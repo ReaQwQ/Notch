@@ -25,7 +25,6 @@ DWORD APIENTRY Notch::ejectThread(HMODULE lpParam) {
     Sleep(200);
     FreeLibraryAndExitThread(lpParam, 0);
  };
-
 void Notch::initialize() {
     Run::running = true;
     init();
