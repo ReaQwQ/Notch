@@ -157,7 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ダウンロード\MelodyV2\MelodyV2\Libs\Json.hpp" />
     <ClInclude Include="include\atlrx.h" />
     <ClInclude Include="include\chakra\ChakraCommon.h" />
     <ClInclude Include="include\chakra\ChakraCommonWindows.h" />
@@ -745,7 +744,6 @@
     <None Include="include\glm\glm\gtx\vector_angle.inl" />
     <None Include="include\glm\glm\gtx\vector_query.inl" />
     <None Include="include\glm\glm\gtx\wrap.inl" />
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\glm\glm\detail\glm.cpp" />
