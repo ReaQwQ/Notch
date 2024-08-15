@@ -91,7 +91,7 @@ void ClickGui::init() {
 	startPos.x += 220.f;
 	this->windowList.emplace_back(new ClickWindow(startPos, Category::CLIENT));
 }
-
+// test (this need for commit)
 void ClickGui::render(ImDrawList* drawlist) {
 	if (!initClickGui) {
 		ClickGui::init();
@@ -110,7 +110,6 @@ void ClickGui::render(ImDrawList* drawlist) {
 	static const float textSize = 1.f;
 	const float textHeight = ImGuiUtils::getTextHeight(textSize);
 	static const float textPadding = 1.f * textSize;
-
 	float roundValue = 0.0f;
 
 	static const UIColor whiteColor(255, 255, 255, 255);

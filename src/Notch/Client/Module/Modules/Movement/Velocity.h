@@ -9,10 +9,6 @@ public:
 	float xModifier = 0.f;
 	float yModifier = 0.f;
 
-	virtual void onEnable() {
-
-	}
-
 	Velocity();
 	~Velocity();
 };

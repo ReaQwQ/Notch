@@ -40,7 +40,7 @@ namespace Memory {
         return ((R(*)(Args...))func)(args...);
     }
 
-    static uintptr_t ResolveRef(uintptr_t ptr, int offset) {
+    static uintptr_t ResolveRef(uintptr_t ptr, int offset = 1) {
         if (!ptr)
             return 0;
 

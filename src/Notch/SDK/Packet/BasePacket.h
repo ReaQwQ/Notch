@@ -20,7 +20,6 @@ union PacketHeader {
 	uint32_t packed;
 };
 static_assert(sizeof(PacketHeader) == 0x4);
-
 class Packet {
 public:
 	uintptr_t** vTable;
@@ -44,16 +43,37 @@ public:
 		else
 			return false;
 	}
-	PacketID getId() {
-		return Memory::CallVFunc<1, PacketID>(this);
-	}
+	virtual int getId(void) { return 0x0; }
 
 	uintptr_t** GetPacketVTable(PacketID id) {
-		auto packet = CreatePacket(id);
-		return packet.get()->vTable;
+		return (uint64_t**)(reinterpret_cast<uintptr_t>(this) + 0x0);
+	}
+};
+
+class MinecraftPackets {
+public:
+	static std::shared_ptr<Packet> CreatePacket(int packetId) {
+		using createPacket = std::shared_ptr<Packet>(__cdecl*)(int);
+		static createPacket createPacketFunc = 0x0;
+		if (!createPacketFunc) {
+			createPacketFunc = (createPacket)Memory::ResolveRef(Memory::FindSignatureModule(SigManager::MinecraftPackets::createPacket));
+		}
+		return createPacketFunc(packetId);
 	}
 
-	std::shared_ptr<Packet> CreatePacket(PacketID id) {
-		return Memory::CallFunc<std::shared_ptr<Packet>, void*, PacketID>((void*)Memory::FindSignatureModule(SigManager::MinecraftPackets::createPacket), (void*)this, id);
+	static std::shared_ptr<Packet> CreatePacket(PacketID packetId) {
+		return CreatePacket((int)packetId);
+	}
+private:
+	template<typename T>
+	static std::shared_ptr<T> CreatePacket(int packetId) {
+		return std::reinterpret_pointer_cast<T>(CreatePacket(packetId));
+	}
+public:
+	template<typename T>
+	static std::shared_ptr<T> CreatePacket() {
+		T instance;
+		int packetId = instance.getId();
+		return std::reinterpret_pointer_cast<T>(CreatePacket(packetId));
 	}
 };

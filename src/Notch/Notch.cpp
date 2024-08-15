@@ -17,6 +17,7 @@ DWORD APIENTRY Notch::ejectThread(HMODULE lpParam) {
     winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
         winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"");
         });
+
 #if _DEBUG
 #else
     static Actor* lp = Game.getClientInstance()->getLocalPlayer();
@@ -42,7 +43,7 @@ void Notch::initialize() {
     if (Game.getClientInstance() != nullptr) 
         logF(xorstr_("GuiData"), Game.getGuiData() == nullptr ? xorstr_("NULLPTR") : xorstr_("NOT NULLPTR"));
     winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
-        winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"NotchHack");
+        winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"Notch");
         });
     
     Sleep(10);
