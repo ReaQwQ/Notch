@@ -90,8 +90,8 @@ void ClickGui::init() {
 	this->windowList.emplace_back(new ClickWindow(startPos, Category::PLAYER));
 	startPos.x += 220.f;
 	this->windowList.emplace_back(new ClickWindow(startPos, Category::CLIENT));
-}
-// test (this need for commit)
+};
+
 void ClickGui::render(ImDrawList* drawlist) {
 	if (!initClickGui) {
 		ClickGui::init();
