@@ -13,6 +13,8 @@ void ModuleManager::initModules() {
 		moduleList.push_back(new CustomFont());
 		moduleList.push_back(new ClickGui());
 		moduleList.push_back(new Colors());
+		moduleList.push_back(new ArrayList());
+
 		//Unknow
 	}
 	std::sort(moduleList.begin(), moduleList.end(), [](Module* lhs, Module* rhs) {

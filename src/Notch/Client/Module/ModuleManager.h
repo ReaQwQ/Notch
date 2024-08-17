@@ -14,6 +14,7 @@
 #include "Modules/Client/CustomFont.h"
 #include "Modules/Client/ClickGui.h"
 #include "Modules/Client/Colors.h"
+#include "Modules/Client/ArrayList.h"
 //Unknow
 
 class ModuleManager {

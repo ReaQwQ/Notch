@@ -34,6 +34,27 @@ void ImGuiUtils::fillRectangle(Vec4 rectPos, UIColor color, float rounding, ImDr
 void ImGuiUtils::fillRectangle(Vec2 pMin, Vec2 pMax, UIColor color, float rounding, ImDrawFlags flags) {
 	drawlist->AddRectFilled(pMin.toImVec2(), pMax.toImVec2(), color.toImColor(), rounding, flags);
 }
+
+void ImGuiUtils::drawTextCenter(Vec2 centerPos, std::string textStr, UIColor color, float textSize, bool shadow)
+{
+	drawText(centerPos.sub(Vec2(ImGuiUtils::getTextWidth(textStr, textSize) / 2, ImGuiUtils::getTextHeight(textSize) / 2)), textStr, color, textSize, shadow);
+}
+
+void ImGuiUtils::drawTextCenterY(Vec2 centerPos, std::string textStr, UIColor color, float textSize, bool shadow, float addX)
+{
+	drawText(Vec2(centerPos.x + addX, centerPos.y - (ImGuiUtils::getTextHeight(textSize) / 2)), textStr, color, textSize, shadow);
+}
+
+void ImGuiUtils::drawTextCenter4(Vec4 centerRect, std::string textStr, UIColor color, float textSize, bool shadow)
+{
+	Vec2 centerPos((centerRect.x + centerRect.z) / 2, (centerRect.y + centerRect.w) / 2);
+	drawTextCenter(centerPos, textStr, color, textSize, shadow);
+}
+
+void ImGuiUtils::drawTextCenter4Y(Vec4 centerRect, std::string textStr, UIColor color, float textSize, bool shadow, float add)
+{
+	drawTextCenterY(Vec2(centerRect.x + add, (centerRect.y + centerRect.w) / 2), textStr, color, textSize, shadow, add);
+}
 //void ImGuiUtils::drawBox(const AABB& blockAABB, UIColor color, UIColor lineColor, float lineWidth, bool fill, bool outline) {
 //	Vec3 lower = blockAABB.lower;
 //	Vec3 upper = blockAABB.upper;

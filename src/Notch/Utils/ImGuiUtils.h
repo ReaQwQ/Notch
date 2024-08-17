@@ -22,6 +22,14 @@ public:
 	static void drawRectangle(Vec2 pMin, Vec2 pMax, UIColor color, float lineWidth = 1.0f, float rounding = 0.0f, ImDrawFlags flags = 0);
 	static void fillRectangle(Vec4 rectPos, UIColor color, float rounding = 0.0f, ImDrawFlags flags = 0);
 	static void fillRectangle(Vec2 pMin, Vec2 pMax, UIColor color, float rounding = 0.0f, ImDrawFlags flags = 0);
+
+	static void drawTextCenter(Vec2 centerPos, std::string textStr, UIColor color, float textSize = 1.f, bool shadow = true);
+	static void drawTextCenterY(Vec2 centerPos, std::string textStr, UIColor color, float textSize = 1.f, bool shadow = true, float addX = 0.f);
+
+	static void drawTextCenter4(Vec4 centerRect, std::string textStr, UIColor color, float textSize = 1.f, bool shadow = true);
+	/* vec4 only centered Y/W */static void drawTextCenter4Y(Vec4 centerRect, std::string textStr, UIColor color, float textSize = 1.f, bool shadow = true, float add = 0.f);
+
+
 	//static void drawBox(const AABB& blockAABB, UIColor color, UIColor lineColor, float lineWidth, bool fill, bool outline);
 	//static void drawBox(const Vec3& blockPos, UIColor color, UIColor lineColor, float lineWidth, bool fill, bool outline);
 	//static bool worldToScreen(const Vec3& pos, Vec2& out);
