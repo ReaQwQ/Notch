@@ -467,6 +467,7 @@
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\CustomFont.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Module.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Movement\Velocity.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Render\AutoEmote.h" />
     <ClInclude Include="src\Notch\Client\System\AudioSystem.h" />
     <ClInclude Include="src\Notch\Client\System\FileSystem.h" />
     <ClInclude Include="src\Notch\Client\System\Network.h" />
@@ -477,6 +478,7 @@
     <ClInclude Include="src\Notch\Hook\Hooks\BaseHook.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\ClientInstance\update.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Font\drawTransformed.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Level\tick.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Test\function.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Keyboard\feed.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Mouse\feed.h" />
@@ -757,6 +759,7 @@
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\CustomFont.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Module.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Movement\Velocity.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Render\AutoEmote.cpp" />
     <ClCompile Include="src\Notch\Client\System\AudioSystem.cpp" />
     <ClCompile Include="src\Notch\Client\System\FileSystem.cpp" />
     <ClCompile Include="src\Notch\Client\System\Network.cpp" />

@@ -1,8 +1,6 @@
 #include "Module.h"
 
 Setting::~Setting() {
-    delete minValue;
-    delete maxValue;
 }
 
 Module::Module(const std::string& mName, const std::string& des, Category c, int k) {
@@ -149,4 +147,7 @@ void Module::onKeyUpdate(int key, bool isDown) {
 }
 
 void Module::onImGuiRender(ImDrawList*) {
+}
+
+void Module::onNormalTick(Actor* actor) {
 }

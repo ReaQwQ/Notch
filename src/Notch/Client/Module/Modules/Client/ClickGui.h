@@ -51,9 +51,9 @@ private:
 	bool isShiftDown = false;
 	bool isBackKeyDown = false;
 	std::string searchingModule;
-	bool isSearching = false;
 	int lastKeyPress = -1;
 	bool* isChoosingKeyBindPtr = nullptr;
+	bool* isSearching = nullptr;
 public:
 	float blurStrength = 7.5f;
 	ClickGui();

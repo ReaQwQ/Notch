@@ -24,7 +24,7 @@ enum class SettingType {
 	ENUM,
 	COLOR,
 	KEYBIND,
-	CLICKME,
+	TEXT,
 };
 
 enum class ValueType {
@@ -38,6 +38,7 @@ struct SettingValue {
 		float _float;
 		int _int;
 		bool _bool;
+		std::string _text;
 	};
 };
 
@@ -55,6 +56,7 @@ public:
 	bool extended = false;
 	std::vector<std::string> enumList;
 	bool isChoosingKeybind = false;
+	bool isInputingKeybind = false;
 	bool isDragging = false;
 	bool isDragging2 = false;
 	bool isDragging3 = false;
@@ -62,7 +64,7 @@ public:
 	float hueDuration = 0.f;
 	~Setting();
 };
-
+class Actor;
 class Module {
 private:
 	std::string moduleName;
@@ -137,13 +139,14 @@ protected:
 		setting->valuePtr = (SettingValue*)(keyPtr);
 		this->settingList.push_back(setting);
 	}
-	void addClickMeSetting(const std::string& name, const std::string& des) {
+	void addTextInputSetting(const std::string& name, const std::string& des, std::string* textPtr) {
 		Setting* setting = new Setting();
 		setting->settingName = name;
 		setting->description = des;
-		setting->settingType = SettingType::CLICKME;
+		setting->settingType = SettingType::TEXT;
+		setting->valuePtr = (SettingValue*)(textPtr);
 		this->settingList.push_back(setting);
-	}
+	};
 public:
 	~Module();
 	static std::string obfuscate(const std::string& input) {
@@ -168,6 +171,7 @@ public:
 	virtual void toggle();
 	virtual bool isVisible();
 	virtual void onEnable();
+	virtual void onNormalTick(Actor* actor);
 	virtual void onDisable();
 	virtual void onSaveConfig(json* currentConfig);
 	virtual void onLoadConfig(json* config);

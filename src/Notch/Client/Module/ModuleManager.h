@@ -7,6 +7,7 @@
 //Combat
 //Misc
 //Render
+#include "Modules/Render/AutoEmote.h"
 //Movement
 #include "Modules/Movement/Velocity.h"
 //Player
@@ -55,6 +56,7 @@ public:
     void onLoadConfig(json* config);
     void onKeyUpdate(int key, bool isDown);
     void onImGuiRender(ImDrawList* drawlist);
+    void onNormalTick(Actor* actor);
 };
 
 

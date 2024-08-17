@@ -17,7 +17,7 @@ void ConfigManager::saveConfig() {
             prefix[0] = *prefixMgr->prefix;
         else
             std::cerr << xorstr_("Error: Client or command manager is nullptr\n");
-        currentConfigObj[xorstr_("prefix")] = prefix;
+        currentConfigObj["prefix"] = prefix;
 
         std::string fullPath = path + currentConfig + xorstr_(".json"); // Changed file extension to .json
         std::ofstream o(fullPath);
@@ -59,8 +59,8 @@ void ConfigManager::loadConfig(std::string configName) {
                 std::cerr << xorstr_("Error: Client or module manager is nullptr\n");
             }
 
-            if (currentConfigObj.contains(xorstr_("prefix"))) {
-                std::string prefix = currentConfigObj[xorstr_("prefix")];
+            if (currentConfigObj.contains("prefix")) {
+                std::string prefix = currentConfigObj["prefix"];
                 prefix = prefix.at(0);
                 if (!prefix.empty())
                     prefixMgr->prefix = strdup(prefix.c_str());

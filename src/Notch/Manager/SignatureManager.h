@@ -25,6 +25,7 @@ public:
 		static inline const char* setNameTag = "48 89 ? ? ? 57 48 83 EC ? 48 8B ? 48 8B ? 48 8B ? ? ? ? ? 48 85 ? 0F 84 ? ? ? ? 48 8B ? 4C 8B"; // Actor::setNameTag
 		static inline const char* shouldRender = "48 83 EC ? 48 8B 01 48 8B 80 ? ? ? ? FF 15 ? ? ? ? 84 C0 0F 94 C0 48 83 C4 ? C3 CC CC 40 53"; // Actor::shouldRender
 		static inline const char* getNameTag = "48 83 EC ? 48 8B 81 ? ? ? ? 48 85 C0 74 ? 48 8B 08 BA ? ? ? ? 48 8B 40 ? 48 2B C1 48 C1 F8 ? 66 3B D0 73 ? 48 8B 41 ? 48 85 C0 74 ? 38 50 ? 75 ? 48 83 C0"; // Actor::getNameTag
+		static inline const char* playEmote = "48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 41 0F B6 F8"; // Actor::playEmote
 	};
 	class ClientInstance {
 	public:
@@ -67,17 +68,8 @@ public:
 	public:
 		static inline const char* feed = "48 8B C4 48 89 58 ? 48 89 68 ? 48 89 70 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 44 0F B7 BC 24"; // Mouse::feed
 	};
-	class ShulkerBoxBlockItem {
-	public:
-		static inline const char* appendFormattedHovertext = "40 53 55 56 57 41 56 41 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 44 24 ? 4D 8B F9 48 8B DA"; // ShulkerBoxBlockItem::appendFormattedHovertext
-	};
-	class Item {
-	public:
-		static inline const char* appendFormattedHovertext = "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 ? 49 8B F1 4D 8B E0 48 8B DA"; // Item::appendFormattedHovertext
-	};
 	class LevelRendererPlayer {
 	public:
-		static inline const char* renderOutlineSelectionOpcode = "0F 10 ? ? ? ? ? 0F 11 ? C6 40 10 ? 0F 57 ? 0F 11 ? ? 0F 11 ? ? 48 8D"; // LevelRendererPlayer::renderOutlineSelectionOpcode
 		static inline const char* renderOutlineSelection = "48 8B ? 55 53 56 57 41 ? 41 ? 48 8D ? ? 48 81 EC ? ? ? ? 0F 29 ? ? 0F 29 ? ? 44 0F"; // LevelRendererPlayer::renderOutlineSelection
 		static inline const char* bobHurt = "40 53 56 48 83 EC 78 ? ? 7C"; // LevelRendererPlayer::bobHurt
 		static inline const char* getFov = "48 8B C4 48 89 58 18 48 89 70 20 57 48 81 EC 90 00 00 00 0F 29 70 E8 0F 29 78 D8 44"; // LevelRendererPlayer::getFov

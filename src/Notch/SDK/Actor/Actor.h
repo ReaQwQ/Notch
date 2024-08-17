@@ -15,6 +15,7 @@ class HashedString;
 class ActorType;
 class ActorInitializationMethod;
 class VariantParameterList;
+enum class LevelSoundEvent : int32_t; 
 class ActorDamageSource;
 class ActorDamageCause;
 class IConstBlockSource;
@@ -40,6 +41,7 @@ class MaterialType;
 class EquipmentSlot;
 class ArmorMaterialType;
 class CompoundTag;
+class Packet;
 class DataLoadHelper;
 class StructureFeatureType;
 class BlockActor;
@@ -390,13 +392,15 @@ public:
 	void jumpFromGround() {
 		Memory::CallFunc<void, Actor*>(Memory::addSignature(SigManager::SimulatedPlayer::simulateJump), this);
 	}
-
+	void playEmote(const std::string pieceID, bool Message) {
+		Memory::CallFunc<void, Actor*, const std::string, bool>(Memory::addSignature(SigManager::Actor::playEmote), this, pieceID, Message);
+	};
 	Vec3 getPosition() {
 		return Vec3(this->stateVector->pos.x - 1, this->stateVector->pos.y - 2, this->stateVector->pos.z);
-	}
+	};
 	Vec3 getPositionOld() {
 		return this->stateVector->oldPos;
-	}
+	};
 	void setPosition(Vec3 pos) {
 		this->stateVector->pos = pos;
 	};

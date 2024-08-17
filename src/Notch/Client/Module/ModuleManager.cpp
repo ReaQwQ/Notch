@@ -6,6 +6,7 @@ void ModuleManager::initModules() {
 		//Combat
 		//Misc
 		//Render
+		moduleList.push_back(new AutoEmote());
 		//Movement
 		moduleList.push_back(new Velocity());
 		//Player
@@ -57,5 +58,12 @@ void ModuleManager::onImGuiRender(ImDrawList* drawlist) {
 		}
 	}
 }
-
+void ModuleManager::onNormalTick(Actor* actor) {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled()) {
+			mod->onNormalTick(actor);
+		}
+	}
+}
 ModuleManager* moduleMgr = new ModuleManager();

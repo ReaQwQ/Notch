@@ -9,7 +9,7 @@ class Font__drawTransformedHook : public Hook {
 public:
     static inline void* odrawTransformedHook;
     static void drawTransformedDetour(void* _this, void* screenContext, const std::string* str, float x, float y, const MC_Color* color, float angle, float size, bool centered, float maxWidth, bool shadow, const MC_Color* shadowColor, const glm::tvec2<float>* shadowOffset) {
-        std::string notPtroverwrite_str = "NotchV2!";
+        std::string notPtroverwrite_str = "Notch Client!";
         MC_Color notPtroverwrite_color = MC_Color(0.58f, 0.83f, 1.f);
         const std::string* overwrite_str = &notPtroverwrite_str;
         const MC_Color* overwrite_color = &notPtroverwrite_color;

@@ -7,10 +7,11 @@ void getModuleListByCategory(Category category, std::vector<Module*>& modList) {
 		}
 	}
 }
-
+std::string textsett = "";
 ClickGui::ClickGui() : Module("ClickGui", "A GUI use to enable/disable modules.", Category::CLIENT, VK_INSERT) {
 	addSlider<float>("Blur", "NULL", ValueType::FLOAT_T, &blurStrength, 0.f, 20.f);
 	addBoolCheck("Tooltips", "Show modules/settings tooltips.", &tooltips);
+	addTextInputSetting("testText", "textinput setting for testing", &textsett);
 }
 
 ClickGui::~ClickGui() {
@@ -300,18 +301,6 @@ void ClickGui::render(ImDrawList* drawlist) {
 								}
 								ImGuiUtils::drawText(Vec2(sRectPos.z - ImGuiUtils::getTextWidth(textStr, textSize) - textPadding * 4.f, sTextPos.y), textStr, whiteColor, textSize, true);
 								yOffset += textHeight + textPadding * 2.f;
-								break;
-							}
-							case SettingType::CLICKME: {
-								ImGuiUtils::drawText(sTextPos, setting->settingName + ":", whiteColor, textSize, true);
-								if (sRectPos.contains(&mousePos)) {
-									ImGuiUtils::fillRectangle(sRectPos, selectedColor, roundValue);
-									if (isLeftClickDown) {
-										configMgr->saveConfig();
-										Game.getLocalPlayer()->displayClientMessage("Successfullly Saved Configs '%s'.", configMgr->getCurrentConfig());
-										isLeftClickDown = false;
-									}
-								}
 								break;
 							}
 							case (SettingType::BOOL): {
@@ -646,7 +635,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 		searchRectPos.w - 5.f);
 	if (typeRectPos.contains(&mousePos) && isLeftClickDown) {
 		if (isChoosingKeyBindPtr != nullptr) *isChoosingKeyBindPtr = false;
-		isSearching = true;
+		isSearching = (bool*)true;
 		isLeftClickDown = false;
 	}
 	Vec2 typeTextPos = Vec2(typeRectPos.x + 5.f, typeRectPos.y + textPadding * 2.f);

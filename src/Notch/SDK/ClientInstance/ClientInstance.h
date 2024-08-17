@@ -8,20 +8,11 @@
 class ClientInstance {
 public:
     uintptr_t** VTable;
-private:
-    char padding_0[0xC0];
 public:
-    class MinecraftGame* minecraftGame; //0xC8
-public:
-    class Minecraft* minecraft; //0xD0
-private:
-    char padding_1[0x18];
-public:
-    LoopbackPacketSender* loopbackPacketSender; //0xF0
-private:
-    char padding_2[0x460];
-public:
-    GuiData* guiData; //0x558
+    BUILD_ACCESS(this, class MinecraftGame*, minecraftGame, OffsetManager::ClientInstance::mcgame);
+    BUILD_ACCESS(this, class Minecraft*, minecraft, OffsetManager::ClientInstance::minecraft);
+    BUILD_ACCESS(this, LoopbackPacketSender*, loopbackPacketSender, OffsetManager::ClientInstance::packetSender);
+    BUILD_ACCESS(this, GuiData*, guiData, OffsetManager::ClientInstance::guiData);
 public:
     glmatrixf* getrefdef() {
         return (glmatrixf*)((uintptr_t)(this) + 0x330);

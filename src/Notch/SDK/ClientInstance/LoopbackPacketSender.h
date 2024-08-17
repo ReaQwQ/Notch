@@ -2,6 +2,10 @@
 #include "../Packet/Packet.h"
 class LoopbackPacketSender {
 public:
+	uintptr_t* getVTable() {
+		return *(uintptr_t**)(this + 0x0);
+	}
+
 	virtual ~LoopbackPacketSender();
 	//Duplicate contructor
 	virtual __int64 send(Packet* packet);
