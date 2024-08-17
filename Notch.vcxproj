@@ -462,6 +462,7 @@
     <ClInclude Include="src\Notch\Client\Command\Prefix.h" />
     <ClInclude Include="src\Notch\Client\Config\ConfigManager.h" />
     <ClInclude Include="src\Notch\Client\Module\ModuleManager.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Client\ArrayList.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\ClickGui.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\Colors.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\CustomFont.h" />
@@ -754,6 +755,7 @@
     <ClCompile Include="src\Notch\Client\Command\Prefix.cpp" />
     <ClCompile Include="src\Notch\Client\Config\ConfigManager.cpp" />
     <ClCompile Include="src\Notch\Client\Module\ModuleManager.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Client\ArrayList.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\ClickGui.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\Colors.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\CustomFont.cpp" />
