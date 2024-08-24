@@ -59,8 +59,8 @@ public:
 	ClickGui();
 	~ClickGui();
 
-	void onMouseUpdate(char mouseButton, bool isDown, bool cancel);
-	void onKey(int key, bool isDown, bool cancel);
+	void onMouseUpdate(char mouseButton, bool isDown, bool& cancel);
+	void onKey(int key, bool isDown, bool& cancel);
 	void render(ImDrawList* drawlist);
 	virtual bool isVisible() override;
 	virtual void onEnable() override;

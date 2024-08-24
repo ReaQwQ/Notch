@@ -469,6 +469,8 @@
     <ClInclude Include="src\Notch\Client\Module\Modules\Module.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Movement\Velocity.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\AutoEmote.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Render\CustomFov.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Render\ViewModel.h" />
     <ClInclude Include="src\Notch\Client\System\AudioSystem.h" />
     <ClInclude Include="src\Notch\Client\System\FileSystem.h" />
     <ClInclude Include="src\Notch\Client\System\Network.h" />
@@ -479,6 +481,7 @@
     <ClInclude Include="src\Notch\Hook\Hooks\BaseHook.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\ClientInstance\update.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Font\drawTransformed.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\LevelRendererPlayer\getFov.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Level\tick.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Test\function.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Keyboard\feed.h" />
@@ -762,12 +765,15 @@
     <ClCompile Include="src\Notch\Client\Module\Modules\Module.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Movement\Velocity.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\AutoEmote.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Render\CustomFov.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Render\ViewModel.cpp" />
     <ClCompile Include="src\Notch\Client\System\AudioSystem.cpp" />
     <ClCompile Include="src\Notch\Client\System\FileSystem.cpp" />
     <ClCompile Include="src\Notch\Client\System\Network.cpp" />
     <ClCompile Include="src\Notch\GameData.cpp" />
     <ClCompile Include="src\Notch\Hook\DXHook.cpp" />
     <ClCompile Include="src\Notch\Hook\HookManager.cpp" />
+    <ClCompile Include="src\Notch\Hook\Hooks\LevelRendererPlayer\bobHurt.h" />
     <ClCompile Include="src\Notch\Hook\Hooks\LoopbackPacketSender\SendToServer.h" />
     <ClCompile Include="src\Notch\Libraries\Libs\ImFX\imfx.cpp" />
     <ClCompile Include="src\Notch\Libraries\Libs\ImGui\imgui.cpp" />

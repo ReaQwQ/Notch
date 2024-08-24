@@ -106,6 +106,6 @@ public:
 	};
 	class Font {
 	public:
-		static inline const char* drawTransformed = "48 8B C4 48 89 58 08 48 89 68 10 48 89 70 18 48 89 78 20 41 54 41 56 41 57 48 81 EC 00"; // Font::drawTransformed
+		static inline const char* drawTransformed = "48 8B C4 48 89 58 ? 48 89 68 ? 48 89 70 ? 48 89 78 ? 41 54 41 56 41 57 48 81 EC"; // Font::drawTransformed
 	};
 };

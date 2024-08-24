@@ -35,8 +35,7 @@ void ClickGui::onDisable() {
 	if (isChoosingKeyBindPtr != nullptr) *isChoosingKeyBindPtr = false;
 }
 
-void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool cancel) {
-	cancel = true;
+void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool& cancel) {
 	if (mouseButton == 1) {
 		isLeftClickDown = isDown;
 		isHoldingLeftClick = isDown;
@@ -45,9 +44,11 @@ void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool cancel) {
 		isRightClickDown = isDown;
 		isHoldingRightClick = isDown;
 	}
+	if (isEnabled())
+		cancel = true;
 }
 
-void ClickGui::onKey(int key, bool isDown, bool cancel) {
+void ClickGui::onKey(int key, bool isDown, bool& cancel) {
 	if (key == VK_SHIFT) isShiftDown = isDown;
 	if (key == VK_BACK) isBackKeyDown = isDown;
 	if (isDown) {
@@ -249,6 +250,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 						//sColor.a = mainColor.a;
 						yOffset += textHeight + textPadding * 2.f;
 						for (Setting* setting : *mod->getSettings()) {
+							if (!setting->visible) continue;
 							mainColor = colorsMod->getColor(-index);
 							index += 25;
 

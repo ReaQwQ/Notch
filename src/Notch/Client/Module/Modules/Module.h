@@ -6,6 +6,12 @@
 #include "../../../Libraries/Libraries.h"
 #include "../../../Utils/HMath.h"
 #include "../../../Utils/ColorUtil.h"
+#include <glm/glm/ext/matrix_clip_space.hpp>
+#include <glm/glm/ext/matrix_relational.hpp>
+#include <glm/glm/ext/matrix_transform.hpp>
+#include <glm/glm/gtc/constants.hpp>
+#include <glm/glm/mat4x4.hpp>
+#include <glm/glm/trigonometric.hpp>
 using json = nlohmann::json;
 
 enum class Category {
@@ -61,6 +67,7 @@ public:
 	bool isDragging2 = false;
 	bool isDragging3 = false;
 	Vec2 pos;
+	bool visible = true;
 	float hueDuration = 0.f;
 	~Setting();
 };
@@ -101,15 +108,17 @@ protected:
 		setting->maxValue = (SettingValue*)(new T(max));
 		this->settingList.push_back(setting);
 	}
-	void addBoolCheck(const std::string& name, const std::string& des, bool* boolPtr) {
+	Setting* addBoolCheck(const std::string& name, const std::string& des, bool* boolPtr) {
 		Setting* setting = new Setting();
 		setting->settingName = name;
 		setting->description = des;
 		setting->settingType = SettingType::BOOL;
 		setting->valuePtr = (SettingValue*)(boolPtr);
 		this->settingList.push_back(setting);
+
+		return setting;
 	}
-	void addEnumSetting(const std::string& name, const std::string& des, const std::vector<std::string>& enumList, int* defaultValue) {
+	Setting* addEnumSetting(const std::string& name, const std::string& des, const std::vector<std::string>& enumList, int* defaultValue) {
 		Setting* setting = new Setting();
 		setting->settingName = name;
 		setting->description = des;
@@ -117,8 +126,10 @@ protected:
 		setting->enumList = enumList;
 		setting->enumValue = defaultValue;
 		this->settingList.push_back(setting);
+
+		return setting;
 	}
-	void addColorPicker(const std::string& name, const std::string& des, UIColor* colorPtr) {
+	Setting* addColorPicker(const std::string& name, const std::string& des, UIColor* colorPtr) {
 		Setting* setting = new Setting();
 		setting->settingName = name;
 		setting->description = des;
@@ -130,22 +141,28 @@ protected:
 		setting->hueDuration = h;
 		setting->pos = Vec2(s * colorPickerSize.x, (v - 1.f) * -1.f * colorPickerSize.y);
 		this->settingList.push_back(setting);
+
+		return setting;
 	}
-	void addKeybindSetting(const std::string& name, const std::string& des, int* keyPtr) {
+	Setting* addKeybindSetting(const std::string& name, const std::string& des, int* keyPtr) {
 		Setting* setting = new Setting();
 		setting->settingName = name;
 		setting->description = des;
 		setting->settingType = SettingType::KEYBIND;
 		setting->valuePtr = (SettingValue*)(keyPtr);
 		this->settingList.push_back(setting);
+
+		return setting;
 	}
-	void addTextInputSetting(const std::string& name, const std::string& des, std::string* textPtr) {
+	Setting* addTextInputSetting(const std::string& name, const std::string& des, std::string* textPtr) {
 		Setting* setting = new Setting();
 		setting->settingName = name;
 		setting->description = des;
 		setting->settingType = SettingType::TEXT;
 		setting->valuePtr = (SettingValue*)(textPtr);
 		this->settingList.push_back(setting);
+
+		return setting;
 	};
 public:
 	~Module();
@@ -176,6 +193,8 @@ public:
 	virtual void onSaveConfig(json* currentConfig);
 	virtual void onLoadConfig(json* config);
 	virtual void onKeyUpdate(int key, bool isDown);
+	virtual void onGetFov(float& fov);
+	virtual void onbobHurt(glm::mat4& matrix, float lerpT);
 //	virtual void onRender(MinecraftUIRenderContext* ctx);
 	virtual void onImGuiRender(ImDrawList* drawlist);
 //	virtual void onNormalTick(Actor* actor);

@@ -14,9 +14,9 @@ struct modules {
 
 class ArrayList : public Module {
 private:
-	std::vector<modules>modInfo;
+	std::vector<modules> modInfo;
 
-	int haitiMode = 1;
+	int position = 1;
 	int keymode = 0;
 
 	bool top = true;
@@ -24,8 +24,8 @@ private:
 	float textsize = 1.f;
 	float height = 1.f;
 	float width = 1.2f;
-	bool ra1 = false; // rainbow for back ground   mada
-	bool ra2 = false; // rainbow for text          mada
+	int backgroundEnum = 1;
+	int textEnum = 1;
 	UIColor backgroundCol;
 	UIColor textCol;
 	bool drawKeybind = false;

@@ -6,6 +6,8 @@ void ModuleManager::initModules() {
 		//Combat
 		//Misc
 		//Render
+		moduleList.push_back(new CustomFov());
+		moduleList.push_back(new ViewModel());
 		moduleList.push_back(new AutoEmote());
 		//Movement
 		moduleList.push_back(new Velocity());
@@ -65,6 +67,22 @@ void ModuleManager::onNormalTick(Actor* actor) {
 	for (Module* mod : moduleList) {
 		if (mod->isEnabled()) {
 			mod->onNormalTick(actor);
+		}
+	}
+}
+void ModuleManager::onGetFov(float& fov) {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled()) {
+			mod->onGetFov(fov);
+		}
+	}
+}
+void ModuleManager::onbobHurt(glm::mat4& matrix, float lerpT) {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled()) {
+			mod->onbobHurt(matrix, lerpT);
 		}
 	}
 }
