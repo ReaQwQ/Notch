@@ -63,7 +63,7 @@ public:
 				keyCode -= 0x20;
 
 			if (keyCode >= 0x30 && keyCode <= 0x5A) {
-				auto mod = moduleMgr->getModuleByName(moduleName);
+				Module* mod = moduleMgr->getModuleByName(moduleName);
 				if (mod == nullptr) {
 					Game.getLocalPlayer()->displayClientMessage("%sCould not find module with name: %s", RED, moduleName.c_str());
 				}

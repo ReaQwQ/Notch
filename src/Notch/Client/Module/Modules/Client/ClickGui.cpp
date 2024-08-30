@@ -56,7 +56,6 @@ void ClickGui::onKey(int key, bool isDown, bool& cancel) {
 			this->setEnabled(false);
 			return;
 		}
-		cancel = isSearching ? true : isChoosingKeyBindPtr ? true : false;
 		if (key < 192) {
 			lastKeyPress = key;
 			if (isChoosingKeyBindPtr != nullptr && (*isChoosingKeyBindPtr))
@@ -107,7 +106,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 	ClientInstance* ci = Game.getClientInstance();
 	Vec2 mousePos = ci->getMousePos();
 	ci->releaseMouse();
-	logF(std::to_string(mousePos.x) + " | " + std::to_string(mousePos.y), "INFO");
+	//logF(std::to_string(mousePos.x) + " | " + std::to_string(mousePos.y), "INFO");
 	ImGuiIO& io = ImGui::GetIO();
 	static const float windowWidth = 175.f;
 	static const float textSize = 1.f;

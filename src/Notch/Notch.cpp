@@ -120,3 +120,7 @@ std::string Notch::getMCVersion() {
     }
     return "Unknown";
 }
+
+Vec2 ClientInstance::getMousePos() {
+    return Game.mousepos;
+};

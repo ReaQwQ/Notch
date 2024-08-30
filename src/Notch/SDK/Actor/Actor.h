@@ -9,6 +9,7 @@
 
 #include "GameMode.h"
 #include "../Level/Level.h"
+#include "../Item/PlayerInventory.h"
 #include <bitset>
 #include "ActorFlags.h"
 class HashedString;
@@ -114,7 +115,6 @@ class Actor {
 public:
 	BUILD_ACCESS(this, EntityContext*, entityContext, OffsetManager::Actor::entityContext);
 	BUILD_ACCESS(this, StateVector*, stateVector, OffsetManager::Actor::statevector);
-	BUILD_ACCESS(this, GameMode*, gamemode, OffsetManager::Actor::gamemode);
 	BUILD_ACCESS(this, Level*, level, OffsetManager::Actor::level);
 	BUILD_ACCESS(this, AABBShapeComponent*, AABBShape, OffsetManager::Actor::AABBShape);
 	BUILD_ACCESS(this, class TextHolder*, playerName, OffsetManager::Actor::playerName);
@@ -424,6 +424,19 @@ public:
 	Level* getLevel() {
 		return this->level;
 	}
+};
+
+class Player : public Actor {
+public:
+	PlayerInventory* getSupplies() {
+		return (PlayerInventory*)((uintptr_t)(this) + 0x790);
+	}
+};
+
+class LocalPlayer : public Player {
+public:
+	BUILD_ACCESS(this, GameMode*, gamemode, OffsetManager::Actor::gamemode);
+	
 	GameMode* getGameMode() {
 		return this->gamemode;
 	}

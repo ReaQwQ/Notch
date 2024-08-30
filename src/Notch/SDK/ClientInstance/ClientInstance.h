@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Utils/Memory.h"
 #include "../../Manager/OffsetManager.h"
+#include "../../Hook/HookManager.h"
 
 #include "GuiData.h"
 #include "LoopbackPacketSender.h"
@@ -22,7 +23,8 @@ private:
 public:
     GuiData* guiData; //0x558
 public:
-    //BUILD_ACCESS(this, Vec2, MousePos, 0x006A);
+    //BUILD_ACCESS(guiData, int16_t, MousePosX, 0x6A);
+    //BUILD_ACCESS(guiData, int16_t, MousePosY, 0x6C);
 
     glmatrixf* getrefdef() { // 1.21.2
         return (glmatrixf*)((uintptr_t)(this) + 0x330);
@@ -31,8 +33,8 @@ public:
         return Memory::CallVFunc<28, BlockSource*>(this);
     }
 
-    auto getLocalPlayer() -> class Actor* { // 1.21.2
-        return Memory::CallVFunc<29, Actor*>(this);
+    auto getLocalPlayer() -> class LocalPlayer* { // 1.21.2
+        return Memory::CallVFunc<29, LocalPlayer*>(this);
     };
     bool isInGame() { // 1.20.73
         return !Memory::CallVFunc<175, bool>((void*)this);
@@ -46,13 +48,7 @@ public:
     void releaseMouse() { // 1.21.2
         Memory::CallVFunc<333, void>((void*)this);
     };
-    Vec2 getMousePos() {
-        float x = Memory::range_start + 0x57EA72C;
-        float y = Memory::range_start + 0x57EA734;
-        return Vec2(x, y);
-        //return ((Vec2*)((uintptr_t)(this) + 0x498))->div(guiData->guiScale); // Shit Brain
-        /*return Vec2(guiData->MousePos[0], guiData->MousePos[1]);*/ // rage this is static ???
-    }
+    Vec2 getMousePos();
     float getFovX() { // 1.21.2
          return (float)((uintptr_t)(this) + 0x6F0); // X = 0x6F0
      }

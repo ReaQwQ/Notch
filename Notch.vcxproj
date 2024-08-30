@@ -583,8 +583,8 @@
     <ClInclude Include="src\Notch\Libraries\Libs\xor\xorstr.hpp" />
     <ClInclude Include="src\Notch\run.h" />
     <ClInclude Include="src\Notch\SDK\Block\BlockSource.h" />
-    <ClInclude Include="src\Notch\SDK\Inventory\Inventory.h" />
-    <ClInclude Include="src\Notch\SDK\Inventory\PlayerInventory.h" />
+    <ClInclude Include="src\Notch\SDK\Item\Inventory.h" />
+    <ClInclude Include="src\Notch\SDK\Item\PlayerInventory.h" />
     <ClInclude Include="src\Notch\SDK\Item\Item.h" />
     <ClInclude Include="src\Notch\SDK\Item\ItemStack.h" />
     <ClInclude Include="src\Notch\SDK\Level\Dimension.h" />

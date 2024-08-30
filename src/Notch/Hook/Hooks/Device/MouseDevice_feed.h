@@ -5,10 +5,9 @@
 class MouseDevice__feedHook : public Hook {
 public:
 	static inline void* oMouseDevice_feed;
-	static inline Vec2 MousePos;
 	static void oMouseDevice_feedCallBack(__int64 a1, char mouseButton, char isDown, __int16 mouseX, __int16 mouseY, __int16 relativeMovementX, __int16 relativeMovementY, char a8) {
 		bool cancel = false;
-		MousePos = Vec2(mouseX, mouseY);
+		Game.mousepos = Vec2(mouseX, mouseY);
 		if (moduleMgr->isInitialized())
 			moduleMgr->getModule<ClickGui>()->onMouseUpdate((int)mouseButton, (bool)isDown, cancel);
 		if (!cancel)

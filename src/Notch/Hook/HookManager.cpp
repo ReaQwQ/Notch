@@ -25,7 +25,7 @@ void HookManager::init() {
 	Hooks.push_back(new LevelRendererPlayer__getFovHook());
 	Hooks.push_back(new CameraClipHook());
 	Hooks.push_back(new UIScene__SetupAndRenderHook());
-	Hooks.push_back(new ScreenView__SetupAndRenderHook());
+//	Hooks.push_back(new ScreenView__SetupAndRenderHook());
 	Hooks.push_back(new Actor__lerpHook());
 	Hooks.push_back(new Level__tickHook());
 	for (Hook* hook : Hooks) {
