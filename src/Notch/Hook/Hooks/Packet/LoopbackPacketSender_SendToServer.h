@@ -11,7 +11,6 @@ public:
 	static void SendToServerHook(LoopbackPacketSender* a1, Packet* a2) {
 		if (a2->getName() == "TextPacket") {
 			TextPacket* funy = reinterpret_cast<TextPacket*>(a2);
-			logF(Memory::combine("Message: ", funy->message, " CommandPrefix: ", *prefixMgr->prefix), "INFO");
 			if (funy->message[0] == *prefixMgr->prefix) {
 				char* Message = strdup(funy->message.c_str());
 				cmdMgr->execute(Message);

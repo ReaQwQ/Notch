@@ -22,6 +22,8 @@ private:
 public:
     GuiData* guiData; //0x558
 public:
+    //BUILD_ACCESS(this, Vec2, MousePos, 0x006A);
+
     glmatrixf* getrefdef() { // 1.21.2
         return (glmatrixf*)((uintptr_t)(this) + 0x330);
     }
@@ -45,7 +47,11 @@ public:
         Memory::CallVFunc<333, void>((void*)this);
     };
     Vec2 getMousePos() {
-        return Vec2(guiData->MousePos[0], guiData->MousePos[1]);
+        float x = Memory::range_start + 0x57EA72C;
+        float y = Memory::range_start + 0x57EA734;
+        return Vec2(x, y);
+        //return ((Vec2*)((uintptr_t)(this) + 0x498))->div(guiData->guiScale); // Shit Brain
+        /*return Vec2(guiData->MousePos[0], guiData->MousePos[1]);*/ // rage this is static ???
     }
     float getFovX() { // 1.21.2
          return (float)((uintptr_t)(this) + 0x6F0); // X = 0x6F0

@@ -208,7 +208,6 @@ namespace Memory {
 #endif
         return 0u;
     }
-
     static void* addSignature(const char* sig) {
         return (void*)findSignature(sig);
     }

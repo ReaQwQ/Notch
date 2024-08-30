@@ -49,7 +49,7 @@ public:
 		return Memory::CallVFunc<1, PacketID>(this); 
 	};
 	std::string getName() {
-		return *Memory::CallVFunc<2, std::string*>(this);
+		return *Memory::CallVFunc<2, std::string*>(this, std::string());
 	}
 	virtual void write(void* stream) {
 		return Memory::CallVFunc<3, void, void*>(this, stream);
