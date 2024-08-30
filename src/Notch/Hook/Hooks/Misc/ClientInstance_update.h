@@ -8,7 +8,7 @@ class ClientInstance__updateHook : public Hook {
 public:
 	static inline void* oClientInstanceUpdate;
 	static bool ClientInstanceUpdateCallback(ClientInstance* ci, bool isinitFinished) {
-		if (!Game.clientinstance) Game.clientinstance = ci;
+		Game.clientinstance = ci;
 		return Memory::CallFunc<bool, ClientInstance*, bool>(oClientInstanceUpdate, ci, isinitFinished);
 	};
 

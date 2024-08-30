@@ -8,7 +8,7 @@
 #include "../../Utils/Memory.h"
 
 #include "GameMode.h"
-#include "Level.h"
+#include "../Level/Level.h"
 #include <bitset>
 #include "ActorFlags.h"
 class HashedString;
@@ -112,12 +112,12 @@ class Actor {
 //public:
 //	GameMode* gamemode; //0xEC8
 public:
-
 	BUILD_ACCESS(this, EntityContext*, entityContext, OffsetManager::Actor::entityContext);
 	BUILD_ACCESS(this, StateVector*, stateVector, OffsetManager::Actor::statevector);
 	BUILD_ACCESS(this, GameMode*, gamemode, OffsetManager::Actor::gamemode);
 	BUILD_ACCESS(this, Level*, level, OffsetManager::Actor::level);
 	BUILD_ACCESS(this, AABBShapeComponent*, AABBShape, OffsetManager::Actor::AABBShape);
+	BUILD_ACCESS(this, class TextHolder*, playerName, OffsetManager::Actor::playerName);
 	BUILD_ACCESS(this, ActorRotationComponent*, ActorRotation, OffsetManager::Actor::ActorRotation);
 public:
 	virtual bool getStatusFlag(ActorFlags) const; // 0

@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 enum class PacketID : int32_t {
+	KeepAlive = 0,
 	Login = 1,
 	PlayStatus = 2,
 	ServerToClientHandshake = 3,
@@ -203,4 +204,12 @@ enum class PacketID : int32_t {
 	PlayerToggleCrafterSlotRequest = 306,
 	SetPlayerInventoryOptions = 307,
 	SetHud = 308,
+	AwardAchievementPacket = 309,
+	ClientboundCloseScreen = 310,
+	ClientboundLoadingScreenPacket_Deprecated = 311,
+	ServerboundLoadingScreenPacket = 312,
+	JigsawStructureDataPacket = 313,
+	CurrentStructureFeaturePacket = 314,
+	ServerboundDiagnosticsPacket = 315,
+	EndId = 316
 };

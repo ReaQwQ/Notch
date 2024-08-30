@@ -1,29 +1,40 @@
 #include "HookManager.h"
 // Hook include
-#include "Hooks/Keyboard/feed.h"
-#include "Hooks/ClientInstance/update.h"
-#include "Hooks/Font/drawTransformed.h"
-#include "Hooks/LevelRendererPlayer/bobHurt.h"
-#include "Hooks/LevelRendererPlayer/getFov.h"
-#include "Hooks/Actor/lerp.h"
-#include "Hooks/Mouse/feed.h"
-#include "Hooks/LoopbackPacketSender/SendToServer.h"
-#include "Hooks/Level/tick.h"
-#include "Hooks/Test/function.h"
+#include "Hooks/Render/Font_drawTransformed.h"
+#include "Hooks/Render/LevelRendererPlayer_bobHurt.h"
+#include "Hooks/Render/LevelRendererPlayer_getFov.h"
+#include "Hooks/Render/CameraClip.h"
+#include "Hooks/Device/keyboard_feed.h"
+#include "Hooks/Device/MouseDevice_feed.h"
+#include "Hooks/Misc/ClientInstance_update.h"
+#include "Hooks/Packet/LoopbackPacketSender_SendToServer.h"
+#include "Hooks/Actor/Actor_lerp.h"
+#include "Hooks/Actor/Level_tick.h"
 // End
+bool HookManager::initalize = false;
+
 void HookManager::init() {
-	Hooks.push_back(new Keyboard__feedHook());
 	Hooks.push_back(new ClientInstance__updateHook());
+	Hooks.push_back(new Keyboard__feedHook());
+	Hooks.push_back(new MouseDevice__feedHook());
 	Hooks.push_back(new Font__drawTransformedHook());
+	Hooks.push_back(new LoopbackPacketSender__SendToServerHook());
 	Hooks.push_back(new LevelRendererPlayer__bobHurtHook());
 	Hooks.push_back(new LevelRendererPlayer__getFovHook());
+	Hooks.push_back(new CameraClipHook());
 	Hooks.push_back(new Actor__lerpHook());
-	Hooks.push_back(new Mouse__feedHook());
-	Hooks.push_back(new LoopbackPacketSender__SendToServerHook());
 	Hooks.push_back(new Level__tickHook());
-	Hooks.push_back(new Test__functionHook());
-
 	for (Hook* hook : Hooks) {
 		hook->Initialize();
 	}
+
+	initalize = true;
 };
+
+Hook* HookManager::getHook(Hook* other) {
+	while (!initalize) Sleep(100);
+
+	for (Hook* hook : Hooks) {
+		if (hook == other) return hook;
+	}
+}

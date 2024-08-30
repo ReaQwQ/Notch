@@ -7,7 +7,10 @@
 
 class HookManager {
 public:
+	static bool initalize;
+
 	static void init();
+	static Hook* getHook(Hook* other);
 	static void initImGui();
 	static void RestoreImGui();
 

@@ -15,5 +15,4 @@ public:
 public:
 	ViewModel();
 	virtual void onNormalTick(Actor* gm) override;
-	virtual void onbobHurt(glm::mat4& matrix, float) override;
 };

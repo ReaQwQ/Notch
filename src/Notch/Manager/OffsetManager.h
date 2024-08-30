@@ -10,6 +10,7 @@ public:
 		static inline int statevector = 0x290; // Actor::getPosition
 		static inline int AABBShape = 0x298; // Actor::getAABB or statevector + 8
 		static inline int ActorRotation = 0x2A0; // Actor::getRotation or statevector + 16
+		static inline int playerName = 0x1D18; // idk
 		static inline int rcx = 0x10;
 		static inline int rda = 0x18;
 	};

@@ -9,9 +9,10 @@ class LevelRendererPlayer__getFovHook : public Hook {
 public:
 	static inline void* LevelRendererPlayergetFov;
 	static float LevelRendererPlayergetFovCallback(void* _this, float a, bool applyEffects) {
-		float fov = Memory::CallFunc<float, void*, float, bool>(LevelRendererPlayergetFov, _this, a, applyEffects);
-		moduleMgr->onGetFov(fov);
-		return fov;
+		static CustomFov* fMod = moduleMgr->getModule<CustomFov>();
+		if (fMod && fMod->isEnabled())
+			return fMod->fov;
+		return Memory::CallFunc<float, void*, float, bool>(LevelRendererPlayergetFov, _this, a, applyEffects);;
 	};
 	virtual void Initialize() override {
 		Memory::CreateHook((void*)Memory::addSignature(SigManager::LevelRendererPlayer::getFov), &LevelRendererPlayergetFovCallback, &LevelRendererPlayergetFov, "LevelRendererPlayer::getFov Hook");

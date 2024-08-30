@@ -266,6 +266,85 @@ struct Vec3 {
 	}
 
 };
+struct Vec3i {
+	int x, y, z;
+
+	Vec3i() { x = y = z = 0; }
+	Vec3i(int a, int b, int c) : x(a), y(b), z(c) {}
+	Vec3i(int a, int b) : x(a), y(b), z(0) {}
+	Vec3i(const Vec3i& copy) {
+		x = copy.x;
+		y = copy.y;
+		z = copy.z;
+	}
+
+	Vec3i(const Vec3& copy) {
+		x = (int)copy.x;
+		y = (int)copy.y;
+		z = (int)copy.z;
+	}
+
+	Vec3i& operator=(const Vec3i& copy) {
+		x = copy.x;
+		y = copy.y;
+		z = copy.z;
+
+		return *this;
+	}
+
+	Vec3i* operator=(const Vec3i* copy) {
+		x = copy->x;
+		y = copy->y;
+		z = copy->z;
+
+		return this;
+	}
+
+	Vec3i(int* v) : x(v[0]), y(v[1]), z(v[2]) {}
+
+	Vec3 toVector3() const {
+		return Vec3(x, y, z);
+	}
+
+	bool iszero() const { return x == 0 && y == 0 && z == 0; }
+
+	bool operator==(const Vec3i& o) const { return x == o.x && y == o.y && z == o.z; }
+	bool operator!=(const Vec3i& o) const { return x != o.x || y != o.y || z != o.z; }
+
+	Vec3i add(Vec3i o) const {
+		return Vec3i(x + o.x, y + o.y, z + o.z);
+	}
+
+	Vec3i add(int f) const {
+		return Vec3i(x + f, y + f, z + f);
+	}
+
+	Vec3i add(int a, int b, int c) const {
+		return Vec3i(x + a, y + b, z + c);
+	};
+
+	Vec3i sub(int ox, int oy, int oz) const {
+		return Vec3i(x - ox, y - oy, z - oz);
+	}
+
+	Vec3i sub(const Vec3i& o) const {
+		return Vec3i(x - o.x, y - o.y, z - o.z);
+	}
+
+	void set(Vec3i* o) {
+		x = o->x;
+		y = o->y;
+		z = o->z;
+	};
+
+	Vec3 toFloatVector() const {
+		Vec3 vec;
+		vec.x = (float)x;
+		vec.y = (float)y;
+		vec.z = (float)z;
+		return vec;
+	};
+};
 struct Vec4 {
 	union {
 		struct {

@@ -1,7 +1,12 @@
 #pragma once
 #include <windows.h>
 #include <iostream>
+#include <algorithm>
+#include <execution>
+#include <string>
 #include <cstdarg>
+#include <cstdint>
+#include <string_view>
 #include <psapi.h>
 #include "TimeUtil.h"
 #include "../Libraries/Libraries.h"
@@ -32,7 +37,9 @@ Ret& direct_access(Type* type, size_t offset) {
     AS_FIELD(std::string, name, get##name);                             \
     std::string get##name() const { if (ptr) return direct_access<std::string>(ptr, offset); else return ""; } \
     void set##name(std::string v) const {if (ptr) direct_access<std::string>(ptr, offset) = v; }
-
+#define MVCLASS_FIELD(type, name, ...) __declspec(property(get = __get_field_##name, put = __set_field_##name)) type name;                             \
+	type& __get_field_##name() const { return util::directAccess<type>(this, SDK::mvGetOffset<__VA_ARGS__>()); }                                    \
+	template<typename T> void __set_field_##name(const T& value) { util::directAccess<type>(this, (SDK::mvGetOffset<__VA_ARGS__>())) = value; }
 namespace Memory {
     template <typename R, typename... Args>
     R CallFunc(void* func, Args... args)
@@ -132,7 +139,7 @@ namespace Memory {
 #define INRANGE(x, a, b) (x >= a && x <= b)
 #define GET_BYTE(x) ((GET_BITS(x[0]) << 4) | GET_BITS(x[1]))
 #define GET_BITS(x) (INRANGE((x & (~0x20)), 'A', 'F') ? ((x & (~0x20)) - 'A' + 0xa) : (INRANGE(x, '0', '9') ? (x - '0') : 0))
-    inline uintptr_t FindSignatureModule(const char* szSignature) {
+    inline uintptr_t findSignature(const char* szSignature) {
         const char* pattern = szSignature;
         uintptr_t firstMatch = 0;
         static const auto rangeStart = (uintptr_t)GetModuleHandleA("Minecraft.Windows.exe");
@@ -202,8 +209,21 @@ namespace Memory {
         return 0u;
     }
 
-    static void* addSignature(const char* sig)
-    {
-        return (void*)FindSignatureModule(sig);
+    static void* addSignature(const char* sig) {
+        return (void*)findSignature(sig);
+    }
+    static char* findString(std::string_view find, const char* module) {
+        auto gameModule = reinterpret_cast<uintptr_t>(GetModuleHandleA(module));
+        auto* const scanBytes = reinterpret_cast<uint8_t*>(gameModule);
+        auto* const dosHeader = reinterpret_cast<PIMAGE_DOS_HEADER>(gameModule);
+        auto* const ntHeaders = reinterpret_cast<PIMAGE_NT_HEADERS>(scanBytes + dosHeader->e_lfanew);
+        const auto sizeOfCode = ntHeaders->OptionalHeader.SizeOfImage;
+
+        const auto end = scanBytes + sizeOfCode;
+
+        auto it = std::search(std::execution::par, scanBytes, end, find.cbegin(), find.cend());
+
+        auto ret = it != end ? reinterpret_cast<char*>(it) : 0ull;
+        return ret;
     }
 }

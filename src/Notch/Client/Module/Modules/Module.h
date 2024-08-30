@@ -193,8 +193,6 @@ public:
 	virtual void onSaveConfig(json* currentConfig);
 	virtual void onLoadConfig(json* config);
 	virtual void onKeyUpdate(int key, bool isDown);
-	virtual void onGetFov(float& fov);
-	virtual void onbobHurt(glm::mat4& matrix, float lerpT);
 //	virtual void onRender(MinecraftUIRenderContext* ctx);
 	virtual void onImGuiRender(ImDrawList* drawlist);
 //	virtual void onNormalTick(Actor* actor);

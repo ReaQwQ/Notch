@@ -148,9 +148,5 @@ void Module::onKeyUpdate(int key, bool isDown) {
 
 void Module::onImGuiRender(ImDrawList*) {
 }
-void Module::onGetFov(float& fov) {
-}
-void Module::onbobHurt(glm::mat4& matrix, float lerpT) {
-}
 void Module::onNormalTick(Actor* actor) {
 }

@@ -7,9 +7,10 @@
 //Combat
 //Misc
 //Render
+#include "Modules/Render/NoCameraClip.h"
+#include "Modules/Render/CustomFov.h"
 #include "Modules/Render/ViewModel.h"
 #include "Modules/Render/AutoEmote.h"
-#include "Modules/Render/CustomFov.h"
 //Movement
 #include "Modules/Movement/Velocity.h"
 //Player
@@ -60,8 +61,6 @@ public:
     void onKeyUpdate(int key, bool isDown);
     void onImGuiRender(ImDrawList* drawlist);
     void onNormalTick(Actor* actor);
-    void onGetFov(float& fov);
-    void onbobHurt(glm::mat4& matrix, float lerpT);
 };
 
 

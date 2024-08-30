@@ -23,18 +23,15 @@ static_assert(sizeof(PacketHeader) == 0x4);
 class Packet {
 public:
 	uintptr_t** vTable;
-	int32_t priority = 2, reliability = 1;
-private:
-	char pad_0x10[0x10];
 public:
-	PacketHandlerDispatcherInstance* dispatcher;
-private:
-	char pad_0x28[0x8];
-
+	int32_t priority = 2;
+	int32_t reliability = 1;
+	uint8_t subClientId = 0;
+	bool isHandled = false;
+	void* unknown = nullptr;
+	PacketHandlerDispatcherInstance* handler = nullptr;
+	int32_t compressibility = 0;
 public:
-	std::string getName() {
-		return *Memory::CallVFunc<2, std::string*>(this, std::string());
-	}
 	template <class T>
 	bool isInstanceOf() {
 		T packet;
@@ -43,37 +40,22 @@ public:
 		else
 			return false;
 	}
-	virtual int getId(void) { return 0x0; }
-
 	uintptr_t** GetPacketVTable(PacketID id) {
-		return (uint64_t**)(reinterpret_cast<uintptr_t>(this) + 0x0);
+		return (uint64_t**)(reinterpret_cast<uintptr_t>(this));
 	}
+public:
+	virtual ~Packet() {};
+	virtual PacketID getID();
+	virtual std::string getName();
+	virtual void write(void* stream);
+	virtual void readExtended(void* stream);
+	virtual bool allowBatch();
+	virtual void read(void* stream);
 };
 
 class MinecraftPackets {
 public:
-	static std::shared_ptr<Packet> CreatePacket(int packetId) {
-		using createPacket = std::shared_ptr<Packet>(__cdecl*)(int);
-		static createPacket createPacketFunc = 0x0;
-		if (!createPacketFunc) {
-			createPacketFunc = (createPacket)Memory::ResolveRef(Memory::FindSignatureModule(SigManager::MinecraftPackets::createPacket));
-		}
-		return createPacketFunc(packetId);
-	}
-
-	static std::shared_ptr<Packet> CreatePacket(PacketID packetId) {
-		return CreatePacket((int)packetId);
-	}
-private:
-	template<typename T>
-	static std::shared_ptr<T> CreatePacket(int packetId) {
-		return std::reinterpret_pointer_cast<T>(CreatePacket(packetId));
-	}
-public:
-	template<typename T>
-	static std::shared_ptr<T> CreatePacket() {
-		T instance;
-		int packetId = instance.getId();
-		return std::reinterpret_pointer_cast<T>(CreatePacket(packetId));
+	static std::shared_ptr<Packet> createPacket(PacketID id) {
+		return reinterpret_cast<std::shared_ptr<Packet>(*)(PacketID)>(SigManager::MinecraftPackets::createPacket)(id);
 	}
 };

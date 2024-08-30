@@ -1,17 +1,43 @@
 #include "Notch.h"
+bool Initialized;
+bool& MH_Initialized() {
+    return Initialized;
+}
 
 DWORD APIENTRY Notch::ejectThread(HMODULE lpParam) {
     while (Run::running) {
         Sleep(10);
     }
+    std::lock_guard<std::mutex> lock(mutex);
     MH_Uninitialize();
     HookManager::RestoreImGui();
     ImFX::CleanupFX();
-    configMgr->saveConfig();
-    delete moduleMgr;
-    delete configMgr;
-    delete cmdMgr;
-    delete prefixMgr;
+    if (MH_Initialized())
+        MH_Uninitialize();
+
+    HookManager::RestoreImGui();
+    ImFX::CleanupFX();
+
+    if (configMgr) {
+        configMgr->saveConfig();
+        delete configMgr;
+        configMgr = nullptr;
+    }
+
+    if (moduleMgr) {
+        delete moduleMgr;
+        moduleMgr = nullptr;
+    }
+
+    if (cmdMgr) {
+        delete cmdMgr;
+        cmdMgr = nullptr;
+    }
+
+    if (prefixMgr) {
+        delete prefixMgr;
+        prefixMgr = nullptr;
+    }
     Notch::closeConsole();
     AudioSystem::getInstance().play(xorstr_("Audios\\uninject.wav"));
     winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
@@ -20,8 +46,7 @@ DWORD APIENTRY Notch::ejectThread(HMODULE lpParam) {
 
 #if _DEBUG
 #else
-    static Actor* lp = Game.getClientInstance()->getLocalPlayer();
-    if (lp != nullptr) lp->displayClientMessage("%sEjected!", RED);
+    if (Game.getLocalPlayer() != nullptr) Game.getLocalPlayer()->displayClientMessage("%sEjected!", RED);
 #endif
     Sleep(200);
     FreeLibraryAndExitThread(lpParam, 0);
@@ -32,10 +57,12 @@ void Notch::initialize() {
     InjectTime = TimeUtil::getCurrentMs();
     FileSystem::Initalize();
     AudioSystem::getInstance().play(xorstr_("Audios\\inject.wav"));
-    Notch::openConsole();
 
+    Notch::openConsole();
+    logF("MC Version " + getMCVersion(), "INFO");
     logF(xorstr_("Initializing Hooks"), xorstr_("WAIT"));
     if (MH_Initialize() == MH_OK) {
+        MH_Initialized() = true;
         HookManager::initImGui();
         HookManager::init();
    }
@@ -73,3 +100,23 @@ void Notch::initialize() {
     };
 #endif
 };
+
+std::string Notch::getMCVersion() {
+    char filePath[MAX_PATH];
+    if (GetModuleFileNameExA(GetCurrentProcess(), nullptr, filePath, MAX_PATH)) {
+        DWORD size = GetFileVersionInfoSizeA(filePath, nullptr);
+        BYTE* ver = new BYTE[size];
+        VS_FIXEDFILEINFO* pFileInfo;
+        if (GetFileVersionInfoA(filePath, 0, size, ver)) {
+            if (VerQueryValue(ver, TEXT("\\"), (LPVOID*)&pFileInfo, nullptr)) {
+                std::ostringstream oss;
+                oss << HIWORD(pFileInfo->dwFileVersionMS) << '.'
+                    << LOWORD(pFileInfo->dwFileVersionMS) << '.'
+                    << HIWORD(pFileInfo->dwFileVersionLS) << '.'
+                    << LOWORD(pFileInfo->dwFileVersionLS);
+                return oss.str();
+            }
+        }
+    }
+    return "Unknown";
+}

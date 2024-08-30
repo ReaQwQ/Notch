@@ -26,12 +26,4 @@ void ViewModel::onNormalTick(Actor* actor) {
 		rotAngle = 0.f;
 		reset = false;
 	}
-} // why doesnt work :sob:
-void ViewModel::onbobHurt(glm::mat4& matrix, float) {/*
-	if (translate)
-		matrix = glm::translate<float>(matrix, glm::vec3(translateVec.x, translateVec.y, translateVec.z));
-	if (scale)
-		matrix = glm::scale<float>(matrix, glm::vec3(scaleVec.x, scaleVec.y, scaleVec.z));
-	if (rotate)
-		matrix = glm::rotate<float>(matrix, rotAngle, glm::vec3(rotateVec.x, rotateVec.y, rotateVec.z));*/
 }

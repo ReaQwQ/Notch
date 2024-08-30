@@ -9,8 +9,9 @@ class LoopbackPacketSender__SendToServerHook : public Hook {
 public:
 	static inline void* oSendToServer;
 	static void SendToServerHook(LoopbackPacketSender* a1, Packet* a2) {
-		if (a2->getName() == "TextPacket") {
+		if (a2->isInstanceOf<TextPacket>()) {
 			TextPacket* funy = reinterpret_cast<TextPacket*>(a2);
+			logF(Memory::combine("Message: ", funy->message, " CommandPrefix: ", *prefixMgr->prefix), "INFO");
 			if (funy->message[0] == *prefixMgr->prefix) {
 				char* Message = strdup(funy->message.c_str());
 				cmdMgr->execute(Message);
@@ -25,6 +26,7 @@ public:
 	}
 	virtual void Initialize() override {
 		while (Game.getClientInstance() == nullptr) Sleep(100);
-		Memory::CreateHook((void*)Game.getClientInstance()->loopbackPacketSender->getVTable()[2], &SendToServerHook, &oSendToServer, "LoopbackPacketSender::SendToServer Hook");
+		auto lps_vfTable = *(uintptr_t**)(Game.getClientInstance()->loopbackPacketSender);
+		Memory::CreateHook((void*)lps_vfTable[2], &SendToServerHook, &oSendToServer, "LoopbackPacketSender::SendToServer Hook");
 	}
 };	

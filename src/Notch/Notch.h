@@ -15,8 +15,10 @@
 #include <chrono>
 #include <thread>
 #include <array>
+#include <mutex>
 #include <map>
 
+#pragma comment(lib, "version.lib")
 
 #include <dxgi.h>
 #include <dxgi1_4.h>
@@ -44,23 +46,25 @@
 
 #include "Hook/HookManager.h"
 
+#include "SDK/Packet/Packet.h"
+#include "SDK/Actor/Actor.h"
 #include "SDK/ClientInstance/ClientInstance.h"
 #include "SDK/ClientInstance/GuiData.h"
 #include "SDK/ClientInstance/LoopbackPacketSender.h"
-
-#include "SDK/Packet/Packet.h"
-#include "SDK/Actor/Actor.h"
 
 #include "GameData.h"
 
 #include "run.h"
 
 class Notch {
+private:
+    static inline std::mutex mutex;
 public:
     static inline bool Initialized;
     static inline bool ShouldUIRender = true;
     static inline uint64_t InjectTime;
     static void initialize();
+    static std::string  getMCVersion();
     static DWORD APIENTRY ejectThread(HMODULE lpParam);
     static void openConsole() {
         ShowWindow(GetConsoleWindow(), SW_HIDE);

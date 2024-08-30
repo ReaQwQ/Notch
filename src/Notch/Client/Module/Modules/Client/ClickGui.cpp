@@ -105,9 +105,10 @@ void ClickGui::render(ImDrawList* drawlist) {
 	}
 	static Colors* colorsMod = moduleMgr->getModule<Colors>();
 	ClientInstance* ci = Game.getClientInstance();
-	ci->releaseMouse();
-	ImGuiIO& io = ImGui::GetIO();
 	Vec2 mousePos = ci->getMousePos();
+	ci->releaseMouse();
+	logF(std::to_string(mousePos.x) + " | " + std::to_string(mousePos.y), "INFO");
+	ImGuiIO& io = ImGui::GetIO();
 	static const float windowWidth = 175.f;
 	static const float textSize = 1.f;
 	const float textHeight = ImGuiUtils::getTextHeight(textSize);
