@@ -9,7 +9,7 @@ class LoopbackPacketSender__SendToServerHook : public Hook {
 public:
 	static inline void* oSendToServer;
 	static void SendToServerHook(LoopbackPacketSender* a1, Packet* a2) {
-		if (a2->isInstanceOf<TextPacket>()) {
+		if (a2->getName() == "TextPacket") {
 			TextPacket* funy = reinterpret_cast<TextPacket*>(a2);
 			logF(Memory::combine("Message: ", funy->message, " CommandPrefix: ", *prefixMgr->prefix), "INFO");
 			if (funy->message[0] == *prefixMgr->prefix) {

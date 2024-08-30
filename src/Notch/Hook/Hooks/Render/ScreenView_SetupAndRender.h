@@ -8,13 +8,13 @@
 #include "../../../SDK/Render/MinecraftUIRenderContext.h"
 #include "../../../SDK/Render/ScreenView.h"
 
-class UIScene__SetupAndRenderHook : public Hook {
+class ScreenView__SetupAndRenderHook : public Hook {
 public:
-	static inline void* UIScene__SetupAndRender;
-	static void UIScene__SetupAndRenderCallback(ScreenView* _this, MinecraftUIRenderContext* ctx) {
-		return Memory::CallFunc<void, ScreenView*, MinecraftUIRenderContext*>(UIScene__SetupAndRender, _this, ctx);
+	static inline void* ScreenView__SetupAndRender;
+	static void ScreenView__SetupAndRenderCallback(ScreenView* _this, MinecraftUIRenderContext* ctx) {
+		return Memory::CallFunc<void, ScreenView*, MinecraftUIRenderContext*>(ScreenView__SetupAndRender, _this, ctx);
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::UIScene::SetupAndRender), &UIScene__SetupAndRenderCallback, &UIScene__SetupAndRender, "LevelRendererPlayer::getFov Hook");
+		Memory::CreateHook((void*)Memory::addSignature(SigManager::ScreenView::SetupAndRender), &ScreenView__SetupAndRenderCallback, &ScreenView__SetupAndRender, "ScreenView::SetupAndRender Hook");
 	}
 };

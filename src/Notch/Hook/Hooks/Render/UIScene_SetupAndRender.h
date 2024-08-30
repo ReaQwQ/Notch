@@ -15,6 +15,6 @@ public:
 		return Memory::CallFunc<void, ScreenView*, MinecraftUIRenderContext*>(UIScene__SetupAndRender, _this, ctx);
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::UIScene::SetupAndRender), &UIScene__SetupAndRenderCallback, &UIScene__SetupAndRender, "LevelRendererPlayer::getFov Hook");
+		Memory::CreateHook((void*)Memory::addSignature(SigManager::UIScene::SetupAndRender), &UIScene__SetupAndRenderCallback, &UIScene__SetupAndRender, "UIScene::SetupAndRender Hook");
 	}
 };

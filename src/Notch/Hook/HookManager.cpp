@@ -4,6 +4,8 @@
 #include "Hooks/Render/LevelRendererPlayer_bobHurt.h"
 #include "Hooks/Render/LevelRendererPlayer_getFov.h"
 #include "Hooks/Render/CameraClip.h"
+#include "Hooks/Render/UIScene_SetupAndRender.h"
+#include "Hooks/Render/ScreenView_SetupAndRender.h"
 #include "Hooks/Device/keyboard_feed.h"
 #include "Hooks/Device/MouseDevice_feed.h"
 #include "Hooks/Misc/ClientInstance_update.h"
@@ -22,6 +24,8 @@ void HookManager::init() {
 	Hooks.push_back(new LevelRendererPlayer__bobHurtHook());
 	Hooks.push_back(new LevelRendererPlayer__getFovHook());
 	Hooks.push_back(new CameraClipHook());
+	Hooks.push_back(new UIScene__SetupAndRenderHook());
+	Hooks.push_back(new ScreenView__SetupAndRenderHook());
 	Hooks.push_back(new Actor__lerpHook());
 	Hooks.push_back(new Level__tickHook());
 	for (Hook* hook : Hooks) {

@@ -17,13 +17,13 @@ namespace ui {
 // Minecraft's RectangleArea is different from a standard rect
 struct RectangleArea {
     float left, right, top, bottom;
+
     // x, width, y, height
-    constexpr RectangleArea(float left, float top, float right, float bottom) {
-        this->left = left;
-        this->right = right;
-        this->top = top;
-        this->bottom = bottom;
-    }
+    constexpr RectangleArea(float left, float top, float right, float bottom)
+        : left(left), 
+        right(right), 
+        top(top), 
+        bottom(bottom) {}
 };
 
 struct TextMeasureData {
