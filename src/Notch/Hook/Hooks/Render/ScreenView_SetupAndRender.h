@@ -17,7 +17,7 @@ public:
 		Memory::CallFunc<void, TexturePtr const&, Vec2 const&, Vec2 const&, Vec2 const&, Vec2 const&>(MinecraftUIRenderContext__drawImage, texture, pos, size, uvPos, uvSize);
 	};
 	static void MinecraftUIRenderContext__drawTextCallback(class Font* font, const float* pos, std::string const& text, MC_Color const& color, float alpha, ui::TextAlignment textAlignment, TextMeasureData const& textMeasureData, CaretMeasureData const& caretMeasureData) {
-		Memory::CallFunc<void, Font*, const float*, std::string const&, MC_Color const&, float, ui::TextAlignment, TextMeasureData const&, CaretMeasureData>(MinecraftUIRenderContext__drawText, font, pos, text, color, alpha, textAlignment, textMeasureData, caretMeasureData)
+		Memory::CallFunc<void, Font*, const float*, std::string const&, MC_Color const&, float, ui::TextAlignment, TextMeasureData const&, CaretMeasureData>(MinecraftUIRenderContext__drawText, font, pos, text, color, alpha, textAlignment, textMeasureData, caretMeasureData);
 	};
 	static void ScreenView__SetupAndRenderCallback(ScreenView* _this, MinecraftUIRenderContext* ctx) {
 		moduleMgr->onPreRender(ctx);
