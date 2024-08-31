@@ -72,7 +72,7 @@ void Notch::initialize() {
     winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
         winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"Notch");
         });
-    
+    logF(Memory::combine("ClientInstance Found at: ", Game.getClientInstance()->VTable), "INFO")
     Sleep(10);
     logF("Initializing modules.", "WAIT");
     moduleMgr->initModules();

@@ -20,7 +20,7 @@
 #include "Modules/Client/Colors.h"
 #include "Modules/Client/ArrayList.h"
 //Unknow
-
+class MinecraftUIRenderContext;
 class ModuleManager {
 private:
     std::vector<Module*> moduleList;
@@ -61,6 +61,9 @@ public:
     void onKeyUpdate(int key, bool isDown);
     void onImGuiRender(ImDrawList* drawlist);
     void onNormalTick(Actor* actor);
+    void onLevelRender();
+    void onPostRender(MinecraftUIRenderContext* c);
+    void onPreRender(MinecraftUIRenderContext* c);
 };
 
 

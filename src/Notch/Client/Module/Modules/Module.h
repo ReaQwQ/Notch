@@ -72,6 +72,7 @@ public:
 	~Setting();
 };
 class Actor;
+class MinecraftUIRenderContext;
 class Module {
 private:
 	std::string moduleName;
@@ -193,10 +194,8 @@ public:
 	virtual void onSaveConfig(json* currentConfig);
 	virtual void onLoadConfig(json* config);
 	virtual void onKeyUpdate(int key, bool isDown);
-//	virtual void onRender(MinecraftUIRenderContext* ctx);
 	virtual void onImGuiRender(ImDrawList* drawlist);
-//	virtual void onNormalTick(Actor* actor);
-//	virtual void onContainerScreenControllerTickEvent(ContainerScreenControllerTickEvent* events);
-//	virtual void onSendPacket(Packet* packet, bool& shouldCancel);
-//	virtual void onLevelRender();
+	virtual void onLevelRender();
+	virtual void onPostRender(MinecraftUIRenderContext* c);
+	virtual void onPreRender(MinecraftUIRenderContext* c);
 };

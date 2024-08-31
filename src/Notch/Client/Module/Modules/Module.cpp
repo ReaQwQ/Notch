@@ -150,3 +150,9 @@ void Module::onImGuiRender(ImDrawList*) {
 }
 void Module::onNormalTick(Actor* actor) {
 }
+void Module::onPostRender(MinecraftUIRenderContext* c) {
+}
+void Module::onPreRender(MinecraftUIRenderContext* c) {
+}
+void Module::onLevelRender() {
+}

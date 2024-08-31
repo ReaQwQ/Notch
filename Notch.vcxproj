@@ -487,8 +487,9 @@
     <ClInclude Include="src\Notch\Hook\Hooks\Actor\Level_tick.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Device\Keyboard_feed.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Device\MouseDevice_feed.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Render\LevelRenderer_renderLevel.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Render\UIScene_render.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\ScreenView_SetupAndRender.h" />
-    <ClInclude Include="src\Notch\Hook\Hooks\Render\UIScene_SetupAndRender.h" />
     <ClInclude Include="src\Notch\Libraries\Libraries.h" />
     <ClInclude Include="src\Notch\Libraries\Libs\Entt\config\config.h" />
     <ClInclude Include="src\Notch\Libraries\Libs\Entt\config\macro.h" />

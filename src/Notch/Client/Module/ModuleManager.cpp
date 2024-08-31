@@ -71,4 +71,29 @@ void ModuleManager::onNormalTick(Actor* actor) {
 		}
 	}
 }
+
+void ModuleManager::onLevelRender() {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled())
+			mod->onLevelRender();
+	}
+}
+
+void ModuleManager::onPostRender(MinecraftUIRenderContext* c) {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled())
+			mod->onPostRender(c);
+	}
+}
+
+void ModuleManager::onPreRender(MinecraftUIRenderContext* c) {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled())
+			mod->onPreRender(c);
+	}
+}
+
 ModuleManager* moduleMgr = new ModuleManager();
