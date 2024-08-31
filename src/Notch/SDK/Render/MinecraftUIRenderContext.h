@@ -14,17 +14,6 @@ namespace ui {
     };
 }
 
-// Minecraft's RectangleArea is different from a standard rect
-struct RectangleArea {
-    float left, right, top, bottom;
-
-    // x, width, y, height
-    constexpr RectangleArea(float left, float top, float right, float bottom)
-        : left(left), 
-        right(right), 
-        top(top), 
-        bottom(bottom) {}
-};
 
 struct TextMeasureData {
     float textSize = 10.f;
@@ -47,8 +36,12 @@ struct CaretMeasureData {
 
 class MinecraftUIRenderContext {
 public:
-    class ClientInstance* cinst;
-    ScreenContext* screenContext;
+public:
+    BUILD_ACCESS(this, uintptr_t, vtable, 0x0);
+    BUILD_ACCESS(this, class ClientInstance*, clientInstance, 0x8);
+    BUILD_ACCESS(this, ScreenContext*, screenContext, 0x10);
+    BUILD_ACCESS(this, float, globalAlpha, 0x28);
+    BUILD_ACCESS(this, class UIScene*, UIScene, 0xF0);
 
     void flushText(float lastFlush) {
         Memory::CallVFunc<6, void, float>(this, lastFlush);
@@ -62,8 +55,8 @@ public:
     virtual void getLineLength(class Font*, std::string const&, float, bool) = 0; // 0x1
     virtual float getTextAlpha() = 0; // 0x2
     virtual void setTextAlpha(float) = 0; // 0x3
-    virtual void drawDebugText(RectangleArea const&, std::string const&, MC_Color const&, float, ui::TextAlignment, TextMeasureData const&, CaretMeasureData const&) = 0; // 0x4
-    virtual void drawText(class Font*, RectangleArea const&, std::string const&, MC_Color const&, float, ui::TextAlignment, TextMeasureData const&, CaretMeasureData const&) = 0; // 0x5
+    virtual void drawDebugText(Vec4 const&, std::string const&, MC_Color const&, float, ui::TextAlignment, TextMeasureData const&, CaretMeasureData const&) = 0; // 0x4
+    virtual void drawText(class Font* font, const float* pos, std::string const& text, MC_Color const& color, float alpha, ui::TextAlignment textAlignment, TextMeasureData const& textMeasureData, CaretMeasureData const& caretMeasureData) = 0; // 0x5
 
 private:
     virtual void flushText_(float) = 0; // 0x6
@@ -73,21 +66,21 @@ public:
     virtual void flushImages(MC_Color const&, float, HashedString const&) = 0; // 0x9
     virtual void beginSharedMeshBatch(void*) = 0; // 0xA
     virtual void endSharedMeshBatch(void*) = 0; // 0xB
-    virtual void drawRectangle(RectangleArea const&, MC_Color const&, float, int) = 0; // 0xC
-    virtual void fillRectangle(RectangleArea const&, MC_Color const&, float) = 0; // 0xD
+    virtual void drawRectangle(Vec4 const&, MC_Color const&, float, int) = 0; // 0xC
+    virtual void fillRectangle(Vec4 const&, MC_Color const&, float) = 0; // 0xD
     virtual void increaseStencilRef() = 0; // 0xE
     virtual void decreaseStencilRef() = 0; // 0xF
     virtual void resetStencilRef() = 0; // 0x10
-    virtual void fillRectangleStencil(RectangleArea const&) = 0; // 0x11
-    virtual void enableScissorTest(RectangleArea const&) = 0; // 0x12
+    virtual void fillRectangleStencil(Vec4 const&) = 0; // 0x11
+    virtual void enableScissorTest(Vec4 const&) = 0; // 0x12
     virtual void disableScissorTest() = 0; // 0x13
-    virtual void setClippingRectangle(RectangleArea const&) = 0; // 0x14
+    virtual void setClippingRectangle(Vec4 const&) = 0; // 0x14
     virtual void setFullClippingRectangle() = 0; // 0x15
     virtual void saveCurrentClippingRectangle() = 0; // 0x16
     virtual void restoreSavedClippingRectangle() = 0; // 0x17
-    virtual RectangleArea getFullClippingRectangle() = 0; // 0x18
+    virtual Vec4 getFullClippingRectangle() = 0; // 0x18
     virtual void updateCustom(class CustomRenderComponent*) = 0; // 0x19
-    virtual void renderCustom(class CustomRenderComponent*, int, RectangleArea const&) = 0; // 0x1A
+    virtual void renderCustom(class CustomRenderComponent*, int, Vec4 const&) = 0; // 0x1A
     virtual void cleanup() = 0; // 0x1B
     virtual void removePersistentMeshes() = 0; // 0x1C
     virtual TexturePtr* getTexture(TexturePtr* ptr, ResourceLocation const&, bool) = 0; // 0x1D
