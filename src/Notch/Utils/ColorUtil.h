@@ -106,6 +106,16 @@ struct UIColor {
 	ImColor toImColor() {
 		return ImColor(this->r, this->g, this->b, this->a);
 	}
+
+	UIColor operator /(int val) {
+		return UIColor(this->r / val, this->g / val, this->b / val, this->a / val);
+	}
+	UIColor operator *(int val) {
+		return UIColor(this->r * val, this->g * val, this->b * val, this->a * val);
+	}
+	bool operator =(UIColor other) {
+		return this->r == other.r && this->g == other.g && this->b == other.b && this->a == other.a;
+	}
 };
 
 class ColorUtils {

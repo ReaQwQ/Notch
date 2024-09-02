@@ -3,7 +3,7 @@
 #include "../BaseHook.h"
 
 #include "../../../Client/Module/ModuleManager.h"
-#include "../../../Manager/SignatureManager.h"
+#include "../../../Manager/Manager.h"
 
 class LevelRendererPlayer__getFovHook : public Hook {
 public:

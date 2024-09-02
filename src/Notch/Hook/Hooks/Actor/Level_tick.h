@@ -3,7 +3,7 @@
 #include "../../../Utils/Memory.h"
 #include "../../../GameData.h"
 #include "../../../Client/Module/ModuleManager.h"
-#include "../../../Manager/SignatureManager.h"
+#include "../../../Manager/Manager.h"
 class Level__tickHook : public Hook {
 public:
 	static inline void* oLevelTick;

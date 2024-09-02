@@ -23,9 +23,9 @@ public:
 		return this->seperation;
 	}
 
-	UIColor getColor(int index = 0) {
+	UIColor getColor(int index = 0, int multiplier = 1) {
 		if (modeValue == 1) return ColorUtils::getRainbowColor(seconds, saturation, brightness, index);
-		if (modeValue == 2) return ColorUtils::getWaveColor(mainColor, secondaryColor, index);
+		if (modeValue == 2) return ColorUtils::getWaveColor(mainColor, secondaryColor, index) * multiplier;
 		return this->mainColor;
 	}
 

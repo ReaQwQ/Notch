@@ -1,7 +1,7 @@
 #pragma once
 #include "../BaseHook.h"
 #include "../../../Utils/Memory.h"
-#include "../../../Manager/SignatureManager.h"
+#include "../../../Manager/Manager.h"
 
 #include "../../../Notch.h"
 class ClientInstance__updateHook : public Hook {

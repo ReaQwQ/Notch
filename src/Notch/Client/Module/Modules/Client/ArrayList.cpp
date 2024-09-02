@@ -17,6 +17,12 @@ ArrayList::ArrayList() : Module("ArrayList", "A GUI use to enable/disable module
 	addEnumSetting("KeybindMode", "change drawing keybind mode", { " ","[]","<>" }, &keymode);
 
 }
+
+enum ColorType {
+	Interface = 0,
+	Rainbow = 1,
+	Custom = 2
+};
 void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 	if (drawlist == nullptr) return;
 	if (Game.getLocalPlayer() == nullptr)return;
@@ -35,40 +41,26 @@ void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 	UIColor textColor;
 	UIColor backGroundColor;
 
-	switch (backgroundEnum) {
-	case 0: {
+	if (backgroundEnum == ColorType::Interface)
 		backGroundColor = cm->getColor();
-		break;
-	};
-	case 1: {
+	else if (backgroundEnum == ColorType::Rainbow)
 		backGroundColor = cm->getRainbowColor();
-		break;
-	};
-	case 2: {
+	else if (backgroundEnum == ColorType::Custom)
 		backGroundColor = backgroundCol;
-		break;
-	};
-	}
 
 	backGroundColor.a = backgroundCol.a;
 
-	switch (textEnum) {
-	case 0: {
+	if (textEnum == ColorType::Interface)
 		textColor = cm->getColor();
-		break;
-	};
-	case 1: {
+	else if (textEnum == ColorType::Rainbow)
 		textColor = cm->getRainbowColor();
-		break;
-	};
-	case 2: {
+	else if (textEnum == ColorType::Custom)
 		textColor = textCol;
-		break;
-	};
-	}
 
 	textColor.a = textCol.a;
 
+	logF(StringUtil::combine("bg ", backgroundEnum, "  Color ", backGroundColor.r, " ", backGroundColor.g, " ", backGroundColor.b, " ", backGroundColor.a), "INFO");
+	logF(StringUtil::combine("text ", textEnum, "   Color ", textColor.r, " ", textColor.g, " ", textColor.b, " ", textColor.a), "INFO");
 	Vec2 winsize = Game.getGuiData()->realSize;
 	Vec2 startPos = Vec2(winsize.x * spos.x, winsize.y * spos.y);
 	float modHeight = ImGuiUtils::getTextHeight(textsize) * height;

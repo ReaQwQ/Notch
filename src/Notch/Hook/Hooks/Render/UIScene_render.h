@@ -3,7 +3,7 @@
 #include "../BaseHook.h"
 
 #include "../../../Client/Module/ModuleManager.h"
-#include "../../../Manager/SignatureManager.h"
+#include "../../../Manager/Manager.h"
 
 #include "../../../SDK/Render/MinecraftUIRenderContext.h"
 #include "../../../SDK/Render/ScreenView.h"
