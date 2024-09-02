@@ -29,6 +29,14 @@ public:
 		return this->mainColor;
 	}
 
+	UIColor getRainbowColor(int index = 0) {
+		return ColorUtils::getRainbowColor(seconds, saturation, brightness, index);
+	}
+
+	UIColor getWaveColor(int index = 0) {
+		return ColorUtils::getWaveColor(mainColor, secondaryColor, index);
+	}
+
 	virtual bool isEnabled() override;
 	virtual void setEnabled(bool enabled) override;
 	virtual bool isVisible() override;

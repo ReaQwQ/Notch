@@ -34,14 +34,14 @@ public:
         if (Manager::checkVer(ver, Manager::targetVersions1_21_X))
             Memory::CallVFunc<332, void>((void*)this);
         if (Manager::checkVer(ver, Manager::targetVersions1_21_2X))
-                Memory::CallVFunc<331, void>((void*)this);
+                Memory::CallVFunc<333, void>((void*)this);
     };
     void releaseMouse() {
         int ver = version::GET_VERSION_INT();
         if (Manager::checkVer(ver, Manager::targetVersions1_21_X))
             Memory::CallVFunc<333, void>((void*)this);
         if (Manager::checkVer(ver, Manager::targetVersions1_21_2X))
-            Memory::CallVFunc<332, void>((void*)this);
+            Memory::CallVFunc<334, void>((void*)this);
     };
     Vec2 getMousePos();
     float getFovX() { // 1.21.2

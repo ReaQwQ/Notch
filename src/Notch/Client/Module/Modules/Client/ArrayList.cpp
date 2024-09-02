@@ -1,6 +1,4 @@
 ﻿#include "ArrayList.h"
-Setting* bgColor;
-Setting* txColor;
 
 ArrayList::ArrayList() : Module("ArrayList", "A GUI use to enable/disable modules.", Category::CLIENT, 0x0) {
 	addEnumSetting("Position", "Position of Arraylist", { "Center","Left","Right" }, &position);  // migi kara or center or hidari kara
@@ -10,12 +8,12 @@ ArrayList::ArrayList() : Module("ArrayList", "A GUI use to enable/disable module
 	addSlider<float>("TextSize", "changes text size", ValueType::FLOAT_T, &textsize, 0.5f, 3.f);
 	addSlider<float>("Height", "height gaps", ValueType::FLOAT_T, &height, 1.f, 2.f);
 	addSlider<float>("Width", "width gaps", ValueType::FLOAT_T, &width, 1.f, 2.f);
-	addEnumSetting("BG Color", "Set Background Color Type", { "Interface", "Rainbow", "Cusotm" }, &backgroundEnum);
-	bgColor = addColorPicker("Color", "BackGround Color", &backgroundCol);
-	addEnumSetting("TEXT Color", "Set Text Color Type", { "Interface", "Rainbow", "Cusotm" }, &textEnum);
-	txColor = addColorPicker("Text Color", "Text Color", &textCol);
+	addEnumSetting("BG Color", "Set Background Color Type", { "Interface", "Rainbow", "Custom" }, &backgroundEnum);
+	addColorPicker("Color", "BackGround Color", &backgroundCol);
+	addEnumSetting("TEXT Color", "Set Text Color Type", { "Interface", "Rainbow", "Custom" }, &textEnum);
+	addColorPicker("Text Color", "Text Color", &textCol);
 	addBoolCheck("ShowKeybind", "draw key bind", &drawKeybind);
-	addEnumSetting("KeybindMode", "change drawing keybind mode", { "Space","[]","<>" }, &keymode);  // migi kara or center or hidari kara
+	addEnumSetting("KeybindMode", "change drawing keybind mode", { " ","[]","<>" }, &keymode);
 
 }
 
@@ -36,8 +34,44 @@ void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 
 	auto io = ImGui::GetIO();
 
-	UIColor backGroundColor = UIColor(0, 0, 0, 100);
 	UIColor white = UIColor(255, 255, 255, 255);
+	Colors* cm = moduleMgr->getModule<Colors>();
+	UIColor textColor;
+	UIColor backGroundColor;
+
+	switch (backgroundEnum) {
+	case 0: {
+		backGroundColor = cm->getColor();
+		break;
+	};
+	case 1: {
+		backGroundColor = cm->getRainbowColor();
+		break;
+	};
+	case 2: {
+		backGroundColor = backgroundCol;
+		break;
+	};
+	}
+
+	backGroundColor.a = backgroundCol.a;
+
+	switch (textEnum) {
+	case 0: {
+		textColor = cm->getColor();
+		break;
+	};
+	case 1: {
+		textColor = cm->getRainbowColor();
+		break;
+	};
+	case 2: {
+		textColor = textCol;
+		break;
+	};
+	}
+
+	textColor.a = textCol.a;
 
 	Vec2 winsize = Game.getGuiData()->realSize;
 	Vec2 startPos = Vec2(winsize.x * spos.x, winsize.y * spos.y);
@@ -67,7 +101,7 @@ void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 		else if (position == 1) modRect = Vec4(startPos.x, startPos.y, startPos.x + (allTextWidth * width + 1) * it.persent, startPos.y + modHeight * it.persent);
 		// right
 		else if (position == 2) modRect = Vec4(startPos.x - (allTextWidth * width + 1) * it.persent, startPos.y, startPos.x, startPos.y + modHeight * it.persent);
-		ImGuiUtils::fillRectangle(modRect, backgroundCol, 0);
+		ImGuiUtils::fillRectangle(modRect, backGroundColor, 0);
 		std::string modText = it.mod->getModuleName();
 		float m1 = allTextWidth * it.persent;
 
@@ -77,7 +111,7 @@ void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 		for (char s : modText) {
 			std::string t(1, s);
 			if (tpos.x > modRect.z)continue;
-			ImGuiUtils::drawTextCenterY(tpos, t, textCol, textsize * it.persent, false, 0);
+			ImGuiUtils::drawTextCenterY(tpos, t, textColor, textsize * it.persent, false, 0);
 			tpos.x += ImGuiUtils::getTextWidth(t, textsize);
 		}
 		if (modKey != "" && drawKeybind)

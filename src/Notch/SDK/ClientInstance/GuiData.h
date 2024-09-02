@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Manager/SignatureManager.h"
+#include "../../Manager/Manager.h"
 #include "../../Utils/HMath.h"
 #include "../../Utils/TextFormat.h"
 class GuiData {

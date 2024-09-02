@@ -4,7 +4,7 @@
 #include "../../../Utils/Memory.h"
 #include "../../../GameData.h"
 #include "../../../Client/Module/ModuleManager.h"
-#include "../../../Manager/SignatureManager.h"
+#include "../../../Manager/Manager.h"
 
 #include <glm/glm/ext/matrix_clip_space.hpp>
 #include <glm/glm/ext/matrix_relational.hpp>
@@ -17,6 +17,9 @@ public:
 	static inline void* LevelRendererPlayerbobHurt;
 	static void LevelRendererPlayerbobHurtCallback(glm::mat4& matrix, float lerpT) {
 		static ViewModel* vMod = moduleMgr->getModule<ViewModel>();
+		glm::mat4 View = matrix;
+		matrix = View;
+
 		if (vMod && vMod->isEnabled()) {
 			if (vMod->translate)
 				matrix = glm::translate<float>(matrix, glm::vec3(vMod->translateVec.x, vMod->translateVec.y, vMod->translateVec.z));

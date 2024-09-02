@@ -3,7 +3,6 @@
 #include "../../Utils/HMath.h"
 #include "../../Utils/ColorUtil.h"
 #include "../../Utils/TextFormat.h"
-#include "../../Manager/SignatureManager.h"
 #include "../../Manager/Manager.h"
 #include "../../Utils/Memory.h"
 
