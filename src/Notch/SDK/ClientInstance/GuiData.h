@@ -4,16 +4,13 @@
 #include "../../Utils/TextFormat.h"
 class GuiData {
 public:
-    char pad_0000[48]; //0x0000
-    Vec2 realSize; //0x0030
-    Vec2 realSize2; //0x0038
-    Vec2 scaledSize; //0x0040
-    char pad_0048[4]; //0x0048
-    float guiScale; //0x004C
-    float scaleMultiplier; //0x0050
-    char pad_0x0050[22];
-public:
-    int16_t MousePos[1]; // X: 0x6A Y: 0x6C
+    BUILD_ACCESS(this, Vec2, realSize, getOffset("GuiData::realSize"));
+    BUILD_ACCESS(this, Vec2, realSize2, getOffset("GuiData::realSize2"));
+    BUILD_ACCESS(this, Vec2, scaledSize, getOffset("GuiData::scaledSize"));
+    BUILD_ACCESS(this, float, guiScale, getOffset("GuiData::guiScale"));
+    BUILD_ACCESS(this, float, scaleMultiplier, getOffset("GuiData::scaleMultiplier"));
+    BUILD_ACCESS(this, int16_t, MousePosX, getOffset("GuiData::MousePosX"));
+    BUILD_ACCESS(this, int16_t, MousePosY, getOffset("GuiData::MousePosY"));
 public:
     void displayClientMessage(const std::string message, ...) {
         va_list arg;
@@ -21,6 +18,6 @@ public:
         char Message[400];
         vsprintf_s(Message, 400, message.c_str(), arg);
         const std::string MessagePointer = std::string(std::string(BOLD) + std::string(BLACK) + "[" + std::string(AQUA) + "Notch" + std::string(BLACK) + "] " + std::string(RESET) + Message);
-        Memory::CallFunc<void, GuiData*, const std::string>(Memory::addSignature(SigManager::GuiData::displayClientMessage), this, MessagePointer);
+        Memory::CallFunc<void, GuiData*, const std::string>(getSig("GuiData::displayClientMessage"), this, MessagePointer);
     };
 };

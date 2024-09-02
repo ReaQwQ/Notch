@@ -14,9 +14,9 @@ class Actor;
 class GameMode {
     uintptr_t** VTable;
 public:
-    BUILD_ACCESS(this, class Player*, plr, 0x8);
-    BUILD_ACCESS(this, float, LastBreakProgress, 0x10)
-    BUILD_ACCESS(this, float, BreakProgress, 0x14)
+    BUILD_ACCESS(this, class Player*, plr, getOffset("GameMode::player"));
+    BUILD_ACCESS(this, float, LastBreakProgress, getOffset("GameMode::lastBreakProgress"))
+    BUILD_ACCESS(this, float, BreakProgress, getOffset("GameMode::breakProgress"))
 public:
     virtual ~GameMode();// 0 Destructor
     virtual void startDestroyBlock(Vec3 const& pos, unsigned char blockSide, bool auth); // 1
@@ -39,9 +39,9 @@ public:
     virtual void registerUpsellScreenCallback(std::function<void> a3); // 18
 public:
     float getDestroyRate(Block* block) {
-        return Memory::CallFunc<float, GameMode*, Block*>(Memory::addSignature(SigManager::GameMode::getDestroyRate), this, block);
+        return Memory::CallFunc<float, GameMode*, Block*>(getSig("GameMode::getDestroyRate"), this, block);
     }
     __int64 baseUseItem(ItemStack& a1) {
-        return Memory::CallFunc<__int64, GameMode*, ItemStack&>(Memory::addSignature(SigManager::GameMode::baseUseItem), this, a1);
+        return Memory::CallFunc<__int64, GameMode*, ItemStack&>(getSig("GameMode::baseUseItem"), this, a1);
     };
 };

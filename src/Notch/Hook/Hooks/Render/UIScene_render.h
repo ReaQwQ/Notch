@@ -17,6 +17,6 @@ public:
 		return Memory::CallFunc<void, void*, ScreenContext*, const void*>(UIScene__render, _this, screenContext, renderObj);
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::UIScene::render), &UIScene__renderCallback, &UIScene__render, "UIScene::render Hook");
+		Memory::CreateHook(getSig("UIScene::render"), &UIScene__renderCallback, &UIScene__render, "UIScene::render Hook");
 	}
 };

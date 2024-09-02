@@ -38,7 +38,7 @@ DWORD APIENTRY Notch::ejectThread(HMODULE lpParam) {
         delete prefixMgr;
         prefixMgr = nullptr;
     }
-    Notch::closeConsole();
+    if (Run::closeConsole) Notch::closeConsole();
     AudioSystem::getInstance().play(xorstr_("Audios\\uninject.wav"));
     winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
         winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"");
@@ -52,74 +52,63 @@ DWORD APIENTRY Notch::ejectThread(HMODULE lpParam) {
     FreeLibraryAndExitThread(lpParam, 0);
  };
 void Notch::initialize() {
-    Run::running = true;
     init();
     InjectTime = TimeUtil::getCurrentMs();
     FileSystem::Initalize();
-    AudioSystem::getInstance().play(xorstr_("Audios\\inject.wav"));
-
     Notch::openConsole();
-    logF("MC Version " + getMCVersion(), "INFO");
-    logF(xorstr_("Initializing Hooks"), xorstr_("WAIT"));
-    if (MH_Initialize() == MH_OK) {
-        MH_Initialized() = true;
-        HookManager::initImGui();
-        HookManager::init();
-   }
-    logF(xorstr_("ClientInstance"), Game.getClientInstance() == nullptr ? xorstr_("NULLPTR") : xorstr_("NOT NULLPTR"));
-    if (Game.getClientInstance() != nullptr) 
-        logF(xorstr_("GuiData"), Game.getGuiData() == nullptr ? xorstr_("NULLPTR") : xorstr_("NOT NULLPTR"));
-    winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
-        winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"Notch");
-        });
-    logF(Memory::combine("ClientInstance Found at: ", Game.getClientInstance()->VTable), "INFO")
-    Sleep(10);
-    logF("Initializing modules.", "WAIT");
-    moduleMgr->initModules();
-    logF("Initialized Modules", "OKAY");
-    configMgr->loadConfig("default");
-    logF("Initializing Commands.", "WAIT");
-    cmdMgr->initCommands();
-    logF("Initialized Commands", "OKAY");
-    logF("Initialized Client", "OKAY");
+    logF(StringUtil::combine("MC Version ", version::GET_VERSION(), " (STRING) | ", version::GET_VERSION_INT(), " (INT)"), "INFO");
+    bool supported = std::find(version::supportedVersionint.begin(), version::supportedVersionint.end(), version::GET_VERSION_INT()) != version::supportedVersionint.end();
+    if (!supported) {
+        logF("This Minecraft version is not supported", "FAIL");
+        logF(StringUtil::combine("Supported Version: ", version::join(version::supportedVersion, ", ")), "INFO");
+        Run::closeConsole = false;
+        Run::running = false;
+    }
+    else if (supported) {
+        Manager::init();
+
+        AudioSystem::getInstance().play(xorstr_("Audios\\inject.wav"));
+        logF(xorstr_("Initializing Hooks"), xorstr_("WAIT"));
+        if (MH_Initialize() == MH_OK) {
+            MH_Initialized() = true;
+            HookManager::initImGui();
+            HookManager::init();
+        }
+        logF(xorstr_("ClientInstance"), Game.getClientInstance() == nullptr ? xorstr_("NULLPTR") : xorstr_("NOT NULLPTR"));
+        if (Game.getClientInstance() != nullptr)
+            logF(xorstr_("GuiData"), Game.getGuiData() == nullptr ? xorstr_("NULLPTR") : xorstr_("NOT NULLPTR"));
+        winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
+            winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"Notch");
+            });
+        logF(StringUtil::combine("ClientInstance Found at: ", Game.getClientInstance()->VTable), "INFO");
+
+        Sleep(10);
+        logF("Initializing modules.", "WAIT");
+        moduleMgr->initModules();
+        logF("Initialized Modules", "OKAY");
+        configMgr->loadConfig("default");
+        logF("Initializing Commands.", "WAIT");
+        cmdMgr->initCommands();
+        logF("Initialized Commands", "OKAY");
+        logF("Initialized Client", "OKAY");
 #if _DEBUG
 #else
-    static Actor* lp = Game.getLocalPlayer();
-    static GuiData* gu = Game.getGuiData();
-    if (lp != nullptr) {
-        logF("LocalPlayer", "NOT NULLPTR");
-        lp->displayClientMessage("%sInjected!", GREEN);
-        lp->displayClientMessage("NameTag: %s%s", YELLOW, lp->getNameTag());
-        Vec3 Pos = lp->getPosition();
-        lp->displayClientMessage("XYZ: %i, %i, %i", (int)Pos.x, (int)Pos.y, (int)Pos.z);
-        if (gu != nullptr)
-            lp->displayClientMessage("WindowSizeReal: %i, %i", (int)Game.getGuiData()->realSize.x, (int)Game.getGuiData()->realSize.y);
-    }
-    else if (lp == nullptr) {
-        logF("LocalPlayer", "NULLPTR");
-    };
-#endif
-};
-
-std::string Notch::getMCVersion() {
-    char filePath[MAX_PATH];
-    if (GetModuleFileNameExA(GetCurrentProcess(), nullptr, filePath, MAX_PATH)) {
-        DWORD size = GetFileVersionInfoSizeA(filePath, nullptr);
-        BYTE* ver = new BYTE[size];
-        VS_FIXEDFILEINFO* pFileInfo;
-        if (GetFileVersionInfoA(filePath, 0, size, ver)) {
-            if (VerQueryValue(ver, TEXT("\\"), (LPVOID*)&pFileInfo, nullptr)) {
-                std::ostringstream oss;
-                oss << HIWORD(pFileInfo->dwFileVersionMS) << '.'
-                    << LOWORD(pFileInfo->dwFileVersionMS) << '.'
-                    << HIWORD(pFileInfo->dwFileVersionLS) << '.'
-                    << LOWORD(pFileInfo->dwFileVersionLS);
-                return oss.str();
-            }
+        static LocalPlayer* lp = Game.getLocalPlayer();
+        static GuiData* gu = Game.getGuiData();
+        if (lp != nullptr) {
+            logF("LocalPlayer", "NOT NULLPTR");
+            lp->displayClientMessage("%sInjected!", GREEN);
+            lp->displayClientMessage("NameTag: %s%s", YELLOW, lp->getNameTag());
+            Vec3 Pos = lp->getPosition();
+            lp->displayClientMessage("XYZ: %i, %i, %i", (int)Pos.x, (int)Pos.y, (int)Pos.z);
+            if (gu != nullptr)
+                lp->displayClientMessage("WindowSizeReal: %i, %i", (int)Game.getGuiData()->realSize.x, (int)Game.getGuiData()->realSize.y);
         }
+        else
+            logF("LocalPlayer", "NULLPTR");
+#endif
     }
-    return "Unknown";
-}
+};
 
 Vec2 ClientInstance::getMousePos() {
     return Game.mousepos;

@@ -4,7 +4,7 @@
 #include "PacketID.h"
 #include "PacketHandlerDispatcherInstance.h"
 #include "../../Utils/Memory.h"
-#include "../../Manager/SignatureManager.h"
+#include "../../Manager/Manager.h"
 
 class ConnectionRequest;
 class ContainerID {};
@@ -23,7 +23,7 @@ static_assert(sizeof(PacketHeader) == 0x4);
 class MinecraftPackets {
 public:
 	static std::shared_ptr<class Packet> createPacket(PacketID id) {
-		return reinterpret_cast<std::shared_ptr<Packet>(*)(PacketID)>(SigManager::MinecraftPackets::createPacket)(id);
+		return reinterpret_cast<std::shared_ptr<Packet>(*)(PacketID)>(getSig("MinecraftPackets::createPacket"))(id);
 	}
 };
 

@@ -13,6 +13,6 @@ public:
 	};
 
 	virtual void Initialize() override {
-		Memory::CreateHook(Memory::addSignature(SigManager::ClientInstance::update), (void*)&ClientInstanceUpdateCallback, &oClientInstanceUpdate, xorstr_("ClientInstance::update Hook"));
+		Memory::CreateHook(getSig("ClientInstance::update"), (void*)&ClientInstanceUpdateCallback, &oClientInstanceUpdate, xorstr_("ClientInstance::update Hook"));
 	}
 };

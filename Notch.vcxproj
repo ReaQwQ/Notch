@@ -481,7 +481,7 @@
     <ClInclude Include="src\Notch\Hook\Hooks\Actor\Actor_lerp.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\BaseHook.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Misc\ClientInstance_update.h" />
-    <ClInclude Include="src\Notch\Hook\Hooks\Render\CameraClip.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Render\CameraAvoidanceSystemUtil_calculateHardDistanceConstraint.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\Font_drawTransformed.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\LevelRendererPlayer_getFov.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Actor\Level_tick.h" />
@@ -590,8 +590,6 @@
     <ClInclude Include="src\Notch\SDK\Item\ItemStack.h" />
     <ClInclude Include="src\Notch\SDK\Level\Dimension.h" />
     <ClInclude Include="src\Notch\SDK\Level\HitResult.h" />
-    <ClInclude Include="src\Notch\SDK\Level\LevelData.h" />
-    <ClInclude Include="src\Notch\SDK\Level\PlayerListEntry.h" />
     <ClInclude Include="src\Notch\SDK\Level\Weather.h" />
     <ClInclude Include="src\Notch\SDK\Render\Font.h" />
     <ClInclude Include="src\Notch\SDK\Render\MinecraftUIRenderContext.h" />
@@ -603,8 +601,7 @@
     <ClInclude Include="src\Notch\Utils\ImGuiUtils.h" />
     <ClInclude Include="src\Notch\Utils\Input.h" />
     <ClInclude Include="Notch\Notch\Libraries\minhook\MinHook.h" />
-    <ClInclude Include="src\Notch\Manager\OffsetManager.h" />
-    <ClInclude Include="src\Notch\Manager\SignatureManager.h" />
+    <ClInclude Include="src\Notch\Manager\Manager.h" />
     <ClInclude Include="src\Notch\SDK\Actor\Actor.h" />
     <ClInclude Include="src\Notch\SDK\Actor\ActorFlags.h" />
     <ClInclude Include="src\Notch\SDK\Block\Block.h" />
@@ -632,6 +629,7 @@
     <ClInclude Include="src\Notch\Utils\StringUtil.h" />
     <ClInclude Include="src\Notch\Utils\TextFormat.h" />
     <ClInclude Include="src\Notch\Utils\TimeUtil.h" />
+    <ClInclude Include="src\Notch\version.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -807,10 +805,12 @@
     <ClCompile Include="src\Notch\Libraries\Libs\ImGui\imgui_tables.cpp" />
     <ClCompile Include="src\Notch\Libraries\Libs\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\Notch\Libraries\Libs\Kiero\Kiero.cpp" />
+    <ClCompile Include="src\Notch\Manager\Manager.cpp" />
     <ClCompile Include="src\Notch\Notch.cpp" />
     <ClCompile Include="src\Notch\Utils\ImGuiUtils.cpp" />
     <ClCompile Include="src\Notch\Utils\TextFormat.cpp" />
     <ClCompile Include="src\Notch\Utils\TimeUtil.cpp" />
+    <ClCompile Include="src\Notch\version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Notch.rc" />

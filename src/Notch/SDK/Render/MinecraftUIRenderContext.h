@@ -3,27 +3,25 @@
 #include "../../Utils/ColorUtil.h"
 #include "TexturePtr.h"
 #include "ScreenContext.h"
-namespace ui {
-    // horizontal alignment, there might be a way to align vertically??
-    enum class TextAlignment {
-        // leading
-        LEFT,
-        // trailing
-        RIGHT,
-        CENTER,
-    };
-}
+// horizontal alignment, there might be a way to align vertically??
+enum class TextAlignment {
+    // leading
+    LEFT,
+    // trailing
+    RIGHT,
+    CENTER,
+};
 
 
 struct TextMeasureData {
     float textSize = 10.f;
     float linePadding = 0.f;
     bool displayShadow = false;
-    bool showMC_ColorSymbols = false;
+    bool showColorSymbols = false;
     bool hideHyphen = false;
 
-    constexpr TextMeasureData(float textSize, bool displayShadow, bool showMC_ColorSymbols)
-        : textSize(textSize), displayShadow(displayShadow), showMC_ColorSymbols(showMC_ColorSymbols) {
+    constexpr TextMeasureData(float textSize, bool displayShadow, bool showColorSymbols)
+        : textSize(textSize), displayShadow(displayShadow), showColorSymbols(showColorSymbols) {
     }
 };
 
@@ -55,15 +53,15 @@ public:
     virtual void getLineLength(class Font*, std::string const&, float, bool) = 0; // 0x1
     virtual float getTextAlpha() = 0; // 0x2
     virtual void setTextAlpha(float) = 0; // 0x3
-    virtual void drawDebugText(Vec4 const&, std::string const&, MC_Color const&, float, ui::TextAlignment, TextMeasureData const&, CaretMeasureData const&) = 0; // 0x4
-    virtual void drawText(class Font* font, const float* pos, std::string const& text, MC_Color const& color, float alpha, ui::TextAlignment textAlignment, TextMeasureData const& textMeasureData, CaretMeasureData const& caretMeasureData) = 0; // 0x5
+    virtual void drawDebugText(Vec4 const&, std::string const&, MC_Color const&, float, TextAlignment, TextMeasureData const&, CaretMeasureData const&) = 0; // 0x4
+    virtual void drawText(class Font* font, const float* pos, std::string const& text, MC_Color const& color, float alpha,  TextAlignment textAlignment, TextMeasureData const& textMeasureData, CaretMeasureData const& caretMeasureData) = 0; // 0x5
 
 private:
     virtual void flushText_(float) = 0; // 0x6
     virtual void drawImage_(TexturePtr const& texture, Vec2 const& pos, Vec2 const& size, Vec2 const& uvPos, Vec2 const& uvSize) = 0; // 0x7
 public:
     virtual void drawNineslice(TexturePtr const&, void* const&) = 0; // 0x8
-    virtual void flushImages(MC_Color const&, float, HashedString const&) = 0; // 0x9
+    virtual void flushImages(MC_Color const&, float, class HashedString const&) = 0; // 0x9
     virtual void beginSharedMeshBatch(void*) = 0; // 0xA
     virtual void endSharedMeshBatch(void*) = 0; // 0xB
     virtual void drawRectangle(Vec4 const&, MC_Color const&, float, int) = 0; // 0xC

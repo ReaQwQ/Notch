@@ -196,6 +196,5 @@ public:
 	virtual void onKeyUpdate(int key, bool isDown);
 	virtual void onImGuiRender(ImDrawList* drawlist);
 	virtual void onLevelRender();
-	virtual void onPostRender(MinecraftUIRenderContext* c);
-	virtual void onPreRender(MinecraftUIRenderContext* c);
+	virtual void onRender(MinecraftUIRenderContext* c);
 };

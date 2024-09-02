@@ -15,6 +15,6 @@ public:
 		return Memory::CallFunc<float, void*, float, bool>(LevelRendererPlayergetFov, _this, a, applyEffects);;
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::LevelRendererPlayer::getFov), &LevelRendererPlayergetFovCallback, &LevelRendererPlayergetFov, "LevelRendererPlayer::getFov Hook");
+		Memory::CreateHook(getSig("LevelRendererPlayer::getFov"), &LevelRendererPlayergetFovCallback, &LevelRendererPlayergetFov, "LevelRendererPlayer::getFov Hook");
 	}
 };

@@ -54,10 +54,11 @@ namespace Memory {
         uintptr_t newAddr = ptr + *reinterpret_cast<int*>(ptr + offset) + (offset + 4);
         return newAddr;
     }
-    template <int IIdx, typename TRet, typename... TArgs>
-    static auto CallVFunc(void* thisptr, TArgs... argList) -> TRet {
-        using Fn = TRet(__thiscall*)(void*, decltype(argList)...);
-        return (*static_cast<Fn**>(thisptr))[IIdx](thisptr, argList...);
+    template <size_t index, typename TRet, typename... TArgs>
+    extern TRet CallVFunc(void* thisptr, TArgs... argList) {
+        using TFunc = TRet(__fastcall*)(void*, TArgs...);
+        TFunc* vtable = *reinterpret_cast<TFunc**>(thisptr);
+        return vtable[index](thisptr, argList...);
     }
     template <typename R, typename... Args>
     auto GetFunc(void* func) -> R(*)(Args...) {
@@ -78,24 +79,6 @@ namespace Memory {
         return reinterpret_cast<ret>(sig);
     }
 
-
-
-    template <typename T> // not related to memory LOL
-    std::string combine(T t)
-    {
-        std::stringstream ss;
-        ss << t;
-        return ss.str();
-    }
-
-    template <typename T, typename... Args> // not related to memory LOL
-    std::string combine(T t, Args... args)
-    {
-        std::stringstream ss;
-        ss << t << combine(args...);
-        return ss.str();
-    }
-
     static const uintptr_t range_start = reinterpret_cast<uintptr_t>(GetModuleHandleA("Minecraft.Windows.exe"));
 
     template <typename T>
@@ -108,7 +91,7 @@ namespace Memory {
             initialized = true;
             if (MH_Initialize() != MH_OK)
             {
-                logF(combine("Failed to initialize MinHook").c_str());
+                logF(StringUtil::combine("Failed to initialize MinHook").c_str());
                 running = false;
                 return false;
             }
@@ -117,13 +100,13 @@ namespace Memory {
         uint64_t start = TimeUtil::getCurrentMs();
         if (MH_CreateHook(pTarget, pDetour, (LPVOID*)pOriginal) != MH_OK)
         {
-            logF(combine("[", pTarget, ",", sigId, "] Failed to create hook").c_str(), "FAIL");
+            logF(StringUtil::combine("[", pTarget, ",", sigId, "] Failed to create hook").c_str(), "FAIL");
             return false;
         }
 
         if (MH_EnableHook(pTarget) != MH_OK)
         {
-            logF(combine("[", pTarget, ",", sigId, "] Failed to enable hook").c_str(), "FAIL");
+            logF(StringUtil::combine("[", pTarget, ",", sigId, "] Failed to enable hook").c_str(), "FAIL");
             return false;
         }
 
@@ -131,11 +114,10 @@ namespace Memory {
         ss << "Minecraft.Windows.exe+" << std::hex << (uintptr_t)pTarget - range_start;
         uint64_t time = TimeUtil::getCurrentMs() - start;
 
-        logF(combine("[", ss.str().c_str(), ",", sigId, "] Successfully Hooked in ", time, "ms.").c_str(), "OKAY");
+        logF(StringUtil::combine("[", ss.str().c_str(), ",", sigId, "] Successfully Hooked in ", time, "ms.").c_str(), "OKAY");
 
         return true;
     }
-
 #define INRANGE(x, a, b) (x >= a && x <= b)
 #define GET_BYTE(x) ((GET_BITS(x[0]) << 4) | GET_BITS(x[1]))
 #define GET_BITS(x) (INRANGE((x & (~0x20)), 'A', 'F') ? ((x & (~0x20)) - 'A' + 0xa) : (INRANGE(x, '0', '9') ? (x - '0') : 0))

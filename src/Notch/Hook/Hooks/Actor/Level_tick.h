@@ -12,6 +12,6 @@ public:
 		return Memory::CallFunc<void, void*>(oLevelTick, level);
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::Level::tick), &LevelTickCallback, &oLevelTick, "Level::Tick Hook");
+		Memory::CreateHook(getSig("Level::tick"), &LevelTickCallback, &oLevelTick, "Level::Tick Hook");
 	}
 };

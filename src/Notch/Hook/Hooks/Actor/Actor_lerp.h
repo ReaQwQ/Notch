@@ -13,6 +13,6 @@ public:
 		return Memory::CallFunc<void, Actor*, Vec3>(oActorLerp, _this, motVec);
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::Actor::lerpMotion), &oActorLerpHookCallBack, &oActorLerp, "Actor::lerpMotion Hook");
+		Memory::CreateHook(getSig("Actor::lerpMotion"), &oActorLerpHookCallBack, &oActorLerp, "Actor::lerpMotion Hook");
 	};
 };

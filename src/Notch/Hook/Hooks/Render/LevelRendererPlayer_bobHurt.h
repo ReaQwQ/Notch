@@ -28,6 +28,6 @@ public:
 		return Memory::CallFunc<void, glm::mat4&, float>(LevelRendererPlayerbobHurt, matrix, lerpT);
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::LevelRendererPlayer::bobHurt), &LevelRendererPlayerbobHurtCallback, &LevelRendererPlayerbobHurt, "LevelRendererPlayer::bobHurt Hook");
+		Memory::CreateHook(getSig("LevelRendererPlayer::bobHurt"), &LevelRendererPlayerbobHurtCallback, &LevelRendererPlayerbobHurt, "LevelRendererPlayer::bobHurt Hook");
 	}
 };

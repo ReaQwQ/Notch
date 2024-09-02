@@ -55,6 +55,7 @@
 #include "GameData.h"
 
 #include "run.h"
+#include "version.h"
 
 class Notch {
 private:
@@ -64,7 +65,6 @@ public:
     static inline bool ShouldUIRender = true;
     static inline uint64_t InjectTime;
     static void initialize();
-    static std::string  getMCVersion();
     static DWORD APIENTRY ejectThread(HMODULE lpParam);
     static void openConsole() {
         ShowWindow(GetConsoleWindow(), SW_HIDE);

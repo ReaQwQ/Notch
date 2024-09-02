@@ -9,6 +9,6 @@ public:
 		return Memory::CallFunc<void, void*, ScreenContext*, void*>(LevelRendererrenderLevel, lvl, scn,unk);
 	};
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::LevelRenderer::renderLevel), &LevelRendererrenderLevelCallback, &LevelRendererrenderLevel, "LevelRenderer::renderLevel Hook");
+		Memory::CreateHook(getSig("LevelRenderer::renderLevel"), &LevelRendererrenderLevelCallback, &LevelRendererrenderLevel, "LevelRenderer::renderLevel Hook");
 	}
 };

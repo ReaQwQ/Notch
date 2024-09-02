@@ -3,7 +3,7 @@
 #include "Hooks/Render/Font_drawTransformed.h"
 #include "Hooks/Render/LevelRendererPlayer_bobHurt.h"
 #include "Hooks/Render/LevelRendererPlayer_getFov.h"
-#include "Hooks/Render/CameraClip.h"
+#include "Hooks/Render/CameraAvoidanceSystemUtil_calculateHardDistanceConstraint.h"
 #include "Hooks/Render/ScreenView_SetupAndRender.h"
 #include "Hooks/Render/ScreenView_SetupAndRender.h"
 #include "Hooks/Render/LevelRenderer_renderLevel.h"
@@ -27,7 +27,7 @@ void HookManager::init() {
 	Hooks.push_back(new LevelRendererPlayer__getFovHook());
 	Hooks.push_back(new LevelRenderer__renderLevelHook());
 	Hooks.push_back(new UIScene__renderHook());
-	Hooks.push_back(new CameraClipHook());
+	Hooks.push_back(new CameraAvoidanceSystemUtil__calculateHardDistanceConstraintHook());
 	Hooks.push_back(new ScreenView__SetupAndRenderHook());
 	Hooks.push_back(new Actor__lerpHook());
 	Hooks.push_back(new Level__tickHook());

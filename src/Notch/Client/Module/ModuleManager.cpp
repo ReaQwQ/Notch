@@ -36,6 +36,7 @@ ModuleManager::~ModuleManager() {
 }
 
 void ModuleManager::onSaveConfig(json* currentConfig) {
+	if (!isInitialized()) return;
 	getModule<ClickGui>()->setEnabled(false);
 	for (Module* mod : moduleList) {
 		mod->onSaveConfig(currentConfig);
@@ -43,6 +44,7 @@ void ModuleManager::onSaveConfig(json* currentConfig) {
 }
 
 void ModuleManager::onLoadConfig(json* config) {
+	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {
 		mod->onLoadConfig(config);
 	}
@@ -75,24 +77,18 @@ void ModuleManager::onNormalTick(Actor* actor) {
 void ModuleManager::onLevelRender() {
 	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {
-		if (mod->isEnabled())
+		if (mod->isEnabled()) {
 			mod->onLevelRender();
+		}
 	}
 }
 
-void ModuleManager::onPostRender(MinecraftUIRenderContext* c) {
+void ModuleManager::onRender(MinecraftUIRenderContext* c) {
 	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {
-		if (mod->isEnabled())
-			mod->onPostRender(c);
-	}
-}
-
-void ModuleManager::onPreRender(MinecraftUIRenderContext* c) {
-	if (!isInitialized()) return;
-	for (Module* mod : moduleList) {
-		if (mod->isEnabled())
-			mod->onPreRender(c);
+		if (mod->isEnabled()) {
+			mod->onRender(c);
+		}
 	}
 }
 

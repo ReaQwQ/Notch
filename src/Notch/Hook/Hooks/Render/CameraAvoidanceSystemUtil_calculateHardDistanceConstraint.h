@@ -1,5 +1,5 @@
 #pragma once
-class CameraClipHook : public Hook {
+class CameraAvoidanceSystemUtil__calculateHardDistanceConstraintHook : public Hook {
 public:
 	static inline void* detour;
 	static inline void CameraDetour(__int64 _this, __int64 a2, __int64 a3, __int64 a4, __int64 a5, __int64 a6) {
@@ -9,6 +9,6 @@ public:
 			Memory::CallFunc<void, __int64, __int64, __int64, __int64, __int64>(detour, _this, a2, a3, a4, a5, a6);
 	}
 	virtual void Initialize() override {
-		Memory::CreateHook(Memory::addSignature(SigManager::Camera::Clip), (void*)&CameraDetour, &detour, "CameraClip Hook");
+		Memory::CreateHook(getSig("CameraAvoidanceSystemUtil::calculateHardDistanceConstraint"), (void*)&CameraDetour, &detour, "CameraAvoidanceSystemUtil::calculateHardDistanceConstraint Hook");
 	}
 };

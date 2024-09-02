@@ -18,6 +18,6 @@ public:
 	}
 
 	virtual void Initialize() override {
-		Memory::CreateHook(Memory::addSignature(SigManager::Keyboard::feed), (void*)&oKeyboard_feedCallBack, &oKeyboard_feed, xorstr_("Keyboard::feed Hook"));
+		Memory::CreateHook(getSig("Keyboard::feed"), &oKeyboard_feedCallBack, &oKeyboard_feed, xorstr_("Keyboard::feed Hook"));
 	}
 };

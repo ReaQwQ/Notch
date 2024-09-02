@@ -4,22 +4,21 @@
 #include <direct.h>
 #include <string>
 #include <iomanip>
-
+#include "../../Libraries/Libraries.h"
 #include "../../Utils/StringUtil.h"
+#include "../../Utils/Logger.h"
 
 #include <filesystem>
 
 #include "Network.h"
-
-#include "../../Libraries/Libraries.h"
 
 namespace fs = std::filesystem;
 class FileSystem {
 public:
 	static void Initalize();
 
-	static bool createFolder(std::string folderName);
-	static bool createAssetsFolder(std::string assetsFolderName);
+	static void createFolder(std::string folderName);
+	static void createAssetsFolder(std::string assetsFolderName);
 	static std::string getRoamPath() {
 		char* value;
 		size_t size;

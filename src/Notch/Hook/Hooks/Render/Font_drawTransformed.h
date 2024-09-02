@@ -1,7 +1,7 @@
 #pragma once
 #include "../BaseHook.h"
 #include "../../../Utils/Memory.h"
-#include "../../../Manager/SignatureManager.h"
+#include "../../../Manager/Manager.h"
 #include "../../../Utils/ColorUtil.h"
 
 #include "glm\glm\vec2.hpp"
@@ -16,6 +16,6 @@ public:
         return Memory::CallFunc<void, void*, void*, const std::string*, float, float, const MC_Color*, float, float, bool, float, bool, const MC_Color*, const glm::tvec2<float>*>(odrawTransformedHook, _this, screenContext, overwrite_str, x, y, overwrite_color, angle, size * 1.2f, centered, maxWidth, shadow, shadowColor, shadowOffset);
     };
     virtual void Initialize() override {
-        Memory::CreateHook(Memory::addSignature(SigManager::Font::drawTransformed), (void*)&drawTransformedDetour, &odrawTransformedHook, "Font::drawTransformed Hook");
+        Memory::CreateHook(getSig("Font::drawTransformed"), (void*)&drawTransformedDetour, &odrawTransformedHook, "Font::drawTransformed Hook");
     }
 };

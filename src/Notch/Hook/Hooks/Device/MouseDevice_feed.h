@@ -17,6 +17,6 @@ public:
 	}
 
 	virtual void Initialize() override {
-		Memory::CreateHook((void*)Memory::addSignature(SigManager::MouseDevice::feed), (void*)&oMouseDevice_feedCallBack, &oMouseDevice_feed, "MouseDevice::feed Hook");
+		Memory::CreateHook(getSig("MouseDevice::feed"), (void*)&oMouseDevice_feedCallBack, &oMouseDevice_feed, "MouseDevice::feed Hook");
 	}
 };  
