@@ -3,6 +3,7 @@
 ArrayList::ArrayList() : Module("ArrayList", "A GUI use to enable/disable modules.", Category::CLIENT, 0x0) {
 	addEnumSetting("Position", "Position of Arraylist", { "Center","Left","Right" }, &position);  // migi kara or center or hidari kara
 	addBoolCheck("Top", "is Arraylist is Top", &top);
+	addBoolCheck("shadow", "Text Shadow", &hasShadow);
 	addSlider<float>("X Position", "X Position", ValueType::FLOAT_T, &spos.x, 0.f, 1.f);
 	addSlider<float>("Y Position", "Y Position", ValueType::FLOAT_T, &spos.y, 0.f, 1.f);
 	addSlider<float>("TextSize", "changes text size", ValueType::FLOAT_T, &textsize, 0.5f, 3.f);
@@ -16,11 +17,6 @@ ArrayList::ArrayList() : Module("ArrayList", "A GUI use to enable/disable module
 	addEnumSetting("KeybindMode", "change drawing keybind mode", { " ","[]","<>" }, &keymode);
 
 }
-
-ArrayList::~ArrayList()
-{
-}
-
 void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 	if (drawlist == nullptr) return;
 	if (Game.getLocalPlayer() == nullptr)return;
@@ -111,14 +107,14 @@ void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 		for (char s : modText) {
 			std::string t(1, s);
 			if (tpos.x > modRect.z)continue;
-			ImGuiUtils::drawTextCenterY(tpos, t, textColor, textsize * it.persent, false, 0);
+			ImGuiUtils::drawTextCenterY(tpos, t, textColor, textsize * it.persent, hasShadow, 0);
 			tpos.x += ImGuiUtils::getTextWidth(t, textsize);
 		}
 		if (modKey != "" && drawKeybind)
 			for (char s : modKey) {
 				std::string t(1, s);
 				if (tpos.x > modRect.z)continue;
-				ImGuiUtils::drawTextCenterY(tpos, t, white, textsize * it.persent, false, 0);
+				ImGuiUtils::drawTextCenterY(tpos, t, white, textsize * it.persent, hasShadow, 0);
 				tpos.x += ImGuiUtils::getTextWidth(t, textsize);
 			}
 		if (top)

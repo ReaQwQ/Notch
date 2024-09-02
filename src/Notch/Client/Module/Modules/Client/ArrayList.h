@@ -26,14 +26,13 @@ private:
 	float width = 1.2f;
 	int backgroundEnum = 1;
 	int textEnum = 1;
+	bool hasShadow = true;
 	UIColor backgroundCol;
 	UIColor textCol;
 	bool drawKeybind = false;
 
 public:
 	ArrayList();
-	~ArrayList();
-
 
 	void onImGuiRender(ImDrawList* drawlist);
 	virtual void onEnable() override;
