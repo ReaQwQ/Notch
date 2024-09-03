@@ -38,7 +38,7 @@ public:
     BUILD_ACCESS(this, uintptr_t, vtable, getOffset("MinecraftUIRenderContext::vtable"));
     BUILD_ACCESS(this, class ClientInstance*, clientInstance, getOffset("MinecraftUIRenderContext::ClientInstance"));
     BUILD_ACCESS(this, ScreenContext*, screenContext, getOffset("MinecraftUIRenderContext::ScreenContext"));
-    BUILD_ACCESS(this, float, globalAlpha, getOffset("MinecraftUIRenderContext::globalAlpha");
+    BUILD_ACCESS(this, float, globalAlpha, getOffset("MinecraftUIRenderContext::globalAlpha"));
     BUILD_ACCESS(this, class UIScene*, UIScene, getOffset("MinecraftUIRenderContext::UIScene"));
 
     void flushText(float lastFlush) {

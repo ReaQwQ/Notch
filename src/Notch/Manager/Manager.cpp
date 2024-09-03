@@ -1,7 +1,7 @@
 #include "Manager.h"
 static std::map<std::string, int> offsets;
 static std::map<std::string, void*> signatures;
-bool debug = false;
+bool debug = true;
 void addOffset(const std::string& functionName, int offset) {
     offsets[functionName] = offset;
     if (debug) {
@@ -40,8 +40,8 @@ void Manager::init() {
     try {
         int ver = version::GET_VERSION_INT();
         logF(StringUtil::combine("Ver: ", ver), "INFO");
-        logF(StringUtil::combine("Supported 1.21.X: ", StringUtil::join(targetVersions1_21_X, ", ")), "INFO");
-        logF(StringUtil::combine("Supported 1.21.2X: ", StringUtil::join(targetVersions1_21_2X, ", ")), "INFO");
+        logF(StringUtil::combine("Supported 1.21.X: ", StringUtil::join(targetVersions1_21_X, ", "), " | ", checkVer(ver, targetVersions1_21_X) ? "True" : "False"), "INFO");
+        logF(StringUtil::combine("Supported 1.21.2X: ", StringUtil::join(targetVersions1_21_2X, ", "), " | ", checkVer(ver, targetVersions1_21_2X) ? "True" : "False"), "INFO");
         logF(StringUtil::combine("Switching Offset/Signature to ", ver, "..."), "INFO");
         logF("Initializing Offset...", "WAIT");
         if (checkVer(ver, targetVersions1_21_X)) {
