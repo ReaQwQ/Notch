@@ -21,6 +21,7 @@ void addSignature(const std::string& functionName, const std::string& signature)
 int getOffset(const std::string& functionName) {
     for (std::pair<std::string, int> offset : offsets) {
         if (functionName == offset.first) {
+            //if (StringUtil::starts_with(offset.first, "Actor::")) logF(StringUtil::combine(offset.first, ": ", offset.second), "INFO");
             return offset.second; // return offset
         }
     }
@@ -40,8 +41,8 @@ void Manager::init() {
     try {
         int ver = version::GET_VERSION_INT();
         logF(StringUtil::combine("Ver: ", ver), "INFO");
-        logF(StringUtil::combine("Supported 1.21.X: ", StringUtil::join(targetVersions1_21_X, ", "), " | ", checkVer(ver, targetVersions1_21_X) ? "True" : "False"), "INFO");
-        logF(StringUtil::combine("Supported 1.21.2X: ", StringUtil::join(targetVersions1_21_2X, ", "), " | ", checkVer(ver, targetVersions1_21_2X) ? "True" : "False"), "INFO");
+        logF(StringUtil::combine("Supported 1.21.X: ", StringUtil::join(targetVersions1_21_X, ", "), " | Version Match: ", checkVer(ver, targetVersions1_21_X) ? "True" : "False"), "INFO");
+        logF(StringUtil::combine("Supported 1.21.2X: ", StringUtil::join(targetVersions1_21_2X, ", "), " | Version Match: ", checkVer(ver, targetVersions1_21_2X) ? "True" : "False"), "INFO");
         logF(StringUtil::combine("Switching Offset/Signature to ", ver, "..."), "INFO");
         logF("Initializing Offset...", "WAIT");
         if (checkVer(ver, targetVersions1_21_X)) {

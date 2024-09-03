@@ -48,19 +48,12 @@ public:
 		Memory::CallFunc<void, Actor*, const std::string, bool>(getSig("Actor::playEmote"), this, pieceID, Message);
 	};
 	Vec3 getPosition() {
+		if (this->stateVector == nullptr) return Vec3(0, 0, 0);
 		return this->stateVector->pos;
 	};
 	Vec3 getPositionOld() {
+		if (this->stateVector == nullptr) return Vec3(0, 0, 0);
 		return this->stateVector->oldPos;
-	};
-	void setPosition(Vec3 pos) {
-		this->stateVector->pos = pos;
-	};
-	float getSpeedPerSecond() {
-		Vec3 targetPos = this->getPosition();
-		Vec3 targetPosOld = this->getPositionOld();
-		float hVel = sqrtf(((targetPos.x - targetPosOld.x) * (targetPos.x - targetPosOld.x)) + ((targetPos.z - targetPosOld.z) * (targetPos.z - targetPosOld.z)));
-		return hVel * 20;
 	};
 	virtual void lerpMotion(Vec3 motionVector) {
 		this->stateVector->velocity.x = motionVector.x;

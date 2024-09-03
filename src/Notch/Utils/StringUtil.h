@@ -40,6 +40,10 @@ public:
         return ret;
     }
 
+    static bool starts_with(std::string str, std::string prefix) {
+        return str.compare(0, prefix.size(), prefix) == 0;
+    }
+
     static std::string join(const std::vector<std::string>& vec, const std::string& delimiter) {
         if (vec.empty()) return "";
         std::ostringstream oss;
