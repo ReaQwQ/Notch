@@ -5,9 +5,13 @@
 #include "../Actor/Actor.h"
 class Level {
 public:
-    virtual std::vector<Actor*, std::allocator<Actor*>> getRuntimeActorList() {
+    std::vector<Actor*> getRuntimeActorList() {
 		std::vector<Actor*> list;
-		Memory::CallVFunc<278, void, std::vector<Actor*>&>(this, list);
+		int version = version::GET_VERSION_INT();
+		if (Manager::checkVer(version, Manager::targetVersions1_21_X))
+			Memory::CallVFunc<278, void, std::vector<Actor*>&>(this, list);
+		else if (Manager::checkVer(version, Manager::targetVersions1_21_2X)) 
+			Memory::CallVFunc<279, void, std::vector<Actor*>&>(this, list);
 		return list;
     };
 };

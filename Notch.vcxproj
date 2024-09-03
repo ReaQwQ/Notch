@@ -470,7 +470,8 @@
     <ClInclude Include="src\Notch\Client\Module\Modules\Movement\Velocity.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\AutoEmote.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\CustomFov.h" />
-    <ClInclude Include="src\Notch\Client\Module\Modules\Render\NoCameraClip.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Render\NameTags.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Render\ViewClip.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\ViewModel.h" />
     <ClInclude Include="src\Notch\Client\System\AudioSystem.h" />
     <ClInclude Include="src\Notch\Client\System\FileSystem.h" />
@@ -787,7 +788,8 @@
     <ClCompile Include="src\Notch\Client\Module\Modules\Movement\Velocity.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\AutoEmote.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\CustomFov.cpp" />
-    <ClCompile Include="src\Notch\Client\Module\Modules\Render\NoCameraClip.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Render\NameTags.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Render\ViewClip.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\ViewModel.cpp" />
     <ClCompile Include="src\Notch\Client\System\AudioSystem.cpp" />
     <ClCompile Include="src\Notch\Client\System\FileSystem.cpp" />

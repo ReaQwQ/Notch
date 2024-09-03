@@ -6,10 +6,11 @@ void ModuleManager::initModules() {
 		//Combat
 		//Misc
 		//Render
-		moduleList.push_back(new NoCameraClip());
 		moduleList.push_back(new CustomFov());
 		moduleList.push_back(new ViewModel());
 		moduleList.push_back(new AutoEmote());
+		moduleList.push_back(new NameTags());
+		moduleList.push_back(new ViewClip());
 		//Movement
 		moduleList.push_back(new Velocity());
 		//Player

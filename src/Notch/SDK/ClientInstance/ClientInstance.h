@@ -44,11 +44,11 @@ public:
             Memory::CallVFunc<334, void>((void*)this);
     };
     Vec2 getMousePos();
-    float getFovX() { // 1.21.2
-         return (float)((uintptr_t)(this) + 0x6F0); // X = 0x6F0
+    float getFovX() {
+         return (float)((uintptr_t)(this) + getOffset("ClientInstance::getFovX")); // X = 0x6F0
      }
-     float getFovY() { // 1.21.2
-         return (float)((uintptr_t)(this) + 0x704); // Y = 0x704
+     float getFovY() {
+         return (float)((uintptr_t)(this) + getOffset("ClientInstance::getFovY")); // Y = 0x704
      }
 
      Vec2 getFov() {

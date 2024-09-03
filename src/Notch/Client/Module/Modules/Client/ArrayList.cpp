@@ -1,128 +1,160 @@
 ﻿#include "ArrayList.h"
+#include "../../../../Utils/ImGuiUtils.h"
 
-ArrayList::ArrayList() : Module("ArrayList", "A GUI use to enable/disable modules.", Category::CLIENT, 0x0) {
-	addEnumSetting("Position", "Position of Arraylist", { "Center","Left","Right" }, &position);  // migi kara or center or hidari kara
-	addBoolCheck("Top", "is Arraylist is Top", &top);
-	addBoolCheck("shadow", "Text Shadow", &hasShadow);
-	addSlider<float>("X Position", "X Position", ValueType::FLOAT_T, &spos.x, 0.f, 1.f);
-	addSlider<float>("Y Position", "Y Position", ValueType::FLOAT_T, &spos.y, 0.f, 1.f);
-	addSlider<float>("TextSize", "changes text size", ValueType::FLOAT_T, &textsize, 0.5f, 3.f);
-	addSlider<float>("Height", "height gaps", ValueType::FLOAT_T, &height, 1.f, 2.f);
-	addSlider<float>("Width", "width gaps", ValueType::FLOAT_T, &width, 1.f, 2.f);
-	addEnumSetting("Anim", "Animation for arraylist", { "None", "Size"}, &Animation);
-	addEnumSetting("BG Color", "Set Background Color Type", { "Interface", "Rainbow", "Custom" }, &backgroundEnum);
-	addColorPicker("Color1", "BackGround Color", &backgroundCol);
-	addEnumSetting("Text Color", "Set Text Color Type", { "Interface", "Rainbow", "Custom" }, &textEnum);
-	addColorPicker("Color2", "Text Color", &textCol);
-	addBoolCheck("Keybind", "Draw keybind", &drawKeybind);
-	addEnumSetting("Mode", "change drawing keybind mode", { " ","[]","<>" }, &keymode);
-
+float textSize = 1.f;
+ArrayList::ArrayList() : Module("ArrayList", "Display your enabled modules on the HUD!", Category::CLIENT, 0x0) {
+	addBoolCheck("Show Keybind", "the display of keybindings for each module.", &showKey);
+	addBoolCheck("Bottom", "the position of the ArrayList to the bottom of the screen.", &bottom);
+	addBoolCheck("Outline", "the outline around each module in the ArrayList.", &outline);
+	addBoolCheck("Modes", "the display of mode names next to each module.", &showMode);
+	addSlider<float>("alpha", "Adjust the transparency of the background.", ValueType::FLOAT_T, &alpha, 0.f, 1.f);
+	addSlider<float>("Blur Strength", "the strength of the background blur effect.", ValueType::FLOAT_T, &blurStrength, 0.f, 20.f);
+	addSlider<float>("Scale", "the strength of the background blur effect.", ValueType::FLOAT_T, &textSize, 0.1f, 2.f);
+	addEnumSetting("ModeType", "Choose the color for the module mode text.", { "White", "Gray"}, &mode);
 }
 
-enum ColorType {
-	Interface = 0,
-	Rainbow = 1,
-	Custom = 2
+ArrayList::~ArrayList() {
+}
+
+struct ModuleContainer {
+	Module* backingModule;
+	std::string moduleName;
+	std::string modName;
+	std::string keybind;
+	bool enabled;
+	bool visible;
+	float textWidth;
+	Vec2* pos;
+
+	ModuleContainer(Module* mod) {
+		static ArrayList* ArrayListMod = moduleMgr->getModule<ArrayList>();
+		this->backingModule = mod;
+		this->moduleName = std::string(mod->getModuleName());
+		this->keybind = mod->getKeybind();
+		if (!mod->getModName().empty() && ArrayListMod->showMode) {
+			this->modName = std::string(mod->getModName());
+			std::string fullModuleName = this->moduleName + std::string(" ") + this->modName;
+			this->textWidth = ImGuiUtils::getTextWidth(fullModuleName.c_str(), textSize);
+		}
+		else {
+			this->textWidth = ImGuiUtils::getTextWidth(this->moduleName.c_str(), textSize);
+		}
+		this->enabled = mod->isEnabled();
+		this->visible = mod->isVisible();
+		this->pos = &Vec2(0.f, 0.f);
+	}
+
+	bool operator<(const ModuleContainer& other) const {
+		if (this->textWidth == other.textWidth)
+			return moduleName < other.moduleName;
+		return this->textWidth > other.textWidth;
+	}
 };
-void ArrayList::onImGuiRender(ImDrawList* drawlist) {
-	if (drawlist == nullptr) return;
-	if (Game.getLocalPlayer() == nullptr)return;
+void ArrayList::onImGuiRender(ImDrawList* d) {
+	if (Game.getLocalPlayer() == nullptr) return;
+	if (!Game.canUseMoveKeys()) return;
+	ImGuiIO& io = ImGui::GetIO();
+	Vec2 windowSize = Game.getGuiData()->realSize;
 
-	if (modInfo.empty()) {
-		for (Module* mod : *moduleMgr->getModuleList()) {
-			modInfo.push_back(modules(mod, false, 0.f));
+	static std::set<ModuleContainer> modContainerList;
+	// Fill modContainerList with Modules
+	{
+		std::vector<Module*>* moduleList = moduleMgr->getModuleList();
+		for (Module* it : *moduleList) {
+			modContainerList.emplace(ModuleContainer(it));
 		}
+	}
+	static const float textPadding = textSize * textSize;
+	float textHeight = ImGuiUtils::getTextHeight(textSize) - textPadding;
+	static const float lineWidth = 1.f;
+	static const UIColor grayColor = UIColor(175, 175, 175, 255);
+	static const bool textShadow = true;
+	static const int seperation = 25;
 
+	static Colors* colorsMod = moduleMgr->getModule<Colors>();
+	float yOffset = this->bottom ? (windowSize.y - textHeight) : 0.f;
+	int i = 0;
+	int index = 0;
+	// Update ModulePos
+	for (auto it = modContainerList.begin(); it != modContainerList.end(); ++it) {
+		float textWidth = it->textWidth;
+		float xOffsetOri = windowSize.x - textWidth - textPadding * 2.f;
+		it->pos->x = smoothLerp((it->enabled && it->visible) ? windowSize.x - xOffsetOri : -2.f, it->pos->x, io.DeltaTime * 15.f);
+		if (it->pos->x > windowSize.x - xOffsetOri) it->pos->x = windowSize.x - xOffsetOri;
 	}
 
-	auto io = ImGui::GetIO();
+	if (blurStrength > 0.f) { // Blur
+		ImFX::Begin(d);
+		for (auto it = modContainerList.begin(); it != modContainerList.end(); ++it) {
+			//mainColor = ColorUtil::getRainbowColor(3.f, 1.f, 1.f, (bottom ? -i : i) * (seperation * 2.f));
+			float textWidth = it->textWidth;
+			float xOffsetOri = windowSize.x - textWidth - textPadding * 2.f;
+			float xOffset = windowSize.x - it->pos->x;
 
-	UIColor white = UIColor(255, 255, 255, 255);
-	Colors* cm = moduleMgr->getModule<Colors>();
-	UIColor textColor;
-	UIColor backGroundColor;
+			float duration = ((windowSize.x - xOffset) / (windowSize.x - xOffsetOri));
+			if (duration < 0.f) duration = 0.f;
 
-	if (backgroundEnum == ColorType::Interface) backGroundColor = cm->getColor();
-	else if (backgroundEnum == ColorType::Rainbow) backGroundColor = cm->getRainbowColor();
-	else if (backgroundEnum == ColorType::Custom) backGroundColor = backgroundCol;
-
-	backGroundColor.a = backgroundCol.a;
-
-	if (textEnum == ColorType::Interface) textColor = cm->getColor();
-	else if (textEnum == ColorType::Rainbow) textColor = cm->getRainbowColor();
-	else if (textEnum == ColorType::Custom) textColor = textCol;
-
-	textColor.a = textCol.a;
-
-	/*logF(StringUtil::combine("bg ", backgroundEnum, "  Color ", backGroundColor.r, " ", backGroundColor.g, " ", backGroundColor.b, " ", backGroundColor.a), "INFO");
-	logF(StringUtil::combine("text ", textEnum, "   Color ", textColor.r, " ", textColor.g, " ", textColor.b, " ", textColor.a), "INFO");*/
-	Vec2 winsize = Game.getGuiData()->realSize;
-	Vec2 startPos = Vec2(winsize.x * spos.x, winsize.y * spos.y);
-	float modHeight = ImGuiUtils::getTextHeight(textsize) * height;
-
-	for (auto& it : modInfo) {
-		if (Animation == 0) it.persent = 1.f;
-		else it.persent = smoothLerp(it.mod->isEnabled() ? 1.f : -0.1f, it.persent, io.DeltaTime * 7.f);
-		if (it.persent < 0.f || !it.mod->isVisible()) continue;
-
-		std::string modKey;
-		auto keyString = Utils::getKeybindName(it.mod->getKeybind());
-		if (keyString != nullptr && keyString != "" && keyString != "Unknown") {
-			if (keymode == 0) modKey = " " + std::string(keyString);
-			else if (keymode == 1) modKey = " [" + std::string(keyString) + "]";
-			else if (keymode == 2) modKey = " <" + std::string(keyString) + ">";
-		}
-		else modKey = "";
-		std::string allText = std::string(it.mod->getModuleName());
-		if (drawKeybind)allText += modKey;
-
-		float allTextWidth = ImGuiUtils::getTextWidth(allText, textsize);
-		float keyWidth = ImGuiUtils::getTextWidth(modKey, textsize);
-		Vec4 modRect{};
-		// canter
-		if (position == 0) modRect = Vec4(startPos.x - ((allTextWidth * width + 1) * it.persent) / 2, startPos.y, startPos.x + ((allTextWidth * width + 1) * it.persent) / 2, startPos.y + modHeight * it.persent);
-		// left
-		else if (position == 1) modRect = Vec4(startPos.x, startPos.y, startPos.x + (allTextWidth * width + 1) * it.persent, startPos.y + modHeight * it.persent);
-		// right
-		else if (position == 2) modRect = Vec4(startPos.x - (allTextWidth * width + 1) * it.persent, startPos.y, startPos.x, startPos.y + modHeight * it.persent);
-		ImGuiUtils::fillRectangle(modRect, backGroundColor, 0);
-		std::string modText = it.mod->getModuleName();
-		float m1 = allTextWidth * it.persent;
-
-		Vec2 tpos = Vec2((modRect.x + modRect.z) / 2 - m1 / 2, (modRect.y + modRect.w) / 2);
-
-
-		for (char s : modText) {
-			std::string t(1, s);
-			if (tpos.x > modRect.z)continue;
-			ImGuiUtils::drawTextCenterY(tpos, t, textColor, textsize * it.persent, hasShadow, 0);
-			if (modKey != "" && drawKeybind) {
-				for (char s : modKey) {
-					std::string t(1, s);
-					if (tpos.x > modRect.z) continue;
-					ImGuiUtils::drawTextCenterY(tpos, t, white, textsize * it.persent, hasShadow, 0);
-					tpos.x += ImGuiUtils::getTextWidth(t, textsize);
-				}
+			Vec4 rectPos(xOffsetOri - 2.f, yOffset + (textHeight - textPadding * 2.f) * (bottom ? (textSize - duration) : 0.f), windowSize.x, yOffset + (textHeight - textPadding * 2.f) * (bottom ? textSize : duration));
+			if (i == 0 && bottom) rectPos.w += textPadding * 2.f;
+			if (duration > 0.01f) {
+				//ImGuiUtils::drawShadowRect(rectPos, mainColor, 50.f * duration, false);
+				ImFX::AddBlur(blurStrength, ImVec4(rectPos.x, rectPos.y, rectPos.z, rectPos.w));
+				i++;
+				yOffset += (textHeight - textPadding * 2.f) * duration * (bottom ? -textSize : textSize);
 			}
-			tpos.x += ImGuiUtils::getTextWidth(t, textsize);
 		}
-		if (top)
-			startPos.y += modHeight * it.persent;
-		else
-			startPos.y -= modHeight * it.persent;
+		ImFX::End();
 	}
-}
 
-void ArrayList::onEnable()
-{
-	for (auto it = moduleMgr->getModuleList()->begin(); it > moduleMgr->getModuleList()->end(); it++) {
-		Module* mod = *it;
+	yOffset = this->bottom ? (windowSize.y - textHeight) : 0.f;
+	index = 0;
 
-		modInfo.push_back(modules(mod, mod->isEnabled(), 1.f));
+	Vec4 lastRect(0.f, 0.f, 0.f, 0.f);
+	for (auto it = modContainerList.begin(); it != modContainerList.end(); ++it) {
+		index++;
+		std::string moduleName = it->moduleName;
+		std::string modName = it->modName;
+		float textWidth = it->textWidth;
+		float xOffsetOri = windowSize.x - textWidth - textPadding * 2.f;
+		float xOffset = windowSize.x - it->pos->x;
+
+		//it->pos->x = smoothLerp((it->enabled && it->visible) ? windowSize.x - xOffsetOri : -2.f, it->pos->x, io.DeltaTime * 15.f);
+		float duration = ((windowSize.x - xOffset) / (windowSize.x - xOffsetOri));
+		if (duration < 0.f) duration = 0.f;
+
+		Vec2 textPos(xOffset, yOffset - textPadding);
+		Vec4 rectPos(xOffsetOri - 2.f, yOffset + (textHeight - textPadding * 2.f) * (bottom ? (textSize - duration) : 0.f), windowSize.x, yOffset + (textHeight - textPadding * 2.f) * (bottom ? textSize : duration));
+		if (i == 0 && bottom) rectPos.w += textPadding * 2.f;
+		if (duration > 0.01f) {
+			UIColor mainColor(
+				moduleMgr->getModule<Colors>()->getColor(index)
+			);
+			if (alpha * 255 > 0) ImGuiUtils::fillRectangle(rectPos, UIColor(0, 0, 0, alpha * 255));
+			if (outline) {
+				if (lastRect.x != 0.f) {
+					if (!bottom) ImGuiUtils::fillRectangle(Vec4(lastRect.x - lineWidth, rectPos.y, rectPos.x, rectPos.y + lineWidth), mainColor);
+					else ImGuiUtils::fillRectangle(Vec4(lastRect.x - lineWidth, rectPos.w, rectPos.x, rectPos.w - lineWidth), mainColor);
+				}
+				ImGuiUtils::fillRectangle(Vec4(rectPos.x - lineWidth, rectPos.y, rectPos.x, rectPos.w), mainColor);
+			}
+			ImGuiUtils::drawText(textPos, moduleName.c_str(), UIColor(mainColor.r, mainColor.g, mainColor.b, (float)(255 * duration)), textSize, textShadow);
+			if (!it->backingModule->getModName().empty() && showMode) {
+				std::string spacing = moduleName + " ";
+				float ModuleWidth = ImGuiUtils::getTextWidth(spacing.c_str(), textSize);
+				if (mode == 0)
+					ImGuiUtils::drawText(Vec2(textPos.x + ModuleWidth, textPos.y), modName.c_str(), UIColor(255, 255, 255, (float)(255 * duration)), textSize, textShadow);
+				if (mode == 1)
+					ImGuiUtils::drawText(Vec2(textPos.x + ModuleWidth, textPos.y), modName.c_str(), UIColor(181, 181, 181, (float)(255 * duration)), textSize, textShadow);
+			}
+			lastRect = rectPos;
+			i++;
+			yOffset += (textHeight - textPadding * 2.f) * duration * (bottom ? -textSize : textSize);
+		}
 	}
-}
-
-void ArrayList::onDisable()
-{
-	modInfo.clear();
+	UIColor mainColor = colorsMod->getColor();
+	if (outline) {
+		if (!bottom) ImGuiUtils::fillRectangle(Vec4(lastRect.x - lineWidth, lastRect.w, windowSize.x, lastRect.w + lineWidth), mainColor);
+		else ImGuiUtils::fillRectangle(Vec4(lastRect.x - lineWidth, lastRect.y, windowSize.x, lastRect.y - lineWidth), mainColor);
+	}
+	modContainerList.clear();
 }

@@ -1,42 +1,20 @@
 #pragma once
+
 #include "../Module.h"
 #include "../../ModuleManager.h"
-#include "../../../../Libraries/Libs/ImFX/imfx.h"
-#include "../../../../Utils/ImGuiUtils.h"
-#include "../../../../GameData.h"
-
-struct modules {
-	Module* mod;
-	bool enable;
-	float persent;
-	modules(Module* mod, bool enable, float persent) : mod(mod), enable(enable), persent(persent) {};
-};
 
 class ArrayList : public Module {
-private:
-	std::vector<modules> modInfo;
-
-	int position = 1;
-	int keymode = 0;
-
-	bool top = true;
-	Vec2 spos; // start pos
-	float textsize = 1.f;
-	float height = 1.f;
-	float width = 1.2f;
-	int backgroundEnum = 1;
-	int Animation = 0;
-	int textEnum = 1;
-	bool hasShadow = true;
-	UIColor backgroundCol;
-	UIColor textCol;
-	bool drawKeybind = false;
-
 public:
+	bool showKey = true;
+	bool showMode = true;
+
+	bool bottom = true;
+	bool outline = true;
+	float alpha = 0.35;
+	float blurStrength = 5.f;
+	int mode = 9;
 	ArrayList();
+	~ArrayList();
 
-	void onImGuiRender(ImDrawList* drawlist);
-	virtual void onEnable() override;
-	virtual void onDisable() override;
+	virtual void onImGuiRender(ImDrawList* d) override;
 };
-

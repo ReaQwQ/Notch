@@ -13,7 +13,15 @@ public:
     ClientInstance* getClientInstance() {
         return clientinstance;
     };
+    bool canUseMoveKeys() {
+        CURSORINFO cursorInfo = CURSORINFO();
+        cursorInfo.cbSize = sizeof(CURSORINFO);
 
+        if (GetCursorInfo(&cursorInfo))
+            return (cursorInfo.flags & 0x00000001) == 0;
+
+        return true;
+    }
     LocalPlayer* getLocalPlayer() {
         if (clientinstance != nullptr)
             return clientinstance->getLocalPlayer();

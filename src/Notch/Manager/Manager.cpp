@@ -1,7 +1,7 @@
 #include "Manager.h"
 static std::map<std::string, int> offsets;
 static std::map<std::string, void*> signatures;
-bool debug = true;
+bool debug = false;
 void addOffset(const std::string& functionName, int offset) {
     offsets[functionName] = offset;
     if (debug) {
@@ -70,6 +70,8 @@ void Manager::init() {
         addOffset("GuiData::scaleMultiplier", 0x0050);
         addOffset("GuiData::MousePosX", 0x006A);
         addOffset("GuiData::MousePosY", 0x006C);
+        addOffset("ClientInstance::getFovX", 0x6F0);
+        addOffset("ClientInstance::getFovY", 0x704);
         addOffset("ClientInstance::MinecraftGame", 0xC8);
         addOffset("ClientInstance::Minecraft", 0xD0);
         addOffset("ClientInstance::LoopbackPacketSender", 0xF0);
@@ -98,7 +100,7 @@ void Manager::init() {
         addSignature("CameraAvoidanceSystemUtil::calculateHardDistanceConstraint", "40 ? 56 57 48 81 EC ? ? ? ? 44 0F");
         addSignature("UIScene::render", "48 89 5C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 48 8B FA 48 8B D9 B9 ? ? ? ?");
         addSignature("Font::drawTransformed", "48 8B C4 48 89 58 ? 48 89 68 ? 48 89 70 ? 48 89 78 ? 41 54 41 56 41 57 48 81 EC");
-        addSignature("GuiData::displayClientMessaage", "40 55 53 56 57 41 56 48 8D AC 24 F0 FE FF FF 48 81 EC 10 02 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 85 00 01 00 00 41");
+        addSignature("GuiData::displayClientMessage", "40 55 53 56 57 41 56 48 8D AC 24 F0 FE FF FF 48 81 EC 10 02 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 85 00 01 00 00 41");
         // ActorRenderDispatcher::render | String xref: No renderer found - have you set the entity's description:identifier correctly?
         if (checkVer(ver, targetVersions1_21_X)) {
              addSignature("ConnectionRequest::create", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 49 8B D9 48 89 55");
@@ -108,6 +110,7 @@ void Manager::init() {
             addSignature("ConnectionRequest::create", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 4D 8B E0");
             addSignature("ActorRenderDispatcher::render", "48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 ? 4D 8B E9 49 8B F8 48 8B F2");
         }
+        addSignature("ThirdPersonNameTag", "0f 84 ? ? ? ? 49 8b d6 48 8b ce e8 ? ? ? ? 84 c0 0f 84");
         logF("Initialized Signature", "OKAY");
     }
     catch (const std::exception& e) {

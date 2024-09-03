@@ -97,7 +97,7 @@ void Module::onLoadConfig(json* config) {
         if (obj.is_null()) return;
 
         if (obj.contains("enabled")) {
-            enabled = obj["enabled"].get<bool>();
+            setEnabled(obj["enabled"].get<bool>());
         }
 
         for (Setting* setting : this->settingList) {
