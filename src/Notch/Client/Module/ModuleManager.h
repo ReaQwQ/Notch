@@ -62,6 +62,7 @@ public:
     void onImGuiRender(ImDrawList* drawlist);
     void onNormalTick(Actor* actor);
     void onLevelRender();
+    void onJoiningServer();
     void onRender(MinecraftUIRenderContext* c);
 };
 

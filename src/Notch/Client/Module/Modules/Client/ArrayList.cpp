@@ -9,12 +9,13 @@ ArrayList::ArrayList() : Module("ArrayList", "A GUI use to enable/disable module
 	addSlider<float>("TextSize", "changes text size", ValueType::FLOAT_T, &textsize, 0.5f, 3.f);
 	addSlider<float>("Height", "height gaps", ValueType::FLOAT_T, &height, 1.f, 2.f);
 	addSlider<float>("Width", "width gaps", ValueType::FLOAT_T, &width, 1.f, 2.f);
+	addEnumSetting("Anim", "Animation for arraylist", { "None", "Size"}, &Animation);
 	addEnumSetting("BG Color", "Set Background Color Type", { "Interface", "Rainbow", "Custom" }, &backgroundEnum);
-	addColorPicker("Color", "BackGround Color", &backgroundCol);
-	addEnumSetting("TEXT Color", "Set Text Color Type", { "Interface", "Rainbow", "Custom" }, &textEnum);
-	addColorPicker("Text Color", "Text Color", &textCol);
-	addBoolCheck("ShowKeybind", "draw key bind", &drawKeybind);
-	addEnumSetting("KeybindMode", "change drawing keybind mode", { " ","[]","<>" }, &keymode);
+	addColorPicker("Color1", "BackGround Color", &backgroundCol);
+	addEnumSetting("Text Color", "Set Text Color Type", { "Interface", "Rainbow", "Custom" }, &textEnum);
+	addColorPicker("Color2", "Text Color", &textCol);
+	addBoolCheck("Keybind", "Draw keybind", &drawKeybind);
+	addEnumSetting("Mode", "change drawing keybind mode", { " ","[]","<>" }, &keymode);
 
 }
 
@@ -41,32 +42,27 @@ void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 	UIColor textColor;
 	UIColor backGroundColor;
 
-	if (backgroundEnum == ColorType::Interface)
-		backGroundColor = cm->getColor();
-	else if (backgroundEnum == ColorType::Rainbow)
-		backGroundColor = cm->getRainbowColor();
-	else if (backgroundEnum == ColorType::Custom)
-		backGroundColor = backgroundCol;
+	if (backgroundEnum == ColorType::Interface) backGroundColor = cm->getColor();
+	else if (backgroundEnum == ColorType::Rainbow) backGroundColor = cm->getRainbowColor();
+	else if (backgroundEnum == ColorType::Custom) backGroundColor = backgroundCol;
 
 	backGroundColor.a = backgroundCol.a;
 
-	if (textEnum == ColorType::Interface)
-		textColor = cm->getColor();
-	else if (textEnum == ColorType::Rainbow)
-		textColor = cm->getRainbowColor();
-	else if (textEnum == ColorType::Custom)
-		textColor = textCol;
+	if (textEnum == ColorType::Interface) textColor = cm->getColor();
+	else if (textEnum == ColorType::Rainbow) textColor = cm->getRainbowColor();
+	else if (textEnum == ColorType::Custom) textColor = textCol;
 
 	textColor.a = textCol.a;
 
-	logF(StringUtil::combine("bg ", backgroundEnum, "  Color ", backGroundColor.r, " ", backGroundColor.g, " ", backGroundColor.b, " ", backGroundColor.a), "INFO");
-	logF(StringUtil::combine("text ", textEnum, "   Color ", textColor.r, " ", textColor.g, " ", textColor.b, " ", textColor.a), "INFO");
+	/*logF(StringUtil::combine("bg ", backgroundEnum, "  Color ", backGroundColor.r, " ", backGroundColor.g, " ", backGroundColor.b, " ", backGroundColor.a), "INFO");
+	logF(StringUtil::combine("text ", textEnum, "   Color ", textColor.r, " ", textColor.g, " ", textColor.b, " ", textColor.a), "INFO");*/
 	Vec2 winsize = Game.getGuiData()->realSize;
 	Vec2 startPos = Vec2(winsize.x * spos.x, winsize.y * spos.y);
 	float modHeight = ImGuiUtils::getTextHeight(textsize) * height;
 
 	for (auto& it : modInfo) {
-		it.persent = smoothLerp(it.mod->isEnabled() ? 1.f : -0.1f, it.persent, io.DeltaTime * 7.f);
+		if (Animation == 0) it.persent = 1.f;
+		else it.persent = smoothLerp(it.mod->isEnabled() ? 1.f : -0.1f, it.persent, io.DeltaTime * 7.f);
 		if (it.persent < 0.f || !it.mod->isVisible()) continue;
 
 		std::string modKey;
@@ -100,15 +96,16 @@ void ArrayList::onImGuiRender(ImDrawList* drawlist) {
 			std::string t(1, s);
 			if (tpos.x > modRect.z)continue;
 			ImGuiUtils::drawTextCenterY(tpos, t, textColor, textsize * it.persent, hasShadow, 0);
+			if (modKey != "" && drawKeybind) {
+				for (char s : modKey) {
+					std::string t(1, s);
+					if (tpos.x > modRect.z) continue;
+					ImGuiUtils::drawTextCenterY(tpos, t, white, textsize * it.persent, hasShadow, 0);
+					tpos.x += ImGuiUtils::getTextWidth(t, textsize);
+				}
+			}
 			tpos.x += ImGuiUtils::getTextWidth(t, textsize);
 		}
-		if (modKey != "" && drawKeybind)
-			for (char s : modKey) {
-				std::string t(1, s);
-				if (tpos.x > modRect.z)continue;
-				ImGuiUtils::drawTextCenterY(tpos, t, white, textsize * it.persent, hasShadow, 0);
-				tpos.x += ImGuiUtils::getTextWidth(t, textsize);
-			}
 		if (top)
 			startPos.y += modHeight * it.persent;
 		else

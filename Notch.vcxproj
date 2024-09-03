@@ -481,6 +481,8 @@
     <ClInclude Include="src\Notch\Hook\Hooks\Actor\Actor_lerp.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\BaseHook.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Misc\ClientInstance_update.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Network\ConnectionRequest_create.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Render\ActorRenderDispatcher_render.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\CameraAvoidanceSystemUtil_calculateHardDistanceConstraint.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\Font_drawTransformed.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\LevelRendererPlayer_getFov.h" />

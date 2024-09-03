@@ -8,6 +8,7 @@ void DXHook::onImGuiRender(ImDrawList* drawlist) {
     ImGuiUtils::setDrawList(drawlist);
 
     ImGuiIO& io = ImGui::GetIO();
+    if (!moduleMgr) return;
     if (!moduleMgr->isInitialized())
         return;
     static CustomFont* cFontMod = moduleMgr->getModule<CustomFont>();

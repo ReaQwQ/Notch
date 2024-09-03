@@ -60,7 +60,7 @@ void Notch::initialize() {
     bool supported = std::find(version::supportedVersionint.begin(), version::supportedVersionint.end(), version::GET_VERSION_INT()) != version::supportedVersionint.end();
     if (!supported) {
         logF("This Minecraft version is not supported", "FAIL");
-        logF(StringUtil::combine("Supported Version: ", version::join(version::supportedVersion, ", ")), "INFO");
+        logF(StringUtil::combine("Supported Version: ", StringUtil::join(version::supportedVersion, ", ")), "INFO");
         Run::closeConsole = false;
         Run::running = false;
     }

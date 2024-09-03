@@ -25,6 +25,7 @@ private:
 	float height = 1.f;
 	float width = 1.2f;
 	int backgroundEnum = 1;
+	int Animation = 0;
 	int textEnum = 1;
 	bool hasShadow = true;
 	UIColor backgroundCol;

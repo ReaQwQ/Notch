@@ -83,6 +83,15 @@ void ModuleManager::onLevelRender() {
 	}
 }
 
+void ModuleManager::onJoiningServer() {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled()) {
+			mod->onJoiningServer();
+		}
+	}
+}
+
 void ModuleManager::onRender(MinecraftUIRenderContext* c) {
 	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {

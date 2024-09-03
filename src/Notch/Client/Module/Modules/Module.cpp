@@ -150,6 +150,8 @@ void Module::onImGuiRender(ImDrawList*) {
 }
 void Module::onNormalTick(Actor* actor) {
 }
+void Module::onJoiningServer() {
+}
 void Module::onRender(MinecraftUIRenderContext* c) {
 }
 void Module::onLevelRender() {

@@ -40,8 +40,8 @@ void Manager::init() {
     try {
         int ver = version::GET_VERSION_INT();
         logF(StringUtil::combine("Ver: ", ver), "INFO");
-        logF(StringUtil::combine("Supported 1.21.X: ", version::join(targetVersions1_21_X, ", ")), "INFO");
-        logF(StringUtil::combine("Supported 1.21.2X: ", version::join(targetVersions1_21_2X, ", ")), "INFO");
+        logF(StringUtil::combine("Supported 1.21.X: ", StringUtil::join(targetVersions1_21_X, ", ")), "INFO");
+        logF(StringUtil::combine("Supported 1.21.2X: ", StringUtil::join(targetVersions1_21_2X, ", ")), "INFO");
         logF(StringUtil::combine("Switching Offset/Signature to ", ver, "..."), "INFO");
         logF("Initializing Offset...", "WAIT");
         if (checkVer(ver, targetVersions1_21_X)) {
@@ -99,11 +99,14 @@ void Manager::init() {
         addSignature("UIScene::render", "48 89 5C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 48 8B FA 48 8B D9 B9 ? ? ? ?");
         addSignature("Font::drawTransformed", "48 8B C4 48 89 58 ? 48 89 68 ? 48 89 70 ? 48 89 78 ? 41 54 41 56 41 57 48 81 EC");
         addSignature("GuiData::displayClientMessaage", "40 55 53 56 57 41 56 48 8D AC 24 F0 FE FF FF 48 81 EC 10 02 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 85 00 01 00 00 41");
+        // ActorRenderDispatcher::render | String xref: No renderer found - have you set the entity's description:identifier correctly?
         if (checkVer(ver, targetVersions1_21_X)) {
              addSignature("ConnectionRequest::create", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 49 8B D9 48 89 55");
+             addSignature("ActorRenderDispatcher::render", "48 89 ? ? ? 55 56 57 41 ? 41 ? 41 ? 41 ? 48 8D ? ? ? 48 81 EC ? ? ? ? 48 8B ? ? ? ? ? 48 33 ? 48 89 ? ? 4D 8B ? 49 8B ? 48 8B ? 4C 8B ? 41 8B");
         }
         else if (checkVer(ver, targetVersions1_21_2X)) {
             addSignature("ConnectionRequest::create", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 4D 8B E0");
+            addSignature("ActorRenderDispatcher::render", "48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 ? 4D 8B E9 49 8B F8 48 8B F2");
         }
         logF("Initialized Signature", "OKAY");
     }

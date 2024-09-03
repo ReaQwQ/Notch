@@ -5,9 +5,10 @@
 #include "Hooks/Render/LevelRendererPlayer_getFov.h"
 #include "Hooks/Render/CameraAvoidanceSystemUtil_calculateHardDistanceConstraint.h"
 #include "Hooks/Render/ScreenView_SetupAndRender.h"
-#include "Hooks/Render/ScreenView_SetupAndRender.h"
+#include "Hooks/Render/ActorRenderDispatcher_render.h"
 #include "Hooks/Render/LevelRenderer_renderLevel.h"
 #include "Hooks/Render/UIScene_render.h"
+#include "Hooks/Network/ConnectionRequest_create.h"
 #include "Hooks/Device/keyboard_feed.h"
 #include "Hooks/Device/MouseDevice_feed.h"
 #include "Hooks/Misc/ClientInstance_update.h"
@@ -27,8 +28,10 @@ void HookManager::init() {
 	Hooks.push_back(new LevelRendererPlayer__getFovHook());
 	Hooks.push_back(new LevelRenderer__renderLevelHook());
 	Hooks.push_back(new UIScene__renderHook());
+	Hooks.push_back(new ConnectionRequest__createHook());
 	Hooks.push_back(new CameraAvoidanceSystemUtil__calculateHardDistanceConstraintHook());
 	Hooks.push_back(new ScreenView__SetupAndRenderHook());
+	Hooks.push_back(new ActorRenderDispatcher__renderHook());
 	Hooks.push_back(new Actor__lerpHook());
 	Hooks.push_back(new Level__tickHook());
 	for (Hook* hook : Hooks) {
