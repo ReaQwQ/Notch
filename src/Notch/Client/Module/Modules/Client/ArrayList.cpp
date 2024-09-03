@@ -3,14 +3,14 @@
 
 float textSize = 1.f;
 ArrayList::ArrayList() : Module("ArrayList", "Display your enabled modules on the HUD!", Category::CLIENT, 0x0) {
-	addBoolCheck("Show Keybind", "the display of keybindings for each module.", &showKey);
-	addBoolCheck("Bottom", "the position of the ArrayList to the bottom of the screen.", &bottom);
-	addBoolCheck("Outline", "the outline around each module in the ArrayList.", &outline);
-	addBoolCheck("Modes", "the display of mode names next to each module.", &showMode);
+	addBoolCheck("Show Keybind", "display of keybindings for each module", &showKey);
+	addBoolCheck("Bottom", "position of the ArrayList to the bottom of the screen", &bottom);
+	addBoolCheck("Outline", "outline around each module in the ArrayList.", &outline);
+	addBoolCheck("Modes", "display of mode names next to each module.", &showMode);
 	addSlider<float>("alpha", "Adjust the transparency of the background.", ValueType::FLOAT_T, &alpha, 0.f, 1.f);
-	addSlider<float>("Blur Strength", "the strength of the background blur effect.", ValueType::FLOAT_T, &blurStrength, 0.f, 20.f);
-	addSlider<float>("Scale", "the strength of the background blur effect.", ValueType::FLOAT_T, &textSize, 0.1f, 2.f);
-	addEnumSetting("ModeType", "Choose the color for the module mode text.", { "White", "Gray"}, &mode);
+	addSlider<float>("Blur Strength", "strength of the background blur effect.", ValueType::FLOAT_T, &blurStrength, 0.f, 20.f);
+	addSlider<float>("Scale", "Arraylist Size", ValueType::FLOAT_T, &textSize, 0.1f, 2.f);
+	addEnumSetting("ModeType", "Choose the color for Mode Text", { "White", "Gray", }, &mode);
 }
 
 ArrayList::~ArrayList() {
@@ -55,15 +55,19 @@ void ArrayList::onImGuiRender(ImDrawList* d) {
 	if (!Game.canUseMoveKeys()) return;
 	ImGuiIO& io = ImGui::GetIO();
 	Vec2 windowSize = Game.getGuiData()->realSize;
-
+	
 	static std::set<ModuleContainer> modContainerList;
 	// Fill modContainerList with Modules
+	std::vector<Module*>* moduleList = moduleMgr->getModuleList();
 	{
-		std::vector<Module*>* moduleList = moduleMgr->getModuleList();
 		for (Module* it : *moduleList) {
 			modContainerList.emplace(ModuleContainer(it));
 		}
 	}
+	std::vector<std::string> modListss;
+	for (Module* mod : *moduleList)
+		modListss.push_back(mod->getModuleName());
+	logF(StringUtil::combine("Mod List : ", StringUtil::join(modListss, ", ")), "INFO");
 	static const float textPadding = textSize * textSize;
 	float textHeight = ImGuiUtils::getTextHeight(textSize) - textPadding;
 	static const float lineWidth = 1.f;

@@ -15,15 +15,15 @@ public:
 
 class TextComponent : public UIComponent { // TODO: needs checking
 public:
-	BUILD_ACCESS(this, std::string, variableToText, 0x0138);
-	BUILD_ACCESS(this, std::string, resolvedText, 0x0190);
-	BUILD_ACCESS(this, std::string, resolvedText2, 0x01B0);
-	BUILD_ACCESS(this, Vec2, controlBounds, 0x01D0);
-	BUILD_ACCESS(this, std::string, variableToText2, 0x01E0);
-	BUILD_ACCESS(this, std::string, resolvedText3, 0x0200);
-	BUILD_ACCESS(this, std::string, lang, 0x0220);
-	BUILD_ACCESS(this, std::string, font, 0x0240);
-	BUILD_ACCESS(this, std::string, resolvedText4, 0x0260);
+	BUILD_ACCESS(this, std::string, variableToText, getOffset("TextComponent::variableToText"));
+	BUILD_ACCESS(this, std::string, resolvedText, getOffset("TextComponent::resolvedText"));
+	BUILD_ACCESS(this, std::string, resolvedText2, getOffset("TextComponent::resolvedText2"));
+	BUILD_ACCESS(this, Vec2, controlBounds, getOffset("TextComponent::controlBounds"));
+	BUILD_ACCESS(this, std::string, variableToText2, getOffset("TextComponent::variableToText2"));
+	BUILD_ACCESS(this, std::string, resolvedText3, getOffset("TextComponent::resolvedText3"));
+	BUILD_ACCESS(this, std::string, lang, getOffset("TextComponent::lang"));
+	BUILD_ACCESS(this, std::string, font, getOffset("TextComponent::font"));
+	BUILD_ACCESS(this, std::string, resolvedText4, getOffset("TextComponent::resolvedText4"));
 };
 
 class CustomRenderComponent : UIComponent { // 4 in list

@@ -35,11 +35,11 @@ struct CaretMeasureData {
 class MinecraftUIRenderContext {
 public:
 public:
-    BUILD_ACCESS(this, uintptr_t, vtable, 0x0);
-    BUILD_ACCESS(this, class ClientInstance*, clientInstance, 0x8);
-    BUILD_ACCESS(this, ScreenContext*, screenContext, 0x10);
-    BUILD_ACCESS(this, float, globalAlpha, 0x28);
-    BUILD_ACCESS(this, class UIScene*, UIScene, 0xF0);
+    BUILD_ACCESS(this, uintptr_t, vtable, getOffset("MinecraftUIRenderContext::vtable"));
+    BUILD_ACCESS(this, class ClientInstance*, clientInstance, getOffset("MinecraftUIRenderContext::ClientInstance"));
+    BUILD_ACCESS(this, ScreenContext*, screenContext, getOffset("MinecraftUIRenderContext::ScreenContext"));
+    BUILD_ACCESS(this, float, globalAlpha, getOffset("MinecraftUIRenderContext::globalAlpha");
+    BUILD_ACCESS(this, class UIScene*, UIScene, getOffset("MinecraftUIRenderContext::UIScene"));
 
     void flushText(float lastFlush) {
         Memory::CallVFunc<6, void, float>(this, lastFlush);

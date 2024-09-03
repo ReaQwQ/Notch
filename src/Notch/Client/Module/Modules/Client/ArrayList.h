@@ -12,7 +12,7 @@ public:
 	bool outline = true;
 	float alpha = 0.35;
 	float blurStrength = 5.f;
-	int mode = 9;
+	int mode = 0;
 	ArrayList();
 	~ArrayList();
 

@@ -1,7 +1,8 @@
 #pragma once
 #include "../../Utils/Memory.h"
+#include "../../Manager/Manager.h"
 class ScreenView {
 public:
-	BUILD_ACCESS(this, class ScreenController*, screenController, 0x38);
-	BUILD_ACCESS(this, class VisualTree*, visualTree, 0x48);
+	BUILD_ACCESS(this, class ScreenController*, screenController, getOffset("ScreenView::ScreenController"));
+	BUILD_ACCESS(this, class VisualTree*, visualTree, getOffset("ScreenView::VisualTree"));
 }; //Size: 0x0080
