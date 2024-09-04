@@ -27,13 +27,13 @@ void HookManager::init() {
 	Hooks.push_back(new LevelRendererPlayer__bobHurtHook());
 	Hooks.push_back(new LevelRendererPlayer__getFovHook());
 	Hooks.push_back(new LevelRenderer__renderLevelHook());
-	Hooks.push_back(new UIScene__renderHook());
-	Hooks.push_back(new ConnectionRequest__createHook());
-	Hooks.push_back(new CameraAvoidanceSystemUtil__calculateHardDistanceConstraintHook());
-	Hooks.push_back(new ScreenView__SetupAndRenderHook());
-	Hooks.push_back(new ActorRenderDispatcher__renderHook());
-	Hooks.push_back(new Actor__lerpHook());
-	Hooks.push_back(new Level__tickHook());
+	//Hooks.push_back(new UIScene__renderHook());
+	//Hooks.push_back(new ConnectionRequest__createHook());
+	//Hooks.push_back(new CameraAvoidanceSystemUtil__calculateHardDistanceConstraintHook());
+	//Hooks.push_back(new ScreenView__SetupAndRenderHook());
+	//Hooks.push_back(new ActorRenderDispatcher__renderHook());
+	//Hooks.push_back(new Actor__lerpHook());
+	//Hooks.push_back(new Level__tickHook());
 	for (Hook* hook : Hooks) {
 		hook->Initialize();
 	}
@@ -48,3 +48,4 @@ Hook* HookManager::getHook(Hook* other) {
 		if (hook == other) return hook;
 	}
 }
+1

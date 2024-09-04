@@ -56,11 +56,14 @@ void Notch::initialize() {
     InjectTime = TimeUtil::getCurrentMs();
     FileSystem::Initalize();
     Notch::openConsole();
-    logF(StringUtil::combine("MC Version ", version::GET_VERSION(), " (STRING) | ", version::GET_VERSION_INT(), " (INT)"), "INFO");
-    bool supported = std::find(version::supportedVersionint.begin(), version::supportedVersionint.end(), version::GET_VERSION_INT()) != version::supportedVersionint.end();
+
+    std::string verStr = version::GET_VERSION();
+    int ver = version::GET_VERSION_INT();
+    logF(StringUtil::combine("MC Version ", verStr, " (STRING) | ", ver, " (INT)"), "INFO");
+    bool supported = Manager::checkVer(ver, Manager::targetVersions1_21_X) || Manager::checkVer(ver, Manager::targetVersions1_21_2X);
     if (!supported) {
         logF("This Minecraft version is not supported", "FAIL");
-        logF(StringUtil::combine("Supported Version: ", StringUtil::join(version::supportedVersion, ", ")), "INFO");
+        logF(StringUtil::combine("Supported Version: ", StringUtil::join(Manager::targetVersions1_21_X, ", "), "/", StringUtil::join(Manager::targetVersions1_21_2X, ", ")), "INFO");
         Run::closeConsole = false;
         Run::running = false;
     }

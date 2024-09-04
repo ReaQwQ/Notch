@@ -48,7 +48,7 @@ public:
 		Memory::CallFunc<void, Actor*, const std::string, bool>(getSig("Actor::playEmote"), this, pieceID, Message);
 	};
 	Vec3 getPosition() {
-		if (this->stateVector == nullptr) return Vec3(0, 0, 0);
+		if (!this->stateVector) return Vec3(0, 0, 0);
 		return this->stateVector->pos;
 	};
 	Vec3 getPositionOld() {
