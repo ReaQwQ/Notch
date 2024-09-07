@@ -48,4 +48,3 @@ Hook* HookManager::getHook(Hook* other) {
 		if (hook == other) return hook;
 	}
 }
-1
