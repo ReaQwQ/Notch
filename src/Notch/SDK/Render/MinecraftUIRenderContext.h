@@ -35,7 +35,7 @@ struct CaretMeasureData {
 class MinecraftUIRenderContext {
 public:
 public:
-    BUILD_ACCESS(this, uintptr_t, vtable, getOffset("MinecraftUIRenderContext::vtable"));
+    BUILD_ACCESS(this, uintptr_t, vtable, getOffset("vtable"));
     BUILD_ACCESS(this, class ClientInstance*, clientInstance, getOffset("MinecraftUIRenderContext::ClientInstance"));
     BUILD_ACCESS(this, ScreenContext*, screenContext, getOffset("MinecraftUIRenderContext::ScreenContext"));
     BUILD_ACCESS(this, float, globalAlpha, getOffset("MinecraftUIRenderContext::globalAlpha"));

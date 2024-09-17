@@ -148,7 +148,7 @@ void Module::onKeyUpdate(int key, bool isDown) {
 
 void Module::onImGuiRender(ImDrawList*) {
 }
-void Module::onNormalTick(Actor* actor) {
+void Module::onTick(Actor* actor) {
 }
 void Module::onJoiningServer() {
 }

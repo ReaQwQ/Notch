@@ -8,9 +8,9 @@ ViewModel::ViewModel() : Module("ViewModel", "Changes hand model", Category::REN
 	addSlider<float>("TransX", "NULL", ValueType::FLOAT_T, &translateVec.x, -2.f, 2.f);
 	addSlider<float>("TransY", "NULL", ValueType::FLOAT_T, &translateVec.y, -2.f, 2.f);
 	addSlider<float>("TransZ", "NULL", ValueType::FLOAT_T, &translateVec.z, -5.f, 2.f);
-	addSlider<float>("ScaleX", "NULL", ValueType::FLOAT_T, &scaleVec.x, 1.f, 5.f);
-	addSlider<float>("ScaleY", "NULL", ValueType::FLOAT_T, &scaleVec.y, 0.f, 2.f);
-	addSlider<float>("ScaleZ", "NULL", ValueType::FLOAT_T, &scaleVec.z, 0.f, 2.f);
+	addSlider<float>("ScaleX", "NULL", ValueType::FLOAT_T, &scaleVec.x, -3.f, 3.f);
+	addSlider<float>("ScaleY", "NULL", ValueType::FLOAT_T, &scaleVec.y, -2.f, 2.f);
+	addSlider<float>("ScaleZ", "NULL", ValueType::FLOAT_T, &scaleVec.z, -2.f, 5.f);
 	addSlider<float>("RotX", "NULL", ValueType::FLOAT_T, &rotateVec.x, 0.f, 2.f);
 	addSlider<float>("RotY", "NULL", ValueType::FLOAT_T, &rotateVec.y, 0.f, 2.f);
 	addSlider<float>("RotZ", "NULL", ValueType::FLOAT_T, &rotateVec.z, 0.f, 2.f);
@@ -18,7 +18,7 @@ ViewModel::ViewModel() : Module("ViewModel", "Changes hand model", Category::REN
 	addBoolCheck("Reset", "Resets all the values to default", &reset);
 }
 
-void ViewModel::onNormalTick(Actor* actor) {
+void ViewModel::onTick(Actor* actor) {
 	if (reset) {
 		translateVec = Vec3(0, 0, 0);
 		scaleVec = Vec3(1.f, 1.f, 1.f);

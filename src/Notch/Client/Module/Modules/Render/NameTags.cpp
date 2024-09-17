@@ -1,5 +1,5 @@
 #include "NameTags.h"
-NameTags::NameTags() : Module("NameTags", "", Category::RENDER, 0x0) {
+NameTags::NameTags() : Module("NameTags", "Displays peoples names through walls", Category::RENDER, 0x0) {
 	addBoolCheck("Self", "Shows your nametag for you while in 3rd person mode.", &ThirdPersonNameTag);
 };
 
@@ -7,14 +7,14 @@ void NameTags::onImGuiRender(ImDrawList* d) {
 	auto plr = Game.getLocalPlayer();
 	if (!d || !plr) return;
 
-	/*entityList = plr->level->getRuntimeActorList();
-	for (Actor* actor : entityList) {
+	//entityList = plr->getLevel()->getRuntimeActorList();
+    /*for (Actor* actor : entityList) {
 		logF(StringUtil::combine("ActorNameTag: ", actor->getNameTag()), "INFO");
 	}*/
 };
 
-void NameTags::onEnable() {
-    if (!ThirdPersonNameTag) return;
+void NameTags::onTick(Actor* actor) {
+    if (!ThirdPersonNameTag || !Game.getLocalPlayer()) return;
     instructionPointer = getSig("ThirdPersonNameTag");
 
     if (instructionPointer) {

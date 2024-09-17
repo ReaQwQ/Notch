@@ -15,20 +15,19 @@
 class LevelRendererPlayer__bobHurtHook : public Hook {
 public:
 	static inline void* LevelRendererPlayerbobHurt;
-	static void LevelRendererPlayerbobHurtCallback(glm::mat4& matrix, float lerpT) {
-		static ViewModel* vMod = moduleMgr->getModule<ViewModel>();
-		glm::mat4 View = matrix;
-		matrix = View;
-
-		if (vMod && vMod->isEnabled()) {
-			if (vMod->translate)
-				matrix = glm::translate<float>(matrix, glm::vec3(vMod->translateVec.x, vMod->translateVec.y, vMod->translateVec.z));
-			if (vMod->scale)
-				matrix = glm::scale<float>(matrix, glm::vec3(vMod->scaleVec.x, vMod->scaleVec.y, vMod->scaleVec.z));
-			if (vMod->rotate)
-				matrix = glm::rotate<float>(matrix, vMod->rotAngle, glm::vec3(vMod->rotateVec.x, vMod->rotateVec.y, vMod->rotateVec.z));
-		}
-		return Memory::CallFunc<void, glm::mat4&, float>(LevelRendererPlayerbobHurt, matrix, lerpT);
+	static __int64 LevelRendererPlayerbobHurtCallback(__int64 _this, glm::mat4* matrix) {
+		auto ret = Memory::CallFunc<__int64, __int64, glm::mat4*>(LevelRendererPlayerbobHurt, _this, matrix);
+		auto& mat = *matrix;
+		if (moduleMgr->isInitialized()) {
+			static ViewModel* vMod = moduleMgr->getModule<ViewModel>();
+			if (vMod->isEnabled()) {
+				;
+				if (vMod->translate) mat = glm::translate<float>(mat, glm::vec3(vMod->translateVec.x, vMod->translateVec.y, vMod->translateVec.z));
+				if (vMod->scale) mat = glm::scale<float>(mat, glm::vec3(vMod->scaleVec.x - vMod->mainHand, vMod->scaleVec.y, vMod->scaleVec.z));
+				if (vMod->rotate) mat = glm::rotate<float>(mat, vMod->rotAngle, glm::vec3(vMod->rotateVec.x, vMod->rotateVec.y, vMod->rotateVec.z));
+			}
+		};
+		return ret;
 	};
 	virtual void Initialize() override {
 		Memory::CreateHook(getSig("LevelRendererPlayer::bobHurt"), &LevelRendererPlayerbobHurtCallback, &LevelRendererPlayerbobHurt, "LevelRendererPlayer::bobHurt Hook");

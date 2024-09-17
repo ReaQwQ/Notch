@@ -7,14 +7,15 @@
 //Combat
 //Misc
 //Render
-#include "Modules/Render/ViewClip.h"
+#include "Modules/Render/PotionHud.h"
 #include "Modules/Render/CustomFov.h"
 #include "Modules/Render/ViewModel.h"
-#include "Modules/Render/AutoEmote.h"
 #include "Modules/Render/NameTags.h"
+#include "Modules/Render/ViewClip.h"
 //Movement
 #include "Modules/Movement/Velocity.h"
 //Player
+#include "Modules/Player/AutoEmote.h"
 //Client
 #include "Modules/Client/CustomFont.h"
 #include "Modules/Client/ClickGui.h"

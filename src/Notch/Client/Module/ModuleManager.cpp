@@ -6,14 +6,15 @@ void ModuleManager::initModules() {
 		//Combat
 		//Misc
 		//Render
+		moduleList.push_back(new PotionHud());
 		moduleList.push_back(new CustomFov());
 		moduleList.push_back(new ViewModel());
-		moduleList.push_back(new AutoEmote());
 		moduleList.push_back(new NameTags());
 		moduleList.push_back(new ViewClip());
 		//Movement
 		moduleList.push_back(new Velocity());
 		//Player
+		moduleList.push_back(new AutoEmote());
 		//Client
 		moduleList.push_back(new CustomFont());
 		moduleList.push_back(new ClickGui());
@@ -70,7 +71,7 @@ void ModuleManager::onNormalTick(Actor* actor) {
 	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {
 		if (mod->isEnabled()) {
-			mod->onNormalTick(actor);
+			mod->onTick(actor);
 		}
 	}
 }

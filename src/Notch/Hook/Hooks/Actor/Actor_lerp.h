@@ -9,7 +9,7 @@ public:
 			return Memory::CallFunc<void, Actor*, Vec3>(oActorLerp, _this, motVec);
 		static auto noKnockbackmod = moduleMgr->getModule<Velocity>();
 		if (noKnockbackmod->isEnabled())
-			motVec = _this->stateVector->velocity.lerp(motVec, noKnockbackmod->xModifier, noKnockbackmod->yModifier, noKnockbackmod->xModifier);
+			motVec = _this->getStateVector()->Velocity.lerp(motVec, noKnockbackmod->xModifier, noKnockbackmod->yModifier, noKnockbackmod->xModifier);
 		return Memory::CallFunc<void, Actor*, Vec3>(oActorLerp, _this, motVec);
 	};
 	virtual void Initialize() override {

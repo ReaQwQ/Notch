@@ -11,6 +11,7 @@
 #include "TimeUtil.h"
 #include "../Libraries/Libraries.h"
 #include "Logger.h"
+#include "StringUtil.h"
 
 template<typename Ret, typename Type>
 Ret& direct_access(Type* type, size_t offset) {

@@ -41,7 +41,7 @@ struct ModuleContainer {
 		}
 		this->enabled = mod->isEnabled();
 		this->visible = mod->isVisible();
-		this->pos = &Vec2(0.f, 0.f);
+		this->pos = new Vec2(0.f, 0.f);
 	}
 
 	bool operator<(const ModuleContainer& other) const {
@@ -64,10 +64,10 @@ void ArrayList::onImGuiRender(ImDrawList* d) {
 			modContainerList.emplace(ModuleContainer(it));
 		}
 	}
-	std::vector<std::string> modListss;
-	for (Module* mod : *moduleList)
-		modListss.push_back(mod->getModuleName());
-	logF(StringUtil::combine("Mod List : ", StringUtil::join(modListss, ", ")), "INFO");
+	//std::vector<std::string> modListss;
+	//for (Module* mod : *moduleList)
+	//	modListss.push_back(mod->getModuleName());
+	//logF(StringUtil::combine("Mod List : ", StringUtil::join(modListss, ", ")), "INFO");
 	static const float textPadding = textSize * textSize;
 	float textHeight = ImGuiUtils::getTextHeight(textSize) - textPadding;
 	static const float lineWidth = 1.f;

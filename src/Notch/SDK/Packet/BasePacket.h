@@ -5,6 +5,7 @@
 #include "PacketHandlerDispatcherInstance.h"
 #include "../../Utils/Memory.h"
 #include "../../Manager/Manager.h"
+#include "../Misc/TextHolder.h"
 
 class ConnectionRequest;
 class ContainerID {};
@@ -22,8 +23,11 @@ union PacketHeader {
 static_assert(sizeof(PacketHeader) == 0x4);
 class MinecraftPackets {
 public:
-	static std::shared_ptr<class Packet> createPacket(PacketID id) {
-		return reinterpret_cast<std::shared_ptr<Packet>(*)(PacketID)>(getSig("MinecraftPackets::createPacket"))(id);
+	static std::shared_ptr<class Packet> createPacket(PacketID packetId) {
+		using createPacket = std::shared_ptr<class Packet>(__cdecl*)(int);
+		static createPacket createPacketFunc = 0x0;
+		if (!createPacketFunc) createPacketFunc = (createPacket)(uintptr_t)getSig("MinecraftPackets::createPacket");
+		return createPacketFunc(static_cast<int>(packetId));
 	}
 };
 
@@ -44,23 +48,11 @@ public:
 		return packet.get()->vTable;
 	}
 public:
-	virtual ~Packet() {};
-	virtual PacketID getID() { 
-		return Memory::CallVFunc<1, PacketID>(this); 
-	};
-	std::string getName() {
-		return *Memory::CallVFunc<2, std::string*>(this, std::string());
-	}
-	virtual void write(void* stream) {
-		return Memory::CallVFunc<3, void, void*>(this, stream);
-	};
-	virtual void readExtended(void* stream) {
-		return Memory::CallVFunc<4, void, void*>(this, stream);
-	};
-	virtual bool allowBatch() {
-		return Memory::CallVFunc<5, bool>(this);
-	};
-	virtual void _read(void* stream) {
-		return Memory::CallVFunc<6, void, void*>(this, stream);
-	};
+	virtual void packetConstructor(void) {};
+	virtual PacketID getId(void) { return (PacketID)0x0; };
+	virtual TextHolder getName() { return (TextHolder)nullptr; };
+	virtual void write(class BinaryStream&) {};
+	virtual void read(class ReadOnlyBinaryStream&) {};
+	virtual void readExtended(class ReadOnlyBinaryStream&) {};
+	virtual void disallowBatching(void) {};
 };

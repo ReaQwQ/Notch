@@ -189,7 +189,7 @@ public:
 	virtual void toggle();
 	virtual bool isVisible();
 	virtual void onEnable();
-	virtual void onNormalTick(Actor* actor);
+	virtual void onTick(Actor* actor);
 	virtual void onDisable();
 	virtual void onSaveConfig(json* currentConfig);
 	virtual void onLoadConfig(json* config);

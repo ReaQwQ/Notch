@@ -38,10 +38,16 @@ public:
     virtual void isInTrialMode(); // 17
     virtual void registerUpsellScreenCallback(std::function<void> a3); // 18
 public:
-    float getDestroyRate(Block* block) {
-        return Memory::CallFunc<float, GameMode*, Block*>(getSig("GameMode::getDestroyRate"), this, block);
+    float getDestroyRate(Block const& block) {
+        using getDestroyRate = float(__fastcall*)(GameMode*, Block const&);
+        static getDestroyRate getDestroyRateFunc = reinterpret_cast<getDestroyRate>(getSig("GameMode::getDestroyRate"));
+        return getDestroyRateFunc(this, block);
     }
-    __int64 baseUseItem(ItemStack& a1) {
-        return Memory::CallFunc<__int64, GameMode*, ItemStack&>(getSig("GameMode::baseUseItem"), this, a1);
-    };
+
+    void baseUseItem(ItemStack& a1) {
+        using GM_baseUseItem_t = void (*)(GameMode*, ItemStack&);
+        static GM_baseUseItem_t baseUseItem = reinterpret_cast<GM_baseUseItem_t>(getSig("GameMode::baseUseItem"));  //"ItemUseInventoryTransaction::handle - destroy block failed, rending blocks around area to player"
+
+        return baseUseItem(this, a1);
+    }
 };

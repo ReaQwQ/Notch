@@ -68,7 +68,19 @@ void ClickGui::onKey(int key, bool isDown, bool& cancel) {
 				if (c >= 'A' && c <= 'Z') return true;
 				return false;
 				};
-			if (key == VK_BACK && !searchingModule.empty()) (GetAsyncKeyState(VK_CONTROL) & 0x8000) ? searchingModule.erase(searchingModule.find_last_of(' ') == std::string::npos ? 0 : searchingModule.find_last_of(' ')) : searchingModule.pop_back();
+			if (key == VK_BACK && !searchingModule.empty()) {
+				if (GetAsyncKeyState(VK_CONTROL) & 0x8000) {
+					size_t pos = searchingModule.find_last_of(' ');
+					if (pos == std::string::npos)
+						searchingModule.clear();
+					else {
+						searchingModule.erase(pos);
+					}
+				}
+				else {
+					searchingModule.pop_back();
+				}
+			}
 			else if (key == ' ') searchingModule += ' ';
 			else if (isValid((char)key)) {
 				if (isShiftDown) searchingModule += (char)key;

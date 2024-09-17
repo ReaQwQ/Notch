@@ -7,7 +7,7 @@
 #pragma comment(lib, "MinHook-x86.lib")
 #endif
 
-#include "Libs/xor/xorstr.hpp"
+#include "Libs/xorstr.hpp"
 
 #include "Libs/ImGui/imgui.h"
 #include "Libs/ImGui/imgui_internal.h"
@@ -21,4 +21,4 @@
 
 #include "Libs/Json.hpp"
 
-#include "Libs/Entt/entt.hpp"
+#include "Libs/entt/entt/entt.hpp"

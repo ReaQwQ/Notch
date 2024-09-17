@@ -14,7 +14,7 @@ public:
 		Game.getLocalPlayer()->displayClientMessage("Modules (%i):", modules->size());
 		for (auto it = modules->begin(); it != modules->end(); ++it) {
 			auto mod = *it;
-			Game.getLocalPlayer()->displayClientMessage(u8"%s %s- %s%s", mod->getModuleName(), GRAY, ITALIC, mod->getDescription());
+			Game.getLocalPlayer()->displayClientMessage("%s %s- %s%s", mod->getModuleName(), GRAY, ITALIC, mod->getDescription());
 		}
 
 		return true;

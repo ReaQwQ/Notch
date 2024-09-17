@@ -66,7 +66,6 @@ void Notch::initialize() {
     }
     else if (supported) {
         Manager::init();
-
         AudioSystem::getInstance().play(xorstr_("Audios\\inject.wav"));
         logF(xorstr_("Initializing Hooks"), xorstr_("WAIT"));
         if (MH_Initialize() == MH_OK) {
@@ -97,6 +96,9 @@ void Notch::initialize() {
         static GuiData* gu = Game.getGuiData();
         if (lp != nullptr) {
             logF("LocalPlayer", "NOT NULLPTR");
+            if (lp->getLevel()) logF("LP -> Level", "NOT NULLPTR")
+            else logF("LP -> Level", "NULLPTR");
+            lp->jumpFromGround();
             lp->displayClientMessage("%sInjected!", GREEN);
             lp->displayClientMessage("NameTag: %s%s", YELLOW, lp->getNameTag());
             Vec3 Pos = lp->getPosition();

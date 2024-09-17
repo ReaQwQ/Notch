@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-enum class PacketID : int32_t {
+enum class PacketID : int {
 	KeepAlive = 0,
 	Login = 1,
 	PlayStatus = 2,

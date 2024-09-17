@@ -9,7 +9,8 @@ class LoopbackPacketSender__SendToServerHook : public Hook {
 public:
 	static inline void* oSendToServer;
 	static void SendToServerHook(LoopbackPacketSender* a1, Packet* a2) {
-		if (a2->getName() == "TextPacket") {
+		std::string packetName = a2->getName().getText();
+		if (packetName == "TextPacket") {
 			TextPacket* funy = reinterpret_cast<TextPacket*>(a2);
 			if (funy->message[0] == *prefixMgr->prefix) {
 				char* Message = strdup(funy->message.c_str());

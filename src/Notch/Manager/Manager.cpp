@@ -45,11 +45,15 @@ void Manager::init() {
         logF(StringUtil::combine("Supported 1.21.2X: ", StringUtil::join(targetVersions1_21_2X, ", "), " | Version Match: ", checkVer(ver, targetVersions1_21_2X) ? "True" : "False"), "INFO");
         logF(StringUtil::combine("Switching Offset/Signature to ", ver, "..."), "INFO");
         logF("Initializing Offset...", "WAIT");
+        addOffset("vtable", 0x0);
         if (checkVer(ver, targetVersions1_21_X)) {
             addOffset("Actor::playerName", 0x1D30);
             addOffset("Actor::packetSender", 0xC48);
             addOffset("Player::getSupplies", 0x760);
-            addOffset("Actor::StateVectorComponent", 0x258);
+            addOffset("Actor::getPosition", 0x298);
+            addOffset("Actor::getAABB", 0x2A0);
+            addOffset("Actor::getRotation", 0x2A8);
+            addOffset("Actor::level", 0x258);
             addOffset("Actor::dimension", 0x240);
             addOffset("Player::gamemode", 0xEC8);
             addOffset("PlayerInventory::inventory", 0xC0);
@@ -58,12 +62,16 @@ void Manager::init() {
             addOffset("Actor::playerName", 0xC88);
             addOffset("Actor::packetSender", 0x890);
             addOffset("Player::getSupplies", 0x628);
-            addOffset("Actor::StateVectorComponent", 0x270);
+            addOffset("Actor::getPosition", 0x270);
+            addOffset("Actor::getAABB", 0x298);
+            addOffset("Actor::getRotation", 0x2A0);
+            addOffset("Actor::level", 0x250);
             addOffset("Actor::dimension", 0x220);
             addOffset("Player::gamemode", 0xB00);
             addOffset("PlayerInventory::inventory", 0xB8);
         }
 
+        addOffset("JumpControlComponent::noJumpDelay", 0x10);
         addOffset("GuiData::realSize", 0x0030);
         addOffset("GuiData::realSize2", 0x0038);
         addOffset("GuiData::scaledSize", 0x0040);
@@ -80,7 +88,6 @@ void Manager::init() {
         addOffset("PlayerInventory::selectedSlot", 0x10);
         addOffset("ScreenView::ScreenController", 0x38);
         addOffset("ScreenView::VisualTree", 0x8);
-        addOffset("MinecraftUIRenderContext::vtable", 0x0);
         addOffset("MinecraftUIRenderContext::ClientInstance", 0x8);
         addOffset("MinecraftUIRenderContext::ScreenContext", 0x10);
         addOffset("MinecraftUIRenderContext::globalAlpha", 0x28);

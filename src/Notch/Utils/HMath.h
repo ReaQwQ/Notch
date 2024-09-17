@@ -264,7 +264,6 @@ struct Vec3 {
 
 		return angles;
 	}
-
 };
 struct Vec3i {
 	int x, y, z;

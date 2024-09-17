@@ -46,7 +46,9 @@
 
 #include "Hook/HookManager.h"
 
+#include "SDK/Render/HashedString.h"
 #include "SDK/Packet/Packet.h"
+#include "SDK/Actor/EntityContext.h"
 #include "SDK/Actor/Actor.h"
 #include "SDK/ClientInstance/ClientInstance.h"
 #include "SDK/ClientInstance/GuiData.h"

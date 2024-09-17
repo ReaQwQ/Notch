@@ -53,7 +53,7 @@ private:
 	std::string searchingModule;
 	int lastKeyPress = -1;
 	bool* isChoosingKeyBindPtr = nullptr;
-	bool* isSearching = nullptr;
+	bool isSearching = false;
 public:
 	float blurStrength = 7.5f;
 	ClickGui();
