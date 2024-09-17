@@ -87,7 +87,12 @@ public:
 	};
 
 	Vec3 getPosition() {
+<<<<<<< HEAD
 		return this->getStateVector()->Position;
+=======
+		if (!this->stateVector) return Vec3(0, 0, 0);
+		return this->stateVector->pos;
+>>>>>>> f55c196f982e81c6fd4e5102b9e8a2ef767e9cfc
 	};
 	Vec3 getPositionOld() {
 		return this->getStateVector()->PrevPosition;

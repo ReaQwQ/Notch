@@ -14,6 +14,7 @@ class version {
 public:
     static std::string GET_VERSION(bool patchVersion = true);
     static int GET_VERSION_INT(bool patchVersion = true);
+<<<<<<< HEAD
     static inline std::vector<std::string> supportedVersion = {
         "1.21.2.2",
         "1.21.20.3",
@@ -28,4 +29,6 @@ public:
         121221,
         121231
     };
+=======
+>>>>>>> f55c196f982e81c6fd4e5102b9e8a2ef767e9cfc
 };

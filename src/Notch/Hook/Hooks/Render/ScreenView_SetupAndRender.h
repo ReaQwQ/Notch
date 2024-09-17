@@ -25,14 +25,14 @@ public:
 			MinecraftUIRenderContext__drawText, renderCtx, font, pos, text, color, alpha, textAlignment, textMeasureData, caretMeasureData);
 	};
 	static __int64 ScreenView__SetupAndRenderCallback(ScreenView* _this, MinecraftUIRenderContext* ctx) {
-		renerCtxVTable = *(uintptr_t**)ctx;
+		//renerCtxVTable = *(uintptr_t**)ctx;
 
 		moduleMgr->onRender(ctx);
 		return Memory::CallFunc<__int64, ScreenView*, MinecraftUIRenderContext*>(ScreenView__SetupAndRender, _this, ctx);
 	};
 	virtual void Initialize() override {
 		Memory::CreateHook(getSig("ScreenView::SetupAndRender"), &ScreenView__SetupAndRenderCallback, &ScreenView__SetupAndRender, "ScreenView::SetupAndRender Hook");
-		while (renerCtxVTable == nullptr) Sleep(100);
+		//while (renerCtxVTable == nullptr) Sleep(100);
 		//Memory::CreateHook((void*)renerCtxVTable[7], &MinecraftUIRenderContext__drawImageCallback, &MinecraftUIRenderContext__drawImage, "MinecraftUIRenderContext::drawImage Hook");
 		//Memory::CreateHook((void*)renerCtxVTable[5], &MinecraftUIRenderContext__drawTextCallback, &MinecraftUIRenderContext__drawText, "MinecraftUIRenderContext::drawText Hook");
 	}
