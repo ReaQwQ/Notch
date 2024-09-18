@@ -98,12 +98,15 @@ public:
 protected:
 	//Module(const std::string& mName, const std::string& des, Category c = Category::UNKNOW, int k = 0x0);
 	template<typename T>
-	void addSlider(const std::string& sliderName, const std::string& des, ValueType vlType, T* valuePtr, T min, T max) {
+	void addSlider(const std::string& sliderName, const std::string& des, T* valuePtr, T min, T max) {
 		Setting* setting = new Setting();
 		setting->settingName = sliderName;
 		setting->description = des;
 		setting->settingType = SettingType::SLIDER;
-		setting->valueType = vlType;
+		if constexpr (std::is_same_v<T, float>)
+			setting->valueType = ValueType::FLOAT_T;
+		if constexpr (std::is_same_v<T, int>)
+			setting->valueType = ValueType::INT_T;
 		setting->valuePtr = (SettingValue*)(valuePtr);
 		setting->minValue = (SettingValue*)(new T(min));
 		setting->maxValue = (SettingValue*)(new T(max));
@@ -165,6 +168,23 @@ protected:
 
 		return setting;
 	};
+
+	virtual Setting* showSetting(std::string name) {
+		for (auto& setting : settingList) {
+			if (strcmp(setting->settingName.c_str(), name.c_str()) == 0) {
+				setting->visible = true;
+				return setting;
+			}
+		}
+	};
+	virtual Setting* hideSetting(std::string name) {
+		for (auto& setting : settingList) {
+			if (strcmp(setting->settingName.c_str(), name.c_str()) == 0) {
+				setting->visible = false;
+				return setting;
+			}
+		}
+	};
 public:
 	~Module();
 	static std::string obfuscate(const std::string& input) {
@@ -195,6 +215,7 @@ public:
 	virtual void onLoadConfig(json* config);
 	virtual void onKeyUpdate(int key, bool isDown);
 	virtual void onImGuiRender(ImDrawList* drawlist);
+	virtual void ClickGuiChanger() {};
 	virtual void onLevelRender();
 	virtual void onJoiningServer();
 	virtual void onRender(MinecraftUIRenderContext* c);

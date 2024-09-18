@@ -8,10 +8,10 @@
 class ClientInstance {
 public:
     uintptr_t** VTable;
-    BUILD_ACCESS(this, class MinecraftGame*, minecraftGame, getOffset("ClientInstance::MinecraftGame"));
-    BUILD_ACCESS(this, class Minecraft*, minecraft, getOffset("ClientInstance::Minecraft"));
-    BUILD_ACCESS(this, LoopbackPacketSender*, loopbackPacketSender, getOffset("ClientInstance::LoopbackPacketSender"));
-    BUILD_ACCESS(this, GuiData*, guiData, getOffset("ClientInstance::GuiData"));
+    BUILD_ACCESS(this, class MinecraftGame*, minecraftGame, 0xC8);
+    BUILD_ACCESS(this, class Minecraft*, minecraft, 0xD0);
+    BUILD_ACCESS(this, LoopbackPacketSender*, loopbackPacketSender, 0xF0);
+    BUILD_ACCESS(this, GuiData*, guiData, 0x558);
 public:
     glmatrixf* getrefdef() {
         return (glmatrixf*)((uintptr_t)(this) + 0x330);
@@ -30,28 +30,30 @@ public:
     //    return Memory::CallVFunc<198, LevelRenderer*>(this);
     //}
     void grabMouse() {
-        int ver = version::GET_VERSION_INT();
-        if (Manager::checkVer(ver, Manager::targetVersions1_21_X))
+        if (Manager::checkVer(Manager::targetVersions1_21_X))
             Memory::CallVFunc<332, void>((void*)this);
-        if (Manager::checkVer(ver, Manager::targetVersions1_21_2X))
-                Memory::CallVFunc<333, void>((void*)this);
+        if (Manager::checkVer(Manager::targetVersions1_21_2X))
+            Memory::CallVFunc<333, void>((void*)this);
+        if (Manager::checkVer(Manager::targetVersions1_21_3X))
+            Memory::CallVFunc<334, void>((void*)this);
     };
     void releaseMouse() {
-        int ver = version::GET_VERSION_INT();
-        if (Manager::checkVer(ver, Manager::targetVersions1_21_X))
+        if (Manager::checkVer(Manager::targetVersions1_21_X))
             Memory::CallVFunc<333, void>((void*)this);
-        if (Manager::checkVer(ver, Manager::targetVersions1_21_2X))
+        if (Manager::checkVer(Manager::targetVersions1_21_2X))
             Memory::CallVFunc<334, void>((void*)this);
+        if (Manager::checkVer(Manager::targetVersions1_21_3X))
+            Memory::CallVFunc<335, void>((void*)this);
     };
     Vec2 getMousePos();
     float getFovX() {
-         return (float)((uintptr_t)(this) + getOffset("ClientInstance::getFovX")); // X = 0x6F0
-     }
-     float getFovY() {
-         return (float)((uintptr_t)(this) + getOffset("ClientInstance::getFovY")); // Y = 0x704
-     }
+         return (float)((uintptr_t)(this) + 0x6F0);
+    }
+    float getFovY() {
+        return (float)((uintptr_t)(this) + 0x704);
+    }
 
-     Vec2 getFov() {
-         return Vec2(getFovX(), getFovY());
-     }
+    Vec2 getFov() {
+        return Vec2(getFovX(), getFovY());
+    }
 };

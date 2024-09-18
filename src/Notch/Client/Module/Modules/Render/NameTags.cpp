@@ -14,7 +14,7 @@ void NameTags::onImGuiRender(ImDrawList* d) {
 };
 
 void NameTags::onTick(Actor* actor) {
-    if (!ThirdPersonNameTag || !Game.getLocalPlayer()) return;
+    if (!ThirdPersonNameTag || !actor) return;
     instructionPointer = getSig("ThirdPersonNameTag");
 
     if (instructionPointer) {

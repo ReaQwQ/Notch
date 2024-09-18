@@ -7,9 +7,9 @@ ArrayList::ArrayList() : Module("ArrayList", "Display your enabled modules on th
 	addBoolCheck("Bottom", "position of the ArrayList to the bottom of the screen", &bottom);
 	addBoolCheck("Outline", "outline around each module in the ArrayList.", &outline);
 	addBoolCheck("Modes", "display of mode names next to each module.", &showMode);
-	addSlider<float>("alpha", "Adjust the transparency of the background.", ValueType::FLOAT_T, &alpha, 0.f, 1.f);
-	addSlider<float>("Blur Strength", "strength of the background blur effect.", ValueType::FLOAT_T, &blurStrength, 0.f, 20.f);
-	addSlider<float>("Scale", "Arraylist Size", ValueType::FLOAT_T, &textSize, 0.1f, 2.f);
+	addSlider<float>("alpha", "Adjust the transparency of the background.", &alpha, 0.f, 1.f);
+	addSlider<float>("Blur Strength", "strength of the background blur effect.", &blurStrength, 0.f, 20.f);
+	addSlider<float>("Scale", "Arraylist Size", &textSize, 0.1f, 2.f);
 	addEnumSetting("ModeType", "Choose the color for Mode Text", { "White", "Gray", }, &mode);
 }
 

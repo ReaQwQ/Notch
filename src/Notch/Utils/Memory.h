@@ -85,19 +85,8 @@ namespace Memory {
     template <typename T>
     bool CreateHook(void* pTarget, T pDetour, void* pOriginal, const char* sigId)
     {
-        /*
-        static bool initialized = false;
-        if (!initialized)
-        {
-            initialized = true;
-            if (MH_Initialize() != MH_OK)
-            {
-                logF(StringUtil::combine("Failed to initialize MinHook").c_str());
-                running = false;
-                return false;
-            }
-        }
-        */
+        if ((uintptr_t)pTarget == 0u) 
+            return false;
         uint64_t start = TimeUtil::getCurrentMs();
         if (MH_CreateHook(pTarget, pDetour, (LPVOID*)pOriginal) != MH_OK)
         {
@@ -159,11 +148,7 @@ namespace Memory {
 
                 if (!pattern[2] || !pattern[1])
                     return firstMatch;
-
-                //if (*(PWORD)pattern == '\?\?' || *(PBYTE)pattern != '\?')
-                //pattern += 3;
-
-                //else
+                
                 pattern += 2;
             }
             else {
@@ -171,24 +156,6 @@ namespace Memory {
                 firstMatch = 0;
             }
         }
-#ifdef _DEBUG
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-variable"
-#endif
-        const char* sig = szSignature;  // Put sig in here to access it in debugger
-        // This will not get optimized away because we are in debug
-        // Leave this in here to quickly find bad signatures in case of updates
-        logF("Signature dead: %s", szSignature);
-        if (false) {
-            const char* msgToTheOverwhelmedDebugger = "SIGNATURE NOT FOUND";
-            __debugbreak();
-        }
-
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-#endif
         return 0u;
     }
     static void* addSignature(const char* sig) {

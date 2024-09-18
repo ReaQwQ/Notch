@@ -11,9 +11,9 @@ public:
 	static float LevelRendererPlayergetFovCallback(void* _this, float a, bool applyEffects) {
 		if (!moduleMgr->isInitialized())
 			return Memory::CallFunc<float, void*, float, bool>(LevelRendererPlayergetFov, _this, a, applyEffects);;
-		static CustomFov* fMod = moduleMgr->getModule<CustomFov>();
-		 if (fMod->isEnabled())
-			return fMod->fov;
+		static Camera* cameraMod = moduleMgr->getModule<Camera>();
+		 if (cameraMod->isEnabled() && cameraMod->morefov)
+			return cameraMod->fov;
 		return Memory::CallFunc<float, void*, float, bool>(LevelRendererPlayergetFov, _this, a, applyEffects);;
 	};
 	virtual void Initialize() override {

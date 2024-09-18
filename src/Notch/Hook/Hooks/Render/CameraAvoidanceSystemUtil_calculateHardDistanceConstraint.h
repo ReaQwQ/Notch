@@ -5,7 +5,7 @@ public:
 	static void CameraDetour(__int64 _this, __int64 a2, __int64 a3, __int64 a4, __int64 a5, __int64 a6) {
 		if (!moduleMgr->isInitialized())
 			return Memory::CallFunc<void, __int64, __int64, __int64, __int64, __int64>(detour, _this, a2, a3, a4, a5, a6);
-		if (!moduleMgr->getModule<ViewClip>()->isEnabled())
+		if (!moduleMgr->getModule<Camera>()->isEnabled())
 			Memory::CallFunc<void, __int64, __int64, __int64, __int64, __int64>(detour, _this, a2, a3, a4, a5, a6);
 	}
 	virtual void Initialize() override {

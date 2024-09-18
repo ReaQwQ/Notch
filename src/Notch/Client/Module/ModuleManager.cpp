@@ -7,10 +7,9 @@ void ModuleManager::initModules() {
 		//Misc
 		//Render
 		moduleList.push_back(new PotionHud());
-		moduleList.push_back(new CustomFov());
 		moduleList.push_back(new ViewModel());
 		moduleList.push_back(new NameTags());
-		moduleList.push_back(new ViewClip());
+		moduleList.push_back(new Camera());
 		//Movement
 		moduleList.push_back(new Velocity());
 		//Player
@@ -62,9 +61,8 @@ void ModuleManager::onKeyUpdate(int key, bool isDown) {
 void ModuleManager::onImGuiRender(ImDrawList* drawlist) {
 	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {
-		if (mod->isEnabled()) {
-			mod->onImGuiRender(drawlist);
-		}
+		if (mod->isEnabled()) mod->onImGuiRender(drawlist);
+		mod->ClickGuiChanger();
 	}
 }
 void ModuleManager::onNormalTick(Actor* actor) {

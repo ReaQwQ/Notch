@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 #include "../../Utils/HMath.h"
 #include "../../Utils/ColorUtil.h"
@@ -87,12 +87,7 @@ public:
 	};
 
 	Vec3 getPosition() {
-<<<<<<< HEAD
 		return this->getStateVector()->Position;
-=======
-		if (!this->stateVector) return Vec3(0, 0, 0);
-		return this->stateVector->pos;
->>>>>>> f55c196f982e81c6fd4e5102b9e8a2ef767e9cfc
 	};
 	Vec3 getPositionOld() {
 		return this->getStateVector()->PrevPosition;
@@ -212,9 +207,8 @@ public:
 		char message[400];
 		vsprintf_s(message, 400, Message.c_str(), arg);
 		std::string* MessagePointer = new std::string(std::string(BOLD) + std::string(BLACK) + "[" + std::string(AQUA) + "Notch" + std::string(BLACK) + "] " + std::string(RESET) + message);
-		int version = version::GET_VERSION_INT();
-		if (Manager::checkVer(version, Manager::targetVersions1_21_X)) Memory::CallVFunc<213, void, std::string*>((void*)this, MessagePointer);
-		else if (Manager::checkVer(version, Manager::targetVersions1_21_2X)) {
+		if (Manager::checkVer(Manager::targetVersions1_21_X)) Memory::CallVFunc<213, void, std::string*>((void*)this, MessagePointer);
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X)) {
 			std::optional<std::string> opt = {};
 			Memory::CallVFunc<210, void, std::string*>((void*)this, MessagePointer, opt);
 		}

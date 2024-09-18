@@ -469,10 +469,9 @@
     <ClInclude Include="src\Notch\Client\Module\Modules\Module.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Movement\Velocity.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Player\AutoEmote.h" />
-    <ClInclude Include="src\Notch\Client\Module\Modules\Render\CustomFov.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\NameTags.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\PotionHud.h" />
-    <ClInclude Include="src\Notch\Client\Module\Modules\Render\ViewClip.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Render\Camera.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\ViewModel.h" />
     <ClInclude Include="src\Notch\Client\System\AudioSystem.h" />
     <ClInclude Include="src\Notch\Client\System\FileSystem.h" />
@@ -487,6 +486,7 @@
     <ClInclude Include="src\Notch\Hook\Hooks\Render\ActorRenderDispatcher_render.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\CameraAvoidanceSystemUtil_calculateHardDistanceConstraint.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\Font_drawTransformed.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Render\HudMobEffectRenderer_render.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Render\LevelRendererPlayer_getFov.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Actor\Level_tick.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Device\Keyboard_feed.h" />
@@ -821,10 +821,9 @@
     <ClCompile Include="src\Notch\Client\Module\Modules\Module.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Movement\Velocity.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Player\AutoEmote.cpp" />
-    <ClCompile Include="src\Notch\Client\Module\Modules\Render\CustomFov.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\NameTags.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\PotionHud.cpp" />
-    <ClCompile Include="src\Notch\Client\Module\Modules\Render\ViewClip.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Render\Camera.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\ViewModel.cpp" />
     <ClCompile Include="src\Notch\Client\System\AudioSystem.cpp" />
     <ClCompile Include="src\Notch\Client\System\FileSystem.cpp" />
@@ -834,6 +833,7 @@
     <ClCompile Include="src\Notch\Hook\HookManager.cpp" />
     <ClCompile Include="src\Notch\Hook\Hooks\Render\LevelRendererPlayer_bobHurt.h" />
     <ClCompile Include="src\Notch\Hook\Hooks\Packet\LoopbackPacketSender_SendToServer.h" />
+    <ClCompile Include="src\Notch\Hook\Hooks\Render\Options_getGamma.h" />
     <ClCompile Include="src\Notch\Libraries\Libs\ImFX\imfx.cpp" />
     <ClCompile Include="src\Notch\Libraries\Libs\ImGui\imgui.cpp" />
     <ClCompile Include="src\Notch\Libraries\Libs\ImGui\imgui_demo.cpp" />

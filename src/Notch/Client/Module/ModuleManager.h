@@ -8,10 +8,9 @@
 //Misc
 //Render
 #include "Modules/Render/PotionHud.h"
-#include "Modules/Render/CustomFov.h"
 #include "Modules/Render/ViewModel.h"
 #include "Modules/Render/NameTags.h"
-#include "Modules/Render/ViewClip.h"
+#include "Modules/Render/Camera.h"
 //Movement
 #include "Modules/Movement/Velocity.h"
 //Player

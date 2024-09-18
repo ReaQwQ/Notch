@@ -12,9 +12,20 @@ void* getSig(const std::string& functionName);
 
 class Manager {
 public:
-    static inline std::set<int> targetVersions1_21_X = { 12103, 12122 };
-    static inline std::set<int> targetVersions1_21_2X = { 121203, 121211, 121221, 121231 };
+    static inline std::set<std::string> targetVersions1_21_X = { 
+        "1.21.0.3",
+        "1.21.2.2"
+    };
+    static inline std::set<std::string> targetVersions1_21_2X = { 
+        "1.21.20.3",
+        "1.21.21.1",
+        "1.21.22.1",
+        "1.21.23.1"
+    };
+    static inline std::set<std::string> targetVersions1_21_3X = {
+        "1.21.30.3"
+    };
 
-    static bool checkVer(int version, std::set<int> versionList);
+    static bool checkVer(std::set<std::string> versionList);
     static void init();
 };

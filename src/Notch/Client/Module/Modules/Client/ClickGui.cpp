@@ -9,7 +9,7 @@ void getModuleListByCategory(Category category, std::vector<Module*>& modList) {
 }
 std::string textsett = "";
 ClickGui::ClickGui() : Module("ClickGui", "A GUI use to enable/disable modules.", Category::CLIENT, VK_INSERT) {
-	addSlider<float>("Blur", "NULL", ValueType::FLOAT_T, &blurStrength, 0.f, 20.f);
+	addSlider<float>("Blur", "NULL", &blurStrength, 0.f, 20.f);
 	addBoolCheck("Tooltips", "Show modules/settings tooltips.", &tooltips);
 	addTextInputSetting("testText", "textinput setting for testing", &textsett);
 }
@@ -51,11 +51,9 @@ void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool& cancel) {
 void ClickGui::onKey(int key, bool isDown, bool& cancel) {
 	if (key == VK_SHIFT) isShiftDown = isDown;
 	if (key == VK_BACK) isBackKeyDown = isDown;
+	if (isEnabled()) 
+		cancel = true;
 	if (isDown) {
-		if (key == this->getKeybind() || key == VK_ESCAPE) {
-			this->setEnabled(false);
-			return;
-		}
 		if (key < 192) {
 			lastKeyPress = key;
 			if (isChoosingKeyBindPtr != nullptr && (*isChoosingKeyBindPtr))

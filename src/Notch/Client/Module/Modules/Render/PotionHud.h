@@ -10,6 +10,7 @@
 class PotionHud : public Module {
 public:
     float size = 1.f;
+    int padding = 15;
     Vec2 Posi = Vec2(1.f, 1.f);
     PotionHud();
     virtual void onImGuiRender(ImDrawList* d) override;
@@ -60,30 +61,30 @@ private:
     };
 
     std::unordered_map<int, UIColor> EffectColors = {
-        {static_cast<int>(MobEffectID::Speed), UIColor(85, 255, 85)},           // Light Green
-        {static_cast<int>(MobEffectID::Slowness), UIColor(96, 96, 255)},        // Light Blue
-        {static_cast<int>(MobEffectID::Haste), UIColor(255, 255, 85)},          // Yellow
-        {static_cast<int>(MobEffectID::MiningFatigue), UIColor(160, 160, 160)}, // Gray
-        {static_cast<int>(MobEffectID::Strength), UIColor(255, 0, 0)},          // Red
-        {static_cast<int>(MobEffectID::InstantHealth), UIColor(255, 85, 255)},  // Pink
-        {static_cast<int>(MobEffectID::InstantDamage), UIColor(64, 0, 0)},      // Dark Red
-        {static_cast<int>(MobEffectID::JumpBoost), UIColor(85, 255, 255)},      // Cyan
-        {static_cast<int>(MobEffectID::Nausea), UIColor(85, 0, 0)},             // Dark Maroon
-        {static_cast<int>(MobEffectID::Regeneration), UIColor(255, 85, 85)},    // Light Red
-        {static_cast<int>(MobEffectID::Resistance), UIColor(192, 192, 192)},    // Silver
-        {static_cast<int>(MobEffectID::FireResistance), UIColor(255, 170, 0)},  // Orange
-        {static_cast<int>(MobEffectID::WaterBreathing), UIColor(0, 85, 255)},   // Blue
-        {static_cast<int>(MobEffectID::Invisibility), UIColor(224, 224, 224)},  // Light Gray
-        {static_cast<int>(MobEffectID::Blindness), UIColor(0, 0, 0)},           // Black
-        {static_cast<int>(MobEffectID::NightVision), UIColor(85, 85, 255)},     // Blueish Purple
-        {static_cast<int>(MobEffectID::Hunger), UIColor(128, 64, 0)},           // Brown
-        {static_cast<int>(MobEffectID::Weakness), UIColor(96, 96, 96)},         // Dark Gray
-        {static_cast<int>(MobEffectID::Poison), UIColor(85, 255, 85)},          // Green
-        {static_cast<int>(MobEffectID::Wither), UIColor(48, 48, 48)},           // Dark Gray
-        {static_cast<int>(MobEffectID::HealthBoost), UIColor(255, 170, 85)},    // Peach
-        {static_cast<int>(MobEffectID::Absorption), UIColor(255, 170, 0)},      // Orange
-        {static_cast<int>(MobEffectID::Saturation), UIColor(255, 85, 85)},      // Red
-        {static_cast<int>(MobEffectID::Levitation), UIColor(170, 170, 255)},    // Light Purple
+        {static_cast<int>(MobEffectID::Speed), UIColor(124, 175, 198)},          // Light Blue
+        {static_cast<int>(MobEffectID::Slowness), UIColor(90, 108, 129)},        // Grayish Blue
+        {static_cast<int>(MobEffectID::Haste), UIColor(217, 192, 67)},           // Yellow
+        {static_cast<int>(MobEffectID::MiningFatigue), UIColor(74, 66, 23)},     // Brown
+        {static_cast<int>(MobEffectID::Strength), UIColor(147, 36, 35)},         // Dark Red
+        {static_cast<int>(MobEffectID::InstantHealth), UIColor(67, 10, 9)},      // Dark Red
+        {static_cast<int>(MobEffectID::InstantDamage), UIColor(67, 10, 9)},      // Dark Red
+        {static_cast<int>(MobEffectID::JumpBoost), UIColor(34, 255, 76)},        // Green
+        {static_cast<int>(MobEffectID::Nausea), UIColor(85, 29, 74)},            // Dark Purple
+        {static_cast<int>(MobEffectID::Regeneration), UIColor(205, 92, 171)},    // Pink
+        {static_cast<int>(MobEffectID::Resistance), UIColor(153, 69, 58)},       // Brownish Red
+        {static_cast<int>(MobEffectID::FireResistance), UIColor(228, 154, 58)},  // Orange
+        {static_cast<int>(MobEffectID::WaterBreathing), UIColor(46, 82, 153)},   // Blue
+        {static_cast<int>(MobEffectID::Invisibility), UIColor(127, 131, 146)},   // Gray
+        {static_cast<int>(MobEffectID::Blindness), UIColor(31, 31, 35)},         // Dark Gray
+        {static_cast<int>(MobEffectID::NightVision), UIColor(31, 31, 161)},      // Dark Blue
+        {static_cast<int>(MobEffectID::Hunger), UIColor(88, 118, 83)},           // Greenish Brown
+        {static_cast<int>(MobEffectID::Weakness), UIColor(72, 77, 72)},          // Gray
+        {static_cast<int>(MobEffectID::Poison), UIColor(78, 147, 49)},           // Green
+        {static_cast<int>(MobEffectID::Wither), UIColor(53, 42, 39)},            // Dark Brown
+        {static_cast<int>(MobEffectID::HealthBoost), UIColor(248, 125, 35)},     // Orange
+        {static_cast<int>(MobEffectID::Absorption), UIColor(37, 82, 165)},       // Blue
+        {static_cast<int>(MobEffectID::Saturation), UIColor(248, 36, 35)},       // Red
+        {static_cast<int>(MobEffectID::Levitation), UIColor(206, 255, 255)},     // Light Cyan
         {static_cast<int>(MobEffectID::FatalPoison), UIColor(0, 85, 0)},        // Dark Green
         {static_cast<int>(MobEffectID::ConduitPower), UIColor(0, 255, 255)},    // Aqua
         {static_cast<int>(MobEffectID::SlowFalling), UIColor(255, 255, 255)},   // White

@@ -14,7 +14,7 @@ class Actor;
 class GameMode {
     uintptr_t** VTable;
 public:
-    BUILD_ACCESS(this, class Player*, plr, getOffset("GameMode::player"));
+    BUILD_ACCESS(this, class Player*, plr, 0x8);
     BUILD_ACCESS(this, float, LastBreakProgress, getOffset("GameMode::lastBreakProgress"))
     BUILD_ACCESS(this, float, BreakProgress, getOffset("GameMode::breakProgress"))
 public:

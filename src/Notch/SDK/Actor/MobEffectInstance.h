@@ -50,15 +50,15 @@ struct FactorCalculationData {
 
 class MobEffectInstance {
 public:
-    MobEffectID                      mId;                              // this+0x0
-    int                              mDuration;                        // this+0x4
-    int                              mDurationEasy;                    // this+0x8
-    int                              mDurationNormal;                  // this+0xC
-    int                              mDurationHard;                    // this+0x10
-    int                              mAmplifier;                       // this+0x14
-    bool                             mDisplayOnScreenTextureAnimation; // this+0x18
-    bool                             mAmbient;                         // this+0x19
-    bool                             mNoCounter;                       // this+0x1A
-    bool                             mEffectVisible;                   // this+0x1B
-    FactorCalculationData            mFactorCalculationData;           // this+0x20
+    MobEffectID           mId;                              // this+0x0
+    int                   mDuration;                        // this+0x4
+    int                   mDurationEasy;                    // this+0x8
+    int                   mDurationNormal;                  // this+0xC
+    int                   mDurationHard;                    // this+0x10
+    int                   mAmplifier;                       // this+0x14
+    bool                  mDisplayOnScreenTextureAnimation; // this+0x18
+    bool                  mAmbient;                         // this+0x19
+    bool                  mNoCounter;                       // this+0x1A
+    bool                  mEffectVisible;                   // this+0x1B
+    FactorCalculationData mFactorCalculationData;           // this+0x20
 };

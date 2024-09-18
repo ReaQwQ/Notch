@@ -4,7 +4,7 @@
 int Emotedelaytick = 0;
 int currentEmoteIndex = 0;
 AutoEmote::AutoEmote() : Module("AutoEmote", "Auto-doing Random Emote", Category::PLAYER) {
-	addSlider<int>("Emote delay", "NULL", ValueType::INT_T, &EmoteDelay, 0, 20);
+	addSlider<int>("Emote delay", "NULL", &EmoteDelay, 0, 20);
 }
 std::vector<std::string> emoteUUIDs = {
 	"18891e6c-bb3d-47f6-bc15-265605d86525",

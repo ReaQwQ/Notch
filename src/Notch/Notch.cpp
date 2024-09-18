@@ -57,13 +57,12 @@ void Notch::initialize() {
     FileSystem::Initalize();
     Notch::openConsole();
 
-    std::string verStr = version::GET_VERSION();
-    int ver = version::GET_VERSION_INT();
-    logF(StringUtil::combine("MC Version ", verStr, " (STRING) | ", ver, " (INT)"), "INFO");
-    bool supported = Manager::checkVer(ver, Manager::targetVersions1_21_X) || Manager::checkVer(ver, Manager::targetVersions1_21_2X);
+    std::string ver = version::GET_VERSION();
+    logF(StringUtil::combine("MC Version ", ver), "INFO");
+    bool supported = Manager::checkVer(version::supportedVersion);
     if (!supported) {
         logF("This Minecraft version is not supported", "FAIL");
-        logF(StringUtil::combine("Supported Version: ", StringUtil::join(Manager::targetVersions1_21_X, ", "), "/", StringUtil::join(Manager::targetVersions1_21_2X, ", ")), "INFO");
+        logF(StringUtil::combine("Supported Version: ", StringUtil::join(version::supportedVersion, ", ")), "INFO");
         Run::closeConsole = false;
         Run::running = false;
     }
@@ -101,11 +100,10 @@ void Notch::initialize() {
             logF("LocalPlayer", "NOT NULLPTR");
             if (lp->getLevel()) logF("LP -> Level", "NOT NULLPTR")
             else logF("LP -> Level", "NULLPTR");
-            lp->jumpFromGround();
             lp->displayClientMessage("%sInjected!", GREEN);
             lp->displayClientMessage("NameTag: %s%s", YELLOW, lp->getNameTag());
-            Vec3 Pos = lp->getPosition();
-            lp->displayClientMessage("XYZ: %i, %i, %i", (int)Pos.x, (int)Pos.y, (int)Pos.z);
+            //Vec3 Pos = lp->getPosition();
+            //lp->displayClientMessage("XYZ: %i, %i, %i", (int)Pos.x, (int)Pos.y, (int)Pos.z);
             if (gu != nullptr)
                 lp->displayClientMessage("WindowSizeReal: %i, %i", (int)Game.getGuiData()->realSize.x, (int)Game.getGuiData()->realSize.y);
         }

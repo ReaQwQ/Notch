@@ -1,10 +1,11 @@
 #include "PotionHud.h"
 #include <iomanip>
 
-PotionHud::PotionHud() : Module("Potion HUD", "Shows Your Effect Hudb", Category::RENDER, 0x0) {
-    addSlider<float>("Size", "Size of Text", ValueType::FLOAT_T, &size, 0.f, 2.f);
-    addSlider<float>("PosX", "Position X of Text", ValueType::FLOAT_T, &Posi.x, 0.f, 1.f);
-    addSlider<float>("PosY", "Position Y of Text", ValueType::FLOAT_T, &Posi.y, 0.f, 1.f);
+PotionHud::PotionHud() : Module("PotionHud", "Shows Your Effects Hud", Category::RENDER, 0x0) {
+    addSlider<float>("Size", "Size of Text", &size, 0.f, 2.f);
+    addSlider<int>("Padding", "Padding of Text Y", &padding, 0, 40);
+    addSlider<float>("PosX", "Position X of Text", &Posi.x, 0.f, 1.f);
+    addSlider<float>("PosY", "Position Y of Text", &Posi.y, 0.f, 1.f);
 }
 
 void PotionHud::onImGuiRender(ImDrawList* d) {
@@ -22,14 +23,15 @@ void PotionHud::onImGuiRender(ImDrawList* d) {
         Vec2 RenderPos = Vec2(winsize.x * Posi.x, winsize.y * Posi.y);
         RenderPos.y += heightIncrement;
         UIColor col = EffectColors[(int)effect.mId];
+        std::string EffectNameAndLevel = Effects[(int)effect.mId] + " " + Amplifiers[effect.mAmplifier + 1];
+        ImGuiUtils::drawText(RenderPos, EffectNameAndLevel, col, size);
         std::ostringstream oss;
-        oss << Effects[(int)effect.mId] << " " << Amplifiers[effect.mAmplifier + 1] << ": "
+        oss << " "
             << std::setw(2) << std::setfill('0') << Minutes << ":"
             << std::setw(2) << std::setfill('0') << Seconds;
+        std::string EffectTime = oss.str();
+        ImGuiUtils::drawText(Vec2(RenderPos.x + ImGuiUtils::getTextWidth(EffectNameAndLevel), RenderPos.y), EffectTime, UIColor(255, 255, 255), size);
 
-        std::string EffectText = oss.str();
-        ImGuiUtils::drawText(RenderPos, EffectText, col, size);
-
-        heightIncrement += 25 * size;
+        heightIncrement += padding * size;
     }
 }

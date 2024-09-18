@@ -19,9 +19,3 @@ std::string version::GET_VERSION(bool patchVersion) {
     }
     return "Unknown";
 }
-
-int version::GET_VERSION_INT(bool patchVersion) {
-    std::string str = GET_VERSION(patchVersion);
-    str.erase(std::remove(str.begin(), str.end(), '.'), str.end());
-    return std::stoi(str);
-}
