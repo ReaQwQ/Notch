@@ -9,5 +9,5 @@ private:
 public:
 	AutoEmote();
 
-	virtual void onTick(Actor* actor) override;
+	virtual void onTick(LocalPlayer* actor) override;
 };

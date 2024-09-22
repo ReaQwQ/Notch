@@ -8,32 +8,34 @@ void NameTags::onImGuiRender(ImDrawList* d) {
 	if (!d || !plr) return;
 
 	//entityList = plr->getLevel()->getRuntimeActorList();
-    /*for (Actor* actor : entityList) {
-		logF(StringUtil::combine("ActorNameTag: ", actor->getNameTag()), "INFO");
-	}*/
+ //   for (Actor* actor : entityList) {
+	//	logF(StringUtil::combine("ActorNameTag: ", actor->getNameTag()), "INFO");
+ //   }
 };
-
-void NameTags::onTick(Actor* actor) {
+bool patched = false;
+void NameTags::onTick(LocalPlayer* actor) {
     if (!ThirdPersonNameTag || !actor) return;
     instructionPointer = getSig("ThirdPersonNameTag");
 
-    if (instructionPointer) {
+    if (instructionPointer && !patched) {
         memcpy(originalBytes, instructionPointer, instructionSize);
 
         DWORD protect;
         VirtualProtect(instructionPointer, instructionSize, PAGE_EXECUTE_READWRITE, &protect);
         memset(instructionPointer, 0x90 /*No-Operation*/, instructionSize);
         VirtualProtect(instructionPointer, instructionSize, protect, &protect);
+        patched = true;
     }
 }
 
 void NameTags::onDisable() {
-    if (!ThirdPersonNameTag) return;
+    if (!ThirdPersonNameTag && !patched) return;
 
     if (instructionPointer) {
         DWORD protect;
         VirtualProtect(instructionPointer, instructionSize, PAGE_EXECUTE_READWRITE, &protect);
         memcpy(instructionPointer, originalBytes, instructionSize);
-        VirtualProtect(instructionPointer, instructionSize, protect, &protect);
+        VirtualProtect(instructionPointer, instructionSize, protect, &protect); 
+        patched = false;
     }
 }

@@ -11,7 +11,7 @@ std::string textsett = "";
 ClickGui::ClickGui() : Module("ClickGui", "A GUI use to enable/disable modules.", Category::CLIENT, VK_INSERT) {
 	addSlider<float>("Blur", "NULL", &blurStrength, 0.f, 20.f);
 	addBoolCheck("Tooltips", "Show modules/settings tooltips.", &tooltips);
-	addTextInputSetting("testText", "textinput setting for testing", &textsett);
+	addBoolCheck("GuiMove", "can move while opening gui", &guiMove);
 }
 
 ClickGui::~ClickGui() {
@@ -44,15 +44,13 @@ void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool& cancel) {
 		isRightClickDown = isDown;
 		isHoldingRightClick = isDown;
 	}
-	if (isEnabled())
-		cancel = true;
+	if (isEnabled() && !guiMove) cancel = true;
 }
 
 void ClickGui::onKey(int key, bool isDown, bool& cancel) {
 	if (key == VK_SHIFT) isShiftDown = isDown;
 	if (key == VK_BACK) isBackKeyDown = isDown;
-	if (isEnabled()) 
-		cancel = true;
+	if (isEnabled() && !guiMove) cancel = true;
 	if (isDown) {
 		if (key < 192) {
 			lastKeyPress = key;

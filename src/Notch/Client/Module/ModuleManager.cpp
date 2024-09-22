@@ -4,6 +4,7 @@ void ModuleManager::initModules() {
 
 	{ // Init modules
 		//Combat
+		moduleList.push_back(new KillAura());
 		//Misc
 		//Render
 		moduleList.push_back(new PotionHud());
@@ -65,7 +66,7 @@ void ModuleManager::onImGuiRender(ImDrawList* drawlist) {
 		mod->ClickGuiChanger();
 	}
 }
-void ModuleManager::onNormalTick(Actor* actor) {
+void ModuleManager::onTick(LocalPlayer* actor) {
 	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {
 		if (mod->isEnabled()) {

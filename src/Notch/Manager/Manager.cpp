@@ -47,31 +47,33 @@ void Manager::init() {
         logF(StringUtil::combine("Supported 1.21.3X: ", StringUtil::join(targetVersions1_21_3X, ", ")), "INFO");
         logF(StringUtil::combine("Switching Offset/Signature to ", ver, "..."), "INFO");
         logF("Initializing Offset...", "WAIT");
-        addOffset("vtable", 0x0);
         if (checkVer(targetVersions1_21_X)) {
-            addOffset("Actor::playerName", 0x1D30);
-            addOffset("Actor::packetSender", 0xC48);
             addOffset("Player::getSupplies", 0x760);
             addOffset("Actor::getPosition", 0x298);
             addOffset("Actor::getAABB", 0x2A0);
             addOffset("Actor::getRotation", 0x2A8);
-            addOffset("Actor::level", 0x258);
-            addOffset("Actor::dimension", 0x240);
+            addOffset("Actor::level", 0x250);
             addOffset("Player::gamemode", 0xEC8);
             addOffset("PlayerInventory::inventory", 0xC0);
         }
-        if (checkVer(targetVersions1_21_2X)) {
-            addOffset("Actor::playerName", 0xC88);
-            addOffset("Actor::packetSender", 0x890);
+        else if (checkVer(targetVersions1_21_2X)) {
             addOffset("Player::getSupplies", 0x628);
             addOffset("Actor::getPosition", 0x270);
             addOffset("Actor::getAABB", 0x298);
             addOffset("Actor::getRotation", 0x2A0);
-            addOffset("Actor::level", 0x250);
-            addOffset("Actor::dimension", 0x220);
+            addOffset("Actor::level", 0x230);
             addOffset("Player::gamemode", 0xB00);
             addOffset("PlayerInventory::inventory", 0xB8);
         }
+        else if (checkVer(targetVersions1_21_3X)) {
+            addOffset("Player::getSupplies", 0x628);
+            addOffset("Actor::getPosition", 0x270);
+            addOffset("Actor::getAABB", 0x298);
+            addOffset("Actor::getRotation", 0x2A0);
+            addOffset("Actor::level", 0x230);
+            addOffset("Player::gamemode", 0xB00);
+            addOffset("PlayerInventory::inventory", 0xB8);
+        };
         addOffset("GameMode::lastBreakProgress", 0x10);
         addOffset("GameMode::breakProgress", 0x14);
         logF("Initialized Offset", "OKAY");
@@ -103,10 +105,13 @@ void Manager::init() {
             addSignature("CameraAvoidanceSystemUtil::calculateHardDistanceConstraint", "40 ? 56 57 48 81 EC ? ? ? ? 44 0F");
         }
         else if (checkVer(targetVersions1_21_2X)) {
+            addSignature("LevelRenderer::renderLevel", "48 89 5C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 49 8B F8 48 8B DA 48 8B F1 33 D2");
+            addSignature("HudMobEffectRenderer::render", "48 8D 05 ? ? ? ? 48 89 85 ? ? ? ? 48 C7 85 ? ? ? ? ? ? ? ? 0F 28 85 ? ? ? ? 66 0F 7F 85 ? ? ? ? 48 8D 95 ? ? ? ? 48 8D 8D ? ? ? ? E8 ? ? ? ? 0F 57 C0 0F 11 85");
             addSignature("ConnectionRequest::create", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 4D 8B E0");
             addSignature("ActorRenderDispatcher::render", "48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 ? 4D 8B E9 49 8B F8 48 8B F2");
             addSignature("CameraAvoidanceSystemUtil::calculateHardDistanceConstraint", "40 ? 56 57 48 81 EC ? ? ? ? 44 0F");
         } else if (checkVer(targetVersions1_21_3X)) {
+            addSignature("HudMobEffectRenderer::render", "48 8D 05 ? ? ? ? 48 89 85 ? ? ? ? 48 C7 85 ? ? ? ? ? ? ? ? 0F 28 85 ? ? ? ? 66 0F 7F 85 ? ? ? ? 48 8D 95 ? ? ? ? 48 8D 8D ? ? ? ? E8 ? ? ? ? 0F 57 C0");
             addSignature("ConnectionRequest::create", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 4D 8B E0");
             addSignature("ActorRenderDispatcher::render", "48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 ? 4D 8B E9 49 8B D8 48 8B FA 4C 8B F9");
         }

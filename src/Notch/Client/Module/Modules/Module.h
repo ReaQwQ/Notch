@@ -72,6 +72,7 @@ public:
 	~Setting();
 };
 class Actor;
+class LocalPlayer;
 class MinecraftUIRenderContext;
 class Module {
 private:
@@ -209,7 +210,7 @@ public:
 	virtual void toggle();
 	virtual bool isVisible();
 	virtual void onEnable();
-	virtual void onTick(Actor* actor);
+	virtual void onTick(LocalPlayer* actor);
 	virtual void onDisable();
 	virtual void onSaveConfig(json* currentConfig);
 	virtual void onLoadConfig(json* config);

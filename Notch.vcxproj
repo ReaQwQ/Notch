@@ -466,6 +466,7 @@
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\ClickGui.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\Colors.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\CustomFont.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Combat\KillAura.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Module.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Movement\Velocity.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Player\AutoEmote.h" />
@@ -585,6 +586,21 @@
     <ClInclude Include="src\Notch\Libraries\Libs\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\Notch\Libraries\Libs\Json.hpp" />
     <ClInclude Include="src\Notch\Libraries\Libs\Kiero\Kiero.h" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Access.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Callable.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\CompileTime.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Concepts.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\c\libhat.h" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Defines.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\FixedString.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\MemoryProtector.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Process.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Result.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Scanner.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Signature.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\StringLiteral.hpp" />
+    <ClInclude Include="src\Notch\Libraries\Libs\libhat\libhat\Traits.hpp" />
     <ClInclude Include="src\Notch\Libraries\Libs\minhook\MinHook.h" />
     <ClInclude Include="src\Notch\Libraries\Libs\xorstr.hpp" />
     <ClInclude Include="src\Notch\run.h" />
@@ -619,6 +635,7 @@
     <ClInclude Include="src\Notch\SDK\Attribute\Attribute.h" />
     <ClInclude Include="src\Notch\SDK\Attribute\BaseAttributeMap.h" />
     <ClInclude Include="src\Notch\SDK\Block\BlockSource.h" />
+    <ClInclude Include="src\Notch\SDK\ClientInstance\LevelRenderer.h" />
     <ClInclude Include="src\Notch\SDK\Item\Inventory.h" />
     <ClInclude Include="src\Notch\SDK\Item\PlayerInventory.h" />
     <ClInclude Include="src\Notch\SDK\Item\Item.h" />
@@ -806,6 +823,7 @@
     <None Include="include\glm\glm\gtx\vector_angle.inl" />
     <None Include="include\glm\glm\gtx\vector_query.inl" />
     <None Include="include\glm\glm\gtx\wrap.inl" />
+    <None Include="src\Notch\Libraries\Libs\libhat\libhat\Scanner.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\glm\glm\detail\glm.cpp" />
@@ -818,6 +836,7 @@
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\ClickGui.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\Colors.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\CustomFont.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Combat\KillAura.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Module.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Movement\Velocity.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Player\AutoEmote.cpp" />
@@ -855,6 +874,8 @@
     <ResourceCompile Include="Notch.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="src\Notch\Libraries\Libs\libhat\libhat.lib" />
+    <Library Include="src\Notch\Libraries\Libs\libhat\libhat_debug.lib" />
     <Library Include="src\Notch\Libraries\Libs\minhook\MinHook-x64.lib" />
     <Library Include="src\Notch\Libraries\Libs\minhook\MinHook-x86.lib" />
   </ItemGroup>

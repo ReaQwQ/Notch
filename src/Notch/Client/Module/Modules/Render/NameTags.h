@@ -16,6 +16,6 @@ public:
 
 	NameTags();
 	virtual void onImGuiRender(ImDrawList*) override;
-	virtual void onTick(Actor* actor) override;
+	virtual void onTick(LocalPlayer* actor) override;
 	virtual void onDisable() override;
 };

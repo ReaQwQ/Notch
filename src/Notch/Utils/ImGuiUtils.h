@@ -30,7 +30,7 @@ public:
 	/* vec4 only centered Y/W */static void drawTextCenter4Y(Vec4 centerRect, std::string textStr, UIColor color, float textSize = 1.f, bool shadow = true, float add = 0.f);
 
 
-	//static void drawBox(const AABB& blockAABB, UIColor color, UIColor lineColor, float lineWidth, bool fill, bool outline);
-	//static void drawBox(const Vec3& blockPos, UIColor color, UIColor lineColor, float lineWidth, bool fill, bool outline);
-	//static bool worldToScreen(const Vec3& pos, Vec2& out);
+	static void drawBox(const AABB& blockAABB, UIColor color, UIColor lineColor, float lineWidth, bool fill, bool outline);
+	static void drawBox(const Vec3& blockPos, UIColor color, UIColor lineColor, float lineWidth, bool fill, bool outline);
+	static bool worldToScreen(const Vec3& pos, Vec2& out);
 };

@@ -48,7 +48,6 @@ public:
 	BUILD_ACCESS(this, StateVectorComponent*, StateVector, getOffset("Actor::getPosition"));
 	BUILD_ACCESS(this, AABBShapeComponent*, AABBShape, getOffset("Actor::getAABB"));
 	BUILD_ACCESS(this, MovementInterpolatorComponent*, MovementInterpolator, getOffset("Actor::getRotation"));
-	BUILD_ACCESS(this, class TextHolder*, playerName, getOffset("Actor::playerName"));
 public:
 	virtual bool getStatusFlag(ActorFlags) const; // 0
 	virtual void setStatusFlag(ActorFlags, bool); // 1
@@ -96,20 +95,35 @@ public:
 		return getComponent<AttributesComponent>();
 	}
 	bool isInLava() {
-		return hasComponent<FlagComponent<InLavaFlag>>();
+		if (Manager::checkVer(Manager::targetVersions1_21_X))
+			return hasComponent<FlagComponent<InLavaFlag>>();
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
+			return hasComponent<WasInLavaFlagComponent>();
 	}
 
 	bool isInWater() {
-		return hasComponent<FlagComponent<InWaterFlag>>();
+		if (Manager::checkVer(Manager::targetVersions1_21_X))
+			return hasComponent<FlagComponent<InWaterFlag>>();
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
+			return hasComponent<WasInWaterFlagComponent>();
 	}
 
 	bool isImmobile() {
-		return hasComponent<FlagComponent<ActorIsImmobileFlag>>();
+		if (Manager::checkVer(Manager::targetVersions1_21_X))
+			return hasComponent<FlagComponent<ActorIsImmobileFlag>>();
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
+			return hasComponent<ActorIsImmobileFlagComponent>();
 	}
 
 	void setImmobile(bool state) {
-		if (state) { getOrEmplaceComponent<FlagComponent<ActorIsImmobileFlag>>(); }
-		else { removeComponent<FlagComponent<ActorIsImmobileFlag>>(); }
+		if (Manager::checkVer(Manager::targetVersions1_21_X)) {
+			if (state) { getOrEmplaceComponent<FlagComponent<ActorIsImmobileFlag>>(); }
+			else { removeComponent<FlagComponent<ActorIsImmobileFlag>>(); }
+		}
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X)) {
+			if (state) { getOrEmplaceComponent<ActorIsImmobileFlagComponent>(); }
+			else { removeComponent<ActorIsImmobileFlagComponent>(); }
+		};
 	}
 
 	bool isOnGround() {
@@ -122,7 +136,10 @@ public:
 	};
 
 	void jumpFromGround() {
-		getOrEmplaceComponent<FlagComponent<JumpFromGroundRequestFlag>>();
+		if (Manager::checkVer(Manager::targetVersions1_21_X))
+			getOrEmplaceComponent<FlagComponent<JumpFromGroundRequestFlag>>();
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
+			getOrEmplaceComponent<JumpFromGroundRequestFlagComponent>();
 	}
 
 	AttributeInstance* getAttribute(int id) {
@@ -138,11 +155,17 @@ public:
 	}
 
 	bool isPlayer() {
-		return hasComponent<FlagComponent<PlayerComponentFlag>>();
+		if (Manager::checkVer(Manager::targetVersions1_21_X))
+			return hasComponent<FlagComponent<PlayerComponentFlag>>();
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
+			return hasComponent<PlayerComponent>();
 	}
 
 	bool isLocalPlayer() {
-		return hasComponent<FlagComponent<LocalPlayerComponentFlag>>();
+		if (Manager::checkVer(Manager::targetVersions1_21_X))
+			return hasComponent<FlagComponent<LocalPlayerComponentFlag>>();
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
+			return hasComponent<LocalPlayerComponent>();
 	}
 
 	float getFallDistance() {
@@ -190,7 +213,12 @@ public:
 	MobEffectsComponent* getMobEffectsComponent() {
 		return getComponent<MobEffectsComponent>();
 	}
-
+	void swing() {
+		if (Manager::checkVer(Manager::targetVersions1_21_X))
+			Memory::CallVFunc<117, void>(this);
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
+			Memory::CallVFunc<115, void>(this);
+	}
 };
 
 class Player : public Actor {
@@ -207,11 +235,9 @@ public:
 		char message[400];
 		vsprintf_s(message, 400, Message.c_str(), arg);
 		std::string* MessagePointer = new std::string(std::string(BOLD) + std::string(BLACK) + "[" + std::string(AQUA) + "Notch" + std::string(BLACK) + "] " + std::string(RESET) + message);
+		std::optional<std::string> opt = {};
 		if (Manager::checkVer(Manager::targetVersions1_21_X)) Memory::CallVFunc<213, void, std::string*>((void*)this, MessagePointer);
-		else if (Manager::checkVer(Manager::targetVersions1_21_2X)) {
-			std::optional<std::string> opt = {};
-			Memory::CallVFunc<210, void, std::string*>((void*)this, MessagePointer, opt);
-		}
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X)) Memory::CallVFunc<210, void, std::string*>((void*)this, MessagePointer, opt);
 	};
 };
 

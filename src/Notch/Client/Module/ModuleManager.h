@@ -5,6 +5,7 @@
 #include "Modules/Module.h"
 
 //Combat
+#include "Modules/Combat/KillAura.h"
 //Misc
 //Render
 #include "Modules/Render/PotionHud.h"
@@ -61,7 +62,7 @@ public:
     void onLoadConfig(json* config);
     void onKeyUpdate(int key, bool isDown);
     void onImGuiRender(ImDrawList* drawlist);
-    void onNormalTick(Actor* actor);
+    void onTick(LocalPlayer* actor);
     void onLevelRender();
     void onJoiningServer();
     void onRender(MinecraftUIRenderContext* c);

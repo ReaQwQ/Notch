@@ -148,7 +148,7 @@ void Module::onKeyUpdate(int key, bool isDown) {
 
 void Module::onImGuiRender(ImDrawList*) {
 }
-void Module::onTick(Actor* actor) {
+void Module::onTick(LocalPlayer* lp) {
 }
 void Module::onJoiningServer() {
 }

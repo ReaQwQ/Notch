@@ -18,7 +18,7 @@ ViewModel::ViewModel() : Module("ViewModel", "Changes hand model", Category::REN
 	addBoolCheck("Reset", "Resets all the values to default", &reset);
 }
 
-void ViewModel::onTick(Actor* actor) {
+void ViewModel::onTick(LocalPlayer* actor) {
 	if (reset) {
 		translateVec = Vec3(0, 0, 0);
 		scaleVec = Vec3(1.f, 1.f, 1.f);

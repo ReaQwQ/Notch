@@ -8,7 +8,7 @@ class Level__tickHook : public Hook {
 public:
 	static inline void* oLevelTick;
 	static void LevelTickCallback(void* level) {
-		if (Game.getLocalPlayer() != nullptr && Game.getLocalPlayer()->getGameMode() != nullptr) moduleMgr->onNormalTick(Game.getLocalPlayer());
+		if (Game.getLocalPlayer() != nullptr && Game.getLocalPlayer()->getGameMode() != nullptr) moduleMgr->onTick(Game.getLocalPlayer());
 		return Memory::CallFunc<void, void*>(oLevelTick, level);
 	};
 	virtual void Initialize() override {

@@ -46,7 +46,7 @@ private:
 	float openDuration = 0.f;
 	bool initClickGui = false;
 	void init();
-
+	bool guiMove = false;
 	bool tooltips = true;
 	bool isShiftDown = false;
 	bool isBackKeyDown = false;

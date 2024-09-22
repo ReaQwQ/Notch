@@ -111,7 +111,7 @@ std::vector<std::string> emoteUUIDs = {
 	"c2d6091d-9f91-4a9e-badd-ef8481353cb0",
 	"3f1bdf46-80b0-4a64-b631-4ac2f2491165",
 };
-void AutoEmote::onTick(Actor* actor) {
+void AutoEmote::onTick(LocalPlayer* actor) {
 	if (actor == nullptr) return;
 
 	if (Emotedelaytick >= EmoteDelay) {

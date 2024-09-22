@@ -14,5 +14,5 @@ public:
 	float rotAngle = 0.1f;
 public:
 	ViewModel();
-	virtual void onTick(Actor* gm) override;
+	virtual void onTick(LocalPlayer* gm) override;
 };
