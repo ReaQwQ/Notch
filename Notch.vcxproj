@@ -644,6 +644,7 @@
     <ClInclude Include="src\Notch\SDK\Level\HitResult.h" />
     <ClInclude Include="src\Notch\SDK\Level\Weather.h" />
     <ClInclude Include="src\Notch\SDK\Misc\TextHolder.h" />
+    <ClInclude Include="src\Notch\SDK\Misc\WeakPtr.h" />
     <ClInclude Include="src\Notch\SDK\Render\HashedString.h" />
     <ClInclude Include="src\Notch\SDK\Render\Font.h" />
     <ClInclude Include="src\Notch\SDK\Render\MinecraftUIRenderContext.h" />
@@ -865,6 +866,7 @@
     <ClCompile Include="src\Notch\Libraries\Libs\Kiero\Kiero.cpp" />
     <ClCompile Include="src\Notch\Manager\Manager.cpp" />
     <ClCompile Include="src\Notch\Notch.cpp" />
+    <ClCompile Include="src\Notch\SDK\Item\ItemStack.cpp" />
     <ClCompile Include="src\Notch\Utils\ImGuiUtils.cpp" />
     <ClCompile Include="src\Notch\Utils\TextFormat.cpp" />
     <ClCompile Include="src\Notch\Utils\TimeUtil.cpp" />

@@ -12,7 +12,7 @@ public:
 		if (!moduleMgr->isInitialized())
 			return Memory::CallFunc<float, void*>(OptionsgetGamma, _this);;
 		static Camera* cameraMod = moduleMgr->getModule<Camera>();
-		if (cameraMod->isEnabled() && cameraMod->intensity)
+		if (cameraMod->isEnabled() && cameraMod->fullbright)
 			return cameraMod->intensity;
 		return Memory::CallFunc<float, void*>(OptionsgetGamma, _this);;
 	};

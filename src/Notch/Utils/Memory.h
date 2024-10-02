@@ -10,6 +10,7 @@
 #include <psapi.h>
 #include "TimeUtil.h"
 #include "../Libraries/Libraries.h"
+#include "../Libraries/Libs/libhat/libhat.hpp"
 #include "Logger.h"
 #include "StringUtil.h"
 
@@ -33,14 +34,6 @@ Ret& direct_access(Type* type, size_t offset) {
     AS_FIELD(type, name, get##name);                                    \
     type get##name() const { return direct_access<type>(ptr, offset); } \
     void set##name(type v) const { direct_access<type>(ptr, offset) = v; }
-
-#define BUILD_ACCESS_STRING(ptr, name, offset)                          \
-    AS_FIELD(std::string, name, get##name);                             \
-    std::string get##name() const { if (ptr) return direct_access<std::string>(ptr, offset); else return ""; } \
-    void set##name(std::string v) const {if (ptr) direct_access<std::string>(ptr, offset) = v; }
-#define MVCLASS_FIELD(type, name, ...) __declspec(property(get = __get_field_##name, put = __set_field_##name)) type name;                             \
-	type& __get_field_##name() const { return util::directAccess<type>(this, SDK::mvGetOffset<__VA_ARGS__>()); }                                    \
-	template<typename T> void __set_field_##name(const T& value) { util::directAccess<type>(this, (SDK::mvGetOffset<__VA_ARGS__>())) = value; }
 namespace Memory {
     template <typename R, typename... Args>
     R CallFunc(void* func, Args... args)
@@ -55,8 +48,8 @@ namespace Memory {
         uintptr_t newAddr = ptr + *reinterpret_cast<int*>(ptr + offset) + (offset + 4);
         return newAddr;
     }
-    template <size_t index, typename TRet, typename... TArgs>
-    extern TRet CallVFunc(void* thisptr, TArgs... argList) {
+    template <typename TRet, typename... TArgs>
+    extern TRet CallVFunc(void* thisptr, size_t index, TArgs... argList) {
         using TFunc = TRet(__fastcall*)(void*, TArgs...);
         TFunc* vtable = *reinterpret_cast<TFunc**>(thisptr);
         return vtable[index](thisptr, argList...);
@@ -87,7 +80,6 @@ namespace Memory {
     {
         if ((uintptr_t)pTarget == 0u) 
             return false;
-        uint64_t start = TimeUtil::getCurrentMs();
         if (MH_CreateHook(pTarget, pDetour, (LPVOID*)pOriginal) != MH_OK)
         {
             logF(StringUtil::combine("[", pTarget, ",", sigId, "] Failed to create hook").c_str(), "FAIL");
@@ -102,17 +94,33 @@ namespace Memory {
 
         std::stringstream ss;
         ss << "Minecraft.Windows.exe+" << std::hex << (uintptr_t)pTarget - range_start;
-        uint64_t time = TimeUtil::getCurrentMs() - start;
 
-        logF(StringUtil::combine("[", ss.str().c_str(), ",", sigId, "] Successfully Hooked in ", time, "ms.").c_str(), "OKAY");
+        logF(StringUtil::combine("[", ss.str().c_str(), ",", sigId, "] Successfully Hooked").c_str(), "OKAY");
 
         return true;
     }
+
 #define INRANGE(x, a, b) (x >= a && x <= b)
 #define GET_BYTE(x) ((GET_BITS(x[0]) << 4) | GET_BITS(x[1]))
 #define GET_BITS(x) (INRANGE((x & (~0x20)), 'A', 'F') ? ((x & (~0x20)) - 'A' + 0xa) : (INRANGE(x, '0', '9') ? (x - '0') : 0))
     inline uintptr_t findSignature(const char* szSignature) {
-        const char* pattern = szSignature;
+        std::string_view signature(szSignature);
+
+        const auto parsed = hat::parse_signature(signature);
+        if (!parsed.has_value()) {
+            //logF(std::format("[ Runtime Scanner ] Failed to parse signature: ", std::string(signature)), "INFO");
+            return 0u;
+        }
+
+        const auto result = hat::find_pattern(parsed.value());
+
+        if (!result.has_result()) {
+            //logF(std::format("[ Runtime Scanner ] Failed to find signature: ", std::string(signature)), "INFO");
+            return 0u;
+        }
+
+        return reinterpret_cast<uintptr_t>(result.get());
+        /*const char* pattern = szSignature;
         uintptr_t firstMatch = 0;
         static const auto rangeStart = (uintptr_t)GetModuleHandleA("Minecraft.Windows.exe");
         static MODULEINFO miModInfo;
@@ -156,7 +164,7 @@ namespace Memory {
                 firstMatch = 0;
             }
         }
-        return 0u;
+        return 0u;*/
     }
     static void* addSignature(const char* sig) {
         return (void*)findSignature(sig);

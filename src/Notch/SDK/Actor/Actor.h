@@ -214,10 +214,7 @@ public:
 		return getComponent<MobEffectsComponent>();
 	}
 	void swing() {
-		if (Manager::checkVer(Manager::targetVersions1_21_X))
-			Memory::CallVFunc<117, void>(this);
-		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X))
-			Memory::CallVFunc<115, void>(this);
+		Memory::CallVFunc<void>(this, getIndex("Actor::swing"));
 	}
 };
 
@@ -236,8 +233,8 @@ public:
 		vsprintf_s(message, 400, Message.c_str(), arg);
 		std::string* MessagePointer = new std::string(std::string(BOLD) + std::string(BLACK) + "[" + std::string(AQUA) + "Notch" + std::string(BLACK) + "] " + std::string(RESET) + message);
 		std::optional<std::string> opt = {};
-		if (Manager::checkVer(Manager::targetVersions1_21_X)) Memory::CallVFunc<213, void, std::string*>((void*)this, MessagePointer);
-		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X)) Memory::CallVFunc<210, void, std::string*>((void*)this, MessagePointer, opt);
+		if (Manager::checkVer(Manager::targetVersions1_21_X)) Memory::CallVFunc<void, std::string*>((void*)this, getIndex("ServerPlayer::displayClientMessage"), MessagePointer);
+		else if (Manager::checkVer(Manager::targetVersions1_21_2X) || Manager::checkVer(Manager::targetVersions1_21_3X)) Memory::CallVFunc<void, std::string*>((void*)this, getIndex("ServerPlayer::displayClientMessage"), MessagePointer, opt);
 	};
 };
 

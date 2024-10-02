@@ -15,8 +15,8 @@ class GameMode {
     uintptr_t** VTable;
 public:
     BUILD_ACCESS(this, class Player*, plr, 0x8);
-    BUILD_ACCESS(this, float, LastBreakProgress, getOffset("GameMode::lastBreakProgress"))
-    BUILD_ACCESS(this, float, BreakProgress, getOffset("GameMode::breakProgress"))
+    BUILD_ACCESS(this, float, breakProgress, 0x14);
+    BUILD_ACCESS(this, float, lastBreakProgress, 0x20);
 public:
     virtual ~GameMode();// 0 Destructor
     virtual void startDestroyBlock(Vec3 const& pos, unsigned char blockSide, bool auth); // 1

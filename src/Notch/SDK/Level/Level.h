@@ -5,25 +5,13 @@
 #include "../Actor/Actor.h"
 class Level {
 public:
-    std::vector<Actor*> getRuntimeActorList() {
+	std::vector<Actor*> getRuntimeActorList() {
 		std::vector<Actor*> listOut;
-		if (Manager::checkVer(Manager::targetVersions1_21_X))
-			Memory::CallVFunc<278, void, decltype(&listOut)>(this, &listOut);
-		else if (Manager::checkVer(Manager::targetVersions1_21_2X)) 
-			Memory::CallVFunc<279, void, decltype(&listOut)>(this, &listOut);
+		Memory::CallVFunc<void, decltype(&listOut)>(this, getIndex("Level::getRuntimeActorList"), &listOut);
 		return listOut;
-    };
-
-	class HitResult* getHitResult() {
-		if (Manager::checkVer(Manager::targetVersions1_21_X))
-			return Memory::CallVFunc<288, HitResult*>(this);
-		else if (Manager::checkVer(Manager::targetVersions1_21_2X))
-			return Memory::CallVFunc<289, HitResult*>(this);
 	};
-	class HitResult* getLiquidHitResult() {
-		if (Manager::checkVer(Manager::targetVersions1_21_X))
-			return Memory::CallVFunc<289, HitResult*>(this);
-		else if (Manager::checkVer(Manager::targetVersions1_21_2X))
-			return Memory::CallVFunc<290, HitResult*>(this);
+
+	class HitResult& getHitResult() {
+		return *hat::member_at<std::shared_ptr<HitResult>>(this, getOffset("Level::hitResult"));
 	};
 };

@@ -42,11 +42,11 @@ public:
     BUILD_ACCESS(this, class UIScene*, UIScene, 0xF0);
 
     void flushText(float lastFlush) {
-        Memory::CallVFunc<6, void, float>(this, lastFlush);
+        Memory::CallVFunc<void, float>(this, 6, lastFlush);
     }
 
     void drawImage(TexturePtr const& texture, Vec2 const& pos, Vec2 const& size, Vec2 const& uvPos, Vec2 const& uvSize) {
-        Memory::CallVFunc<7, void, TexturePtr const&, Vec2 const&, Vec2 const&, Vec2 const&, Vec2 const&>(this, texture, pos, size, uvPos, uvSize);
+        Memory::CallVFunc<void, TexturePtr const&, Vec2 const&, Vec2 const&, Vec2 const&, Vec2 const&>(this, 7, texture, pos, size, uvPos, uvSize);
     }
 
     virtual ~MinecraftUIRenderContext() = 0; // 0x0

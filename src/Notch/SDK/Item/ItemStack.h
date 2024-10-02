@@ -2,15 +2,23 @@
 #include <string_view>
 #include <optional>
 #include "../Block/BlockLegacy.h"
+#include "../../Manager/Manager.h"
+#include "../../Utils/Memory.h"
 #include "Item.h"
-
+#include "../Misc/WeakPtr.h"
 class ItemStack {
 public:
-	virtual void destructor(); // 0
-	virtual void reinit(std::basic_string_view<char, std::char_traits<char>>, int, int); // 1
-	virtual void reinit(const BlockLegacy&, int); // 2
-	virtual void reinit(const Item&, int, int); // 3
-	virtual void setNull(std::optional<std::string>); // 4
-	virtual std::string toString() const; // 5
-	virtual std::string toDebugString() const; // 6
+    uintptr_t** vtable; // 0x0
+    WeakPtr<Item> item; // 0x8
+    void* userData;     // 0x10, CompoundTag*
+    class Block* block; // 0x18
+
+    BUILD_ACCESS(this, void*, tag, getOffset("ItemStack::tag"));
+    BUILD_ACCESS(this, unsigned char, count, getOffset("ItemStack::count"));
+
+    [[nodiscard]] bool isValid() const;
+    [[nodiscard]] Item* getItem() const;
+    short getDamageValue();
+    short getMaxDamage();
+    bool isEnchanted();
 };

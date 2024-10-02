@@ -2,14 +2,14 @@
 class MaterialPtr;
 class LevelRendererPlayer {
 public:
-	BUILD_ACCESS(this, Vec3, cameraPos, 0x5FC); // 1.21.2
+	BUILD_ACCESS(this, Vec3, cameraPos, getOffset("LevelRendererPlayer::cameraPos"));
 };
 
 class LevelRenderer {
 public:
 	LevelRendererPlayer* getLevelRendererPlayer()
 	{
-		return *reinterpret_cast<LevelRendererPlayer**>((uintptr_t)(this) + 0x308); // 1.21.2 // Under level renderer index
+		return *reinterpret_cast<LevelRendererPlayer**>((uintptr_t)(this) + 0x308);
 		/*
 		* v8 = *(_DWORD **)(v7 + 0x308);
 		*(_DWORD *)(a1 + 132) = v8[383];

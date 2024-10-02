@@ -16,48 +16,30 @@ public:
     BUILD_ACCESS(this, LevelRenderer*, LevelRender, 0xE0);
 public:
     glmatrixf* getrefdef() {
-        return (glmatrixf*)((uintptr_t)(this) + 0x330);
+        return (glmatrixf*)((uintptr_t)(this) + getOffset("ClientInstance::getrefdef"));
     }
     auto getBlockSource() -> class BlockSource* {
-        return Memory::CallVFunc<28, BlockSource*>(this);
+        return Memory::CallVFunc<BlockSource*>(this, 28);
     }
 
     auto getLocalPlayer() -> class LocalPlayer* {
-        return Memory::CallVFunc<29, LocalPlayer*>(this);
+        return Memory::CallVFunc<LocalPlayer*>(this, 29);
     };
-    bool isInGame() {
-        return !Memory::CallVFunc<175, bool>((void*)this);
-    }
-
     Vec3 getOrigin() {
         return LevelRender->getOrigin();
     };
 
     void grabMouse() {
-        if (Manager::checkVer(Manager::targetVersions1_21_X))
-            Memory::CallVFunc<332, void>((void*)this);
-        if (Manager::checkVer(Manager::targetVersions1_21_2X))
-            Memory::CallVFunc<333, void>((void*)this);
-        if (Manager::checkVer(Manager::targetVersions1_21_3X))
-            Memory::CallVFunc<335, void>((void*)this);
+        Memory::CallVFunc<void>((void*)this, getIndex("ClientInstance::grabMouse"));
     };
     void releaseMouse() {
-        if (Manager::checkVer(Manager::targetVersions1_21_X))
-            Memory::CallVFunc<333, void>((void*)this);
-        if (Manager::checkVer(Manager::targetVersions1_21_2X))
-            Memory::CallVFunc<334, void>((void*)this);
-        if (Manager::checkVer(Manager::targetVersions1_21_3X))
-            Memory::CallVFunc<336, void>((void*)this);
+        Memory::CallVFunc<void>((void*)this, getIndex("ClientInstance::releaseMouse"));
     };
     Vec2 getMousePos();
-    float getFovX() {
-         return (float)((uintptr_t)(this) + 0x6F0);
-    }
-    float getFovY() {
-        return (float)((uintptr_t)(this) + 0x704);
-    }
-
     Vec2 getFov() {
-        return Vec2(getFovX(), getFovY());
+        return Vec2(
+            (float)((uintptr_t)(this) + getOffset("ClientInstance::getFovX")), // X
+            (float)((uintptr_t)(this) + getOffset("ClientInstance::getFovY"))  // Y
+        );
     }
 };
