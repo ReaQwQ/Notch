@@ -30,7 +30,7 @@ void PotionHud::onImGuiRender(ImDrawList* d) {
             << std::setw(2) << std::setfill('0') << Minutes << ":"
             << std::setw(2) << std::setfill('0') << Seconds;
         std::string EffectTime = oss.str();
-        ImGuiUtils::drawText(Vec2(RenderPos.x + ImGuiUtils::getTextWidth(EffectNameAndLevel), RenderPos.y), EffectTime, UIColor(255, 255, 255), size);
+        ImGuiUtils::drawText(Vec2(RenderPos.x + ImGuiUtils::getTextWidth(EffectNameAndLevel, size), RenderPos.y), EffectTime, UIColor(255, 255, 255), size);
 
         heightIncrement += padding * size;
     }

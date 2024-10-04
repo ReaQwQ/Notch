@@ -467,9 +467,11 @@
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\Colors.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\CustomFont.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Combat\KillAura.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Combat\Surround.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Module.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Movement\Velocity.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Player\AutoEmote.h" />
+    <ClInclude Include="src\Notch\Client\Module\Modules\Player\PacketMine.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\NameTags.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\PotionHud.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Render\Camera.h" />
@@ -481,6 +483,7 @@
     <ClInclude Include="src\Notch\Hook\DXHook.h" />
     <ClInclude Include="src\Notch\Hook\HookManager.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Actor\Actor_lerp.h" />
+    <ClInclude Include="src\Notch\Hook\Hooks\Actor\GameMode_startDestroyBlock.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\BaseHook.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Misc\ClientInstance_update.h" />
     <ClInclude Include="src\Notch\Hook\Hooks\Network\ConnectionRequest_create.h" />
@@ -838,9 +841,11 @@
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\Colors.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\CustomFont.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Combat\KillAura.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Combat\Surround.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Module.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Movement\Velocity.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Player\AutoEmote.cpp" />
+    <ClCompile Include="src\Notch\Client\Module\Modules\Player\PacketMine.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\NameTags.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\PotionHud.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Render\Camera.cpp" />

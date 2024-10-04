@@ -6,6 +6,7 @@
 
 //Combat
 #include "Modules/Combat/KillAura.h"
+#include "Modules/Combat/Surround.h"
 //Misc
 //Render
 #include "Modules/Render/PotionHud.h"
@@ -15,6 +16,7 @@
 //Movement
 #include "Modules/Movement/Velocity.h"
 //Player
+#include "Modules/Player/PacketMine.h"
 #include "Modules/Player/AutoEmote.h"
 //Client
 #include "Modules/Client/CustomFont.h"

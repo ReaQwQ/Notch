@@ -44,6 +44,7 @@ void DXHook::onImGuiRender(ImDrawList* drawlist) {
     static ClickGui* clickGuiMod = moduleMgr->getModule<ClickGui>();
     clickGuiMod->render(drawlist);
 }
+
 HRESULT DXHook::presentCallback(IDXGISwapChain3* pSwapChain, UINT syncInterval, UINT flags) {
     if (Game.getClientInstance() == nullptr || Game.getGuiData() == nullptr)
         return oPresent(pSwapChain, syncInterval, flags);

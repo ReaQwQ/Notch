@@ -1,5 +1,5 @@
 #pragma once
-
+#include <regex>
 #include "../BaseHook.h"
 
 #include "../../../Client/Module/ModuleManager.h"
@@ -21,11 +21,15 @@ public:
 			MinecraftUIRenderContext__drawImage, renderCtx, texturePtr, pos, size, uvPos, uvSize);
 	};
 	static void MinecraftUIRenderContext__drawTextCallback(MinecraftUIRenderContext* renderCtx, class Font* font, const float* pos, std::string const& text, MC_Color const& color, float alpha, TextAlignment textAlignment, TextMeasureData const& textMeasureData, CaretMeasureData const& caretMeasureData) {
+		std::string changed = text;
+		changed = regex_replace(changed, (std::regex)Game.getLocalPlayer()->getNameTag(), std::string("Notch User"));
+
 		Memory::CallFunc<void, MinecraftUIRenderContext*, Font*, const float*, std::string const&, MC_Color const&, float, TextAlignment, TextMeasureData const&, CaretMeasureData>(
-			MinecraftUIRenderContext__drawText, renderCtx, font, pos, text, color, alpha, textAlignment, textMeasureData, caretMeasureData);
+			MinecraftUIRenderContext__drawText, renderCtx, font, pos, changed, color, alpha, textAlignment, textMeasureData, caretMeasureData);
 	};
 	static __int64 ScreenView__SetupAndRenderCallback(ScreenView* _this, MinecraftUIRenderContext* ctx) {
-		//renerCtxVTable = *(uintptr_t**)ctx;
+		//logF(StringUtil::combine("MUIRC Found at: ", (uintptr_t)(ctx + 0x0)), "INFO");
+		renerCtxVTable = *(uintptr_t**)(ctx);
 
 		moduleMgr->onRender(ctx);
 		return Memory::CallFunc<__int64, ScreenView*, MinecraftUIRenderContext*>(ScreenView__SetupAndRender, _this, ctx);

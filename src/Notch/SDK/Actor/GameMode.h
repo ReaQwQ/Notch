@@ -15,28 +15,29 @@ class GameMode {
     uintptr_t** VTable;
 public:
     BUILD_ACCESS(this, class Player*, plr, 0x8);
-    BUILD_ACCESS(this, float, breakProgress, 0x14);
+    BUILD_ACCESS(this, Vec3i, breakPos, 0x10);
     BUILD_ACCESS(this, float, lastBreakProgress, 0x20);
+    BUILD_ACCESS(this, float, breakProgress, 0x24);
 public:
     virtual ~GameMode();// 0 Destructor
-    virtual void startDestroyBlock(Vec3 const& pos, unsigned char blockSide, bool auth); // 1
-    virtual void destroyBlock(Vec3 const& a1, unsigned char a2, bool auth); // 2
-    virtual void continueDestroyBlock(Vec3 const& a1, unsigned char a2, Vec3 const& a3, bool& a4); // 3
-    virtual void stopDestroyBlock(Vec3 const& a1); // 4
-    virtual void startBuildBlock(Vec3 const& a1, unsigned char a2, bool auth); // 5
-    virtual void buildBlock(Vec3 const& a1, unsigned char a2, bool auth); // 6
-    virtual void continueBuildBlock(Vec3 const& a1, unsigned char a2); // 7
-    virtual void stopBuildBlock(); // 8
-    virtual void tick(); // 9
-    virtual void getPickRange(InputMode const& a1, bool a2); // 10
-    virtual void useItem(ItemStack& a1); // 11
-    virtual void useItemOn(ItemStack& a1, Vec3 const& a2, unsigned char a3, Vec3 const& a4, Block const* a5); // 12
-    virtual void interact(Actor* a1, Vec3 const& a2); // 13
-    virtual void attack(class Actor& a1); // 14
-    virtual void releaseUsingItem(); // 15
+    virtual __int64 startDestroyBlock(Vec3i const& pos, unsigned char blockSide, bool& isDestroyedOut); // 1
+    virtual __int64 destroyBlock(const Vec3i&, unsigned char blockSide); // 2
+    virtual __int64 continueDestroyBlock(Vec3i const& a1, unsigned char a2, Vec3 const& a3, bool& a4); // 3
+    virtual __int64 stopDestroyBlock(Vec3i const&); // 4
+    virtual __int64 startBuildBlock(Vec3i const& a1, unsigned char a2, bool auth); // 5
+    virtual __int64 buildBlock(Vec3i const& a1, unsigned char a2, bool auth); // 6
+    virtual __int64 continueBuildBlock(Vec3i const& a1, unsigned char a2); // 7
+    virtual __int64 stopBuildBlock(); // 8
+    virtual __int64 tick(); // 9
+    virtual __int64 getPickRange(InputMode const& a1, bool a2); // 10
+    virtual __int64 useItem(class ItemStack& a1); // 11
+    virtual __int64 useItemOn(ItemStack& a1, Vec3i const& a2, unsigned char a3, Vec3 const& a4, class Block const* a5); // 12
+    virtual __int64 interact(Actor* a1, Vec3 const& a2); // 13
+    virtual __int64 attack(Actor&); // 14
+    virtual __int64 releaseUsingItem(); // 15
     virtual void setTrialMode(bool a1); // 16
     virtual void isInTrialMode(); // 17
-    virtual void registerUpsellScreenCallback(std::function<void> a3); // 18
+    virtual __int64 registerUpsellScreenCallback(std::function<void> a3); // 18
 public:
     float getDestroyRate(Block const& block) {
         using getDestroyRate = float(__fastcall*)(GameMode*, Block const&);

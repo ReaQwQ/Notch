@@ -98,11 +98,6 @@ void Manager::init() {
             addOffset("Player::getSupplies", 0x760);
            
             addOffset("PlayerInventory::inventory", 0xC0);
-
-            addOffset("MoveInputComponent::forward", 0x0A);
-            addOffset("MoveInputComponent::backward", 0x0B);
-            addOffset("MoveInputComponent::left", 0x0C);
-            addOffset("MoveInputComponent::right", 0x0D);
         }
         else if (checkVer(targetVersions1_21_2X)) {
             addOffset("ClientInstance::getrefdef", 0x330);
@@ -120,15 +115,10 @@ void Manager::init() {
             addOffset("Player::gamemode", 0xB00);
             addOffset("Player::getSupplies", 0x628);
             addOffset("PlayerInventory::inventory", 0xB8);
-
-            addOffset("MoveInputComponent::forward", 0x0A);
-            addOffset("MoveInputComponent::backward", 0x0B);
-            addOffset("MoveInputComponent::left", 0x0C);
-            addOffset("MoveInputComponent::right", 0x0D);
         }
         else if (checkVer(targetVersions1_21_3X)) {
-            addOffset("ClientInstance::guiData", 0x588);
             addOffset("ClientInstance::getrefdef", 0x360);
+            addOffset("ClientInstance::guiData", 0x588);
             addOffset("ClientInstance::getFovX", 0x720);
             addOffset("ClientInstance::getFovY", 0x734);
 
@@ -144,11 +134,6 @@ void Manager::init() {
 
             addOffset("PlayerInventory::inventory", 0xB8);
 
-            addOffset("MoveInputComponent::forward", 0x2C);
-            addOffset("MoveInputComponent::backward", 0x2D);
-            addOffset("MoveInputComponent::left", 0x2E);
-            addOffset("MoveInputComponent::right", 0x2F);
-
         };
         inittime = TimeUtil::getCurrentMs() - start;
         logF(StringUtil::combine("Initialized Offset in ", inittime, "ms"), "OKAY");
@@ -159,6 +144,7 @@ void Manager::init() {
         addSignature("Actor::lerpMotion", "48 83 EC ? 4C 8B 81 ? ? ? ? 4D 85 C0 74 ? 8B 02");
         addSignature("Actor::getNameTag", "48 83 EC ? 48 8B 81 ? ? ? ? 48 85 C0 74 ? 48 8B 08 BA ? ? ? ? 48 8B 40 ? 48 2B C1 48 C1 F8 ? 66 3B D0 73 ? 48 8B 41 ? 48 85 C0 74 ? 38 50 ? 75 ? 48 83 C0");
         addSignature("Actor::playEmote", "48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 41 0F B6 F8");
+        addSignature("BlockSource::getSeenPerscent", "40 55 57 41 54 41 55 41 56 41 57 48 81 EC A8");
         addSignature("Level::tick", "48 89 5c 24 ? 57 48 81 ec ? ? ? ? 48 8b 05 ? ? ? ? 48 33 c4 48 89 84 24 ? ? ? ? 48 8b d9 48 8b 01 48 8b 80 ? ? ? ? ff 15 ? ? ? ? 48 8d 0d");
         addSignature("MinecraftPackets::createPacket", "E8 ? ? ? ? 90 48 83 BD ? ? 00 00 ? 0F 84 ? ? ? ? ff");
         addSignature("MouseDevice::feed", "48 8B C4 48 89 58 ? 48 89 68 ? 48 89 70 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 44 0F B7 BC 24");
@@ -186,7 +172,7 @@ void Manager::init() {
             addSignature("ThirdPersonNameTag", "0f 84 ? ? ? ? 49 8b d6 48 8b ce e8 ? ? ? ? 84 c0 0f 84");
             addSignature("HurtColor", "E8 ? ? ? ? E9 ? ? ? ? 8B 43 ? 48 8D 54 24 ? 48 8B 4B ? 89 44 24 ? E8 ? ? ? ? 4C 8B D8");
             addSignature("ItemRenderer::renderGuiItemNew", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 E8 48 81 EC 18 01 00 00 0F 29 B4 24 00 01 00 00 48");
-            addSignature("LevelRenderer::renderLevel", "48 89 5C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 84 24 ? ? ? ? 49 8B F8 48 8B DA 48 8B F1 33 D2");
+            addSignature("LevelRenderer::renderLevel", "48 89 5C 24 ? 48 89 74 24 ? 55 57 41 56 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 49 8B F0 48 8B DA 4C 8B F1");
             addSignature("HudMobEffectRenderer::render", "48 8D 05 ? ? ? ? 48 89 85 ? ? ? ? 48 C7 85 ? ? ? ? ? ? ? ? 0F 28 85 ? ? ? ? 66 0F 7F 85 ? ? ? ? 48 8D 95 ? ? ? ? 48 8D 8D ? ? ? ? E8 ? ? ? ? 0F 57 C0 0F 11 85");
             addSignature("ConnectionRequest::create", "40 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 4D 8B E0");
             addSignature("ActorRenderDispatcher::render", "48 89 5C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 ? 4D 8B E9 49 8B F8 48 8B F2");

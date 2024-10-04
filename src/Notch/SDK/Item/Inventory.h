@@ -1,6 +1,7 @@
 #include "../Item/ItemStack.h"
 #include "../Actor/Actor.h"
 #include "../Block/Block.h"
+#include "../Block/BlockSource.h"
 
 class Inventory {
 public:

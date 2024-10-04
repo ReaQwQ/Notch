@@ -15,6 +15,7 @@
 #include "Hooks/Device/MouseDevice_feed.h"
 #include "Hooks/Misc/ClientInstance_update.h"
 #include "Hooks/Packet/LoopbackPacketSender_SendToServer.h"
+#include "Hooks/Actor/GameMode_startDestroyBlock.h"
 #include "Hooks/Actor/Actor_lerp.h"
 #include "Hooks/Actor/Level_tick.h"
 // End
@@ -36,6 +37,7 @@ void HookManager::init() {
 	Hooks.push_back(new HudMobEffectRenderer__renderHook());
 	Hooks.push_back(new ActorRenderDispatcher__renderHook());
 	Hooks.push_back(new Options__getGammaHook());
+	Hooks.push_back(new GameMode__startDestroyBlockHook());
 	Hooks.push_back(new Actor__lerpHook());
 	Hooks.push_back(new Level__tickHook());
 	for (Hook* hook : Hooks) {

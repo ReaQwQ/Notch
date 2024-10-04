@@ -14,6 +14,7 @@ void ModuleManager::initModules() {
 		//Movement
 		moduleList.push_back(new Velocity());
 		//Player
+		moduleList.push_back(new PacketMine());
 		moduleList.push_back(new AutoEmote());
 		//Client
 		moduleList.push_back(new CustomFont());

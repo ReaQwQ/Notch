@@ -1,5 +1,6 @@
 #pragma once
-
+#include "BlockLegacy.h"
+#include <stdint.h>
 class Block {
 public:
 	BUILD_ACCESS(this, uint8_t, data, 0x8);
@@ -9,8 +10,4 @@ public:
 public:
 	virtual ~Block();
 	virtual int getRenderLayer();
-};
-
-class BlockSource {
-public:
 };
