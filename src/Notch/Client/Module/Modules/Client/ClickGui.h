@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Debugconsole.h"
 #include "../Module.h"
 #include "../../ModuleManager.h"
 #include "../../../Config/ConfigManager.h"

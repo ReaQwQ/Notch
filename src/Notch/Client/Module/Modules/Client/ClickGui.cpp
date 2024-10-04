@@ -25,14 +25,19 @@ bool ClickGui::isVisible() {
 }
 
 void ClickGui::onEnable() {
+	static DebugConsole* DebugConsoleMod = moduleMgr->getModule<DebugConsole>();
+	DebugConsoleMod->addLog("open clikcgui");
 	Game.getClientInstance()->releaseMouse();
 }
 
 void ClickGui::onDisable() {
 	if (Game.getLocalPlayer() != nullptr) Game.getClientInstance()->grabMouse();
+	static DebugConsole* DebugConsoleMod = moduleMgr->getModule<DebugConsole>();
+	DebugConsoleMod->addLog("close clikcgui");
 	isSearching = false;
 	searchingModule.clear();
 	if (isChoosingKeyBindPtr != nullptr) *isChoosingKeyBindPtr = false;
+
 }
 
 void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool& cancel) {
@@ -111,6 +116,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 		return;
 	}
 	static Colors* colorsMod = moduleMgr->getModule<Colors>();
+	
 	ClientInstance* ci = Game.getClientInstance();
 	Vec2 mousePos = ci->getMousePos();
 	ci->releaseMouse();
@@ -214,6 +220,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 					ImGuiUtils::fillRectangle(mRectPos, mbgColor);
 
 					if (mod->isEnabled()) {
+						
 						UIColor altColor = mainColor;
 						altColor.a *= 0.03f;
 						drawlist->AddRectFilledMultiColor(
@@ -224,6 +231,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 							mainColor.toImColor(),
 							altColor.toImColor()
 						);
+
 					}
 
 					Vec2 mTextPos = { mRectPos.x + textPadding * 4.f, mRectPos.y + textPadding };
