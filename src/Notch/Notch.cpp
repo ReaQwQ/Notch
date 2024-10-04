@@ -1,4 +1,5 @@
 #include "Notch.h"
+
 bool Initialized;
 bool& MH_Initialized() {
     return Initialized;
@@ -59,10 +60,13 @@ void Notch::initialize() {
 
     std::string ver = version::GET_VERSION();
     logF(StringUtil::combine("MC Version ", ver), "INFO");
+    g_DebugConsole.addNotchLog("MC Version " + ver, "INFO");
     bool supported = Manager::checkVer(version::supportedVersion);
     if (!supported) {
         logF("This Minecraft version is not supported", "FAIL");
         logF(StringUtil::combine("Supported Version: ", StringUtil::join(version::supportedVersion, ", ")), "INFO");
+        g_DebugConsole.addNotchLog("This Minecraft version is not supported", "FAIL");
+        g_DebugConsole.addNotchLog("Supported Version: " + StringUtil::join(version::supportedVersion, ", "), "INFO");
         Run::closeConsole = false;
         Run::running = false;
     }
@@ -70,14 +74,17 @@ void Notch::initialize() {
         Manager::init();
         AudioSystem::getInstance().play(xorstr_("Audios\\inject.wav"));
         logF(xorstr_("Initializing Hooks"), xorstr_("WAIT"));
+        g_DebugConsole.addNotchLog("Initializing Hooks", "WAIT");
         if (MH_Initialize() == MH_OK) {
             MH_Initialized() = true;
             HookManager::initImGui();
             HookManager::init();
         }
         logF(xorstr_("ClientInstance"), Game.getClientInstance() == nullptr ? xorstr_("NULLPTR") : xorstr_("NOT NULLPTR"));
+        g_DebugConsole.addNotchLog("ClientInstance", Game.getClientInstance() == nullptr ? "NULLPTR" : "NOT NULLPTR");
         if (Game.getClientInstance() != nullptr)
             logF(xorstr_("GuiData"), Game.getGuiData() == nullptr ? xorstr_("NULLPTR") : xorstr_("NOT NULLPTR"));
+            g_DebugConsole.addNotchLog("GuiData", Game.getGuiData() == nullptr ? "NULLPTR" : "NOT NULLPTR");
         winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().CoreWindow().Dispatcher().RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, []() {
             winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().Title(L"Notch");
             });
@@ -92,6 +99,7 @@ void Notch::initialize() {
         cmdMgr->initCommands();
         logF("Initialized Commands", "OKAY");
         logF("Initialized Client", "OKAY");
+        g_DebugConsole.addNotchLog("Initialized Client", "OKAY");
 #if _DEBUG
 #else
         static LocalPlayer* lp = Game.getLocalPlayer();

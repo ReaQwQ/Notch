@@ -154,6 +154,7 @@
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>${SolutionDir}\Notch\Notch\Libraries\Libs\</AdditionalLibraryDirectories>
       <PerUserRedirection>true</PerUserRedirection>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -465,6 +466,7 @@
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\ArrayList.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\ClickGui.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\Colors.h" />
+	<ClInclude Include="src\Notch\Client\Module\Modules\Client\Debugconsole.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Client\CustomFont.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Combat\KillAura.h" />
     <ClInclude Include="src\Notch\Client\Module\Modules\Module.h" />
@@ -836,6 +838,7 @@
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\ArrayList.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\ClickGui.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\Colors.cpp" />
+	<ClCompile Include="src\Notch\Client\Module\Modules\Client\Debugconsole.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Client\CustomFont.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Combat\KillAura.cpp" />
     <ClCompile Include="src\Notch\Client\Module\Modules\Module.cpp" />

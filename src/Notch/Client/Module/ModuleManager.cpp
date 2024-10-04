@@ -17,6 +17,7 @@ void ModuleManager::initModules() {
 		moduleList.push_back(new AutoEmote());
 		//Client
 		moduleList.push_back(new CustomFont());
+		moduleList.push_back(new DebugConsole());
 		moduleList.push_back(new ClickGui());
 		moduleList.push_back(new Colors());
 		moduleList.push_back(new ArrayList());
