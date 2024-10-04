@@ -1,5 +1,6 @@
 #include "ClickGui.h"
-
+#include "../../../../SDK/Attribute/BaseAttributeMap.h"
+#include <string>
 void getModuleListByCategory(Category category, std::vector<Module*>& modList) {
 	for (Module* mod : *moduleMgr->getModuleList()) {
 		if (mod->getCategory() == category) {
@@ -25,17 +26,24 @@ bool ClickGui::isVisible() {
 }
 
 void ClickGui::onEnable() {
+	static DebugConsole* DebugConsoleMod = moduleMgr->getModule<DebugConsole>();
+
+	//DebugConsoleMod->addLog(std::to_string(sizeof(BaseAttributeMap)));
 	Game.getClientInstance()->releaseMouse();
 }
 
 void ClickGui::onDisable() {
 	if (Game.getLocalPlayer() != nullptr) Game.getClientInstance()->grabMouse();
+	static DebugConsole* DebugConsoleMod = moduleMgr->getModule<DebugConsole>();
+	
+	//DebugConsoleMod->addLog(std::to_string(sizeof(BaseAttributeMap)));
 	isSearching = false;
 	searchingModule.clear();
 	if (isChoosingKeyBindPtr != nullptr) *isChoosingKeyBindPtr = false;
+
 }
 
-void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool& cancel) {
+void ClickGui::onMouseClickUpdate(int mouseButton, bool isDown, bool& cancel) {
 	if (mouseButton == 1) {
 		isLeftClickDown = isDown;
 		isHoldingLeftClick = isDown;
@@ -48,9 +56,11 @@ void ClickGui::onMouseUpdate(char mouseButton, bool isDown, bool& cancel) {
 }
 
 void ClickGui::onKey(int key, bool isDown, bool& cancel) {
+	if (!isEnabled()) return;
 	if (key == VK_SHIFT) isShiftDown = isDown;
 	if (key == VK_BACK) isBackKeyDown = isDown;
-	if (isEnabled() && !guiMove) cancel = true;
+	if (!guiMove) cancel = true;
+	if (key == VK_ESCAPE) setEnabled(false);
 	if (isDown) {
 		if (key < 192) {
 			lastKeyPress = key;
@@ -111,6 +121,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 		return;
 	}
 	static Colors* colorsMod = moduleMgr->getModule<Colors>();
+	
 	ClientInstance* ci = Game.getClientInstance();
 	Vec2 mousePos = ci->getMousePos();
 	ci->releaseMouse();
@@ -214,6 +225,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 					ImGuiUtils::fillRectangle(mRectPos, mbgColor);
 
 					if (mod->isEnabled()) {
+						
 						UIColor altColor = mainColor;
 						altColor.a *= 0.03f;
 						drawlist->AddRectFilledMultiColor(
@@ -224,6 +236,7 @@ void ClickGui::render(ImDrawList* drawlist) {
 							mainColor.toImColor(),
 							altColor.toImColor()
 						);
+
 					}
 
 					Vec2 mTextPos = { mRectPos.x + textPadding * 4.f, mRectPos.y + textPadding };

@@ -40,9 +40,10 @@ void DXHook::onImGuiRender(ImDrawList* drawlist) {
     }
 
     moduleMgr->onImGuiRender(drawlist);
-    
     static ClickGui* clickGuiMod = moduleMgr->getModule<ClickGui>();
     clickGuiMod->render(drawlist);
+    static DebugConsole* debugMod = moduleMgr->getModule<DebugConsole>();
+    debugMod->render(drawlist);
 }
 
 HRESULT DXHook::presentCallback(IDXGISwapChain3* pSwapChain, UINT syncInterval, UINT flags) {

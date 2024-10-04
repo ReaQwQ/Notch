@@ -4,7 +4,6 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-
 class Logger {
 public:
 	std::string getTime() {
@@ -26,7 +25,7 @@ public:
 
 	std::string GetColorByStatus(const std::string& status) {
 		static const std::unordered_map<std::string, int> statusColorMap = {
-			{xorstr_("WAIT"), 3}, {xorstr_("STOP"), 3}, {xorstr_("FAIL"), 1}, {xorstr_("NULLPTR"), 1},
+			{xorstr_("WAIT"), 3}, {xorstr_("FAIL"), 1}, {xorstr_("NULLPTR"), 1},
 			{xorstr_("NOT NULLPTR"), 2}, {xorstr_("ERROR"), 1}, {xorstr_("OKAY"), 2},
 			{xorstr_("INFO"), 2}, {xorstr_("SUCCESS"), 2}
 		};

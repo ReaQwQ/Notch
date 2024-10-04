@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Debugconsole.h"
 #include "../Module.h"
 #include "../../ModuleManager.h"
 #include "../../../Config/ConfigManager.h"
@@ -59,9 +59,9 @@ public:
 	ClickGui();
 	~ClickGui();
 
-	void onMouseUpdate(char mouseButton, bool isDown, bool& cancel);
-	void onKey(int key, bool isDown, bool& cancel);
-	void render(ImDrawList* drawlist);
+	virtual void onMouseClickUpdate(int mouseButton, bool isDown, bool& cancel) override;
+	virtual void onKey(int key, bool isDown, bool& cancel) override;
+	virtual void render(ImDrawList* drawlist);
 	virtual bool isVisible() override;
 	virtual void onEnable() override;
 	virtual void onDisable() override;

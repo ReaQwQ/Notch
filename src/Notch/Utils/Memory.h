@@ -13,6 +13,26 @@
 #include "../Libraries/Libs/libhat/libhat.hpp"
 #include "Logger.h"
 #include "StringUtil.h"
+#include <vector>
+
+
+class AddressLogger {
+public:
+    void log(size_t name, uintptr_t address) {
+        logs.push_back(std::to_string(name) + ": " + std::to_string(address));
+    }
+
+    // Change the return type to return the logs
+    std::vector<std::string> printLogs() const {
+        return logs;  // Return the vector of logs
+    }
+
+private:
+    std::vector<std::string> logs;  // Changed access to private
+};
+
+
+
 
 template<typename Ret, typename Type>
 Ret& direct_access(Type* type, size_t offset) {
@@ -23,6 +43,10 @@ Ret& direct_access(Type* type, size_t offset) {
     } u;
     u.source = type;
     u.raw += offset;
+    AddressLogger addressLogger;
+    // Log the access
+    addressLogger.log(offset, reinterpret_cast<uintptr_t>(u.target));
+
     return *u.target;
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "../BaseHook.h"
 #include "../../../GameData.h"
+#include "../../../Client/Module/ModuleManager.h"
 #include "../../../Client/Command/CommandManager.h"
 #include "../../../Client/Command/Prefix.h"
 #include "../../../SDK/ClientInstance/ClientInstance.h"

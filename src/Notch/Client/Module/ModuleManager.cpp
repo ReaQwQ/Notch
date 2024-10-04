@@ -18,6 +18,8 @@ void ModuleManager::initModules() {
 		moduleList.push_back(new AutoEmote());
 		//Client
 		moduleList.push_back(new CustomFont());
+		moduleList.push_back(new DebugConsole());
+		moduleList.push_back(new Test());
 		moduleList.push_back(new ClickGui());
 		moduleList.push_back(new Colors());
 		moduleList.push_back(new ArrayList());
@@ -37,7 +39,6 @@ ModuleManager::~ModuleManager() {
 		delete mod;
 	}
 }
-
 void ModuleManager::onSaveConfig(json* currentConfig) {
 	if (!isInitialized()) return;
 	getModule<ClickGui>()->setEnabled(false);
@@ -54,10 +55,13 @@ void ModuleManager::onLoadConfig(json* config) {
 	getModule<ClickGui>()->setEnabled(false);
 }
 
-void ModuleManager::onKeyUpdate(int key, bool isDown) {
+void ModuleManager::onKeyUpdate(int key, bool isDown, bool& cancel) {
 	if (!isInitialized()) return;
 	for (Module* mod : moduleList) {
-		mod->onKeyUpdate(key, isDown);
+		if (mod->getModuleName() == "ClickGui") mod->onKeyUpdate(key, isDown); if (mod->getModuleName() != "ClickGui" && Game.canUseMoveKeys())
+			mod->onKeyUpdate(key, isDown);
+		mod->onKey(key, isDown, cancel);
+
 	}
 }
 void ModuleManager::onImGuiRender(ImDrawList* drawlist) {
@@ -75,6 +79,24 @@ void ModuleManager::onTick(LocalPlayer* actor) {
 		}
 	}
 }
+
+void ModuleManager::onMouseClickUpdate(int mousekey, bool isDown, bool& cancel) {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled()) {
+			mod->onMouseClickUpdate(mousekey, isDown, cancel);
+		}
+	}
+};
+
+void ModuleManager::onWheelScroll(bool direction) {
+	if (!isInitialized()) return;
+	for (Module* mod : moduleList) {
+		if (mod->isEnabled()) {
+			mod->onWheelScroll(direction);
+		}
+	}
+};
 
 void ModuleManager::onLevelRender() {
 	if (!isInitialized()) return;

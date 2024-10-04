@@ -19,8 +19,11 @@ public:
 		return Memory::CallFunc<bool, GameMode*, Vec3i const&, uint8_t, bool&>(oGameModestartDestroyBlock, _this, pos, face, isDestroyedOut);
 	};
 	virtual void Initialize() override {
-		while (Game.getLocalPlayer() == nullptr) Sleep(100);
-		auto gmvfTable = *(uintptr_t**)(Game.getLocalPlayer()->getGameMode());
-		Memory::CreateHook((void*)gmvfTable[1], &oGameModestartDestroyBlockHookCallBack, &oGameModestartDestroyBlock, "GameMode::startDestroyBlock Hook");
+		std::thread initThread([this]() {
+			while (Game.getLocalPlayer() == nullptr) Sleep(100);
+			auto gmvfTable = *(uintptr_t**)(Game.getLocalPlayer()->getGameMode());
+			Memory::CreateHook((void*)gmvfTable[1], &oGameModestartDestroyBlockHookCallBack, &oGameModestartDestroyBlock, "GameMode::startDestroyBlock Hook");
+		});
+		initThread.detach();
 	};
 };

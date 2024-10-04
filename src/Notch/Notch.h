@@ -33,6 +33,7 @@
 #include "Client/System/FileSystem.h"
 #include "Client/System/Network.h"
 
+#include "Client/Module/Modules/Client/Debugconsole.h"
 #include "Client/Module/ModuleManager.h"
 #include "Client/Command/CommandManager.h"
 #include "Client/Command/Prefix.h"
@@ -86,3 +87,5 @@ public:
         FreeConsole();
     };
 };
+
+extern void log(std::string msg, std::string titl);

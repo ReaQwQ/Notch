@@ -145,14 +145,11 @@ void Module::onKeyUpdate(int key, bool isDown) {
         }
     }
 }
-
-void Module::onImGuiRender(ImDrawList*) {
-}
-void Module::onTick(LocalPlayer* lp) {
-}
-void Module::onJoiningServer() {
-}
-void Module::onRender(MinecraftUIRenderContext* c) {
-}
-void Module::onLevelRender() {
-}
+void Module::onKey(int key, bool isDown, bool& cancel) {};
+void Module::onImGuiRender(ImDrawList*) {};
+void Module::onTick(LocalPlayer* lp) {}
+void Module::onJoiningServer() {};
+void Module::onRender(MinecraftUIRenderContext* c) {};
+void Module::onLevelRender() {};
+void Module::onMouseClickUpdate(int key, bool isDown, bool& cancel) {};
+void Module::onWheelScroll(bool direction) {};

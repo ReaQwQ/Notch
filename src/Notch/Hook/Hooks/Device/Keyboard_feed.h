@@ -8,9 +8,7 @@ public:
 	static void oKeyboard_feedCallBack(int key, bool isDown) {
 		if ((GetAsyncKeyState(VK_CONTROL) & 0x8000 && GetAsyncKeyState('L') & 0x8000) || key == VK_END) Game.uninject();
 		bool cancel = false;
-		if (moduleMgr->isInitialized())
-			moduleMgr->getModule<ClickGui>()->onKey(key, isDown, cancel);
-		moduleMgr->onKeyUpdate(key, isDown);
+		moduleMgr->onKeyUpdate(key, isDown, cancel);
 		if (!cancel)
 			return Memory::CallFunc<void, int, bool>(
 				oKeyboard_feed, key, isDown

@@ -29,7 +29,7 @@ public:
 	};
 	static __int64 ScreenView__SetupAndRenderCallback(ScreenView* _this, MinecraftUIRenderContext* ctx) {
 		//logF(StringUtil::combine("MUIRC Found at: ", (uintptr_t)(ctx + 0x0)), "INFO");
-		renerCtxVTable = *(uintptr_t**)(ctx);
+		//renerCtxVTable = *(uintptr_t**)(ctx);
 
 		moduleMgr->onRender(ctx);
 		return Memory::CallFunc<__int64, ScreenView*, MinecraftUIRenderContext*>(ScreenView__SetupAndRender, _this, ctx);

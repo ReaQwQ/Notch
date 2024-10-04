@@ -20,6 +20,8 @@
 #include "Modules/Player/AutoEmote.h"
 //Client
 #include "Modules/Client/CustomFont.h"
+#include "Modules/Client/Debugconsole.h"
+#include "Modules/Client/Test.h"
 #include "Modules/Client/ClickGui.h"
 #include "Modules/Client/Colors.h"
 #include "Modules/Client/ArrayList.h"
@@ -62,7 +64,9 @@ public:
 public:
     void onSaveConfig(json* currentConfig);
     void onLoadConfig(json* config);
-    void onKeyUpdate(int key, bool isDown);
+    void onKeyUpdate(int key, bool isDown, bool& cancel);
+    void onMouseClickUpdate(int mousekey, bool isDown, bool& cancel);
+    void onWheelScroll(bool direction);
     void onImGuiRender(ImDrawList* drawlist);
     void onTick(LocalPlayer* actor);
     void onLevelRender();

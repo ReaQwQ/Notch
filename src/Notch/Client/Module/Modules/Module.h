@@ -214,7 +214,10 @@ public:
 	virtual void onDisable();
 	virtual void onSaveConfig(json* currentConfig);
 	virtual void onLoadConfig(json* config);
+	virtual void onMouseClickUpdate(int key, bool isDown, bool& cancel);
+	virtual void onWheelScroll(bool direction);
 	virtual void onKeyUpdate(int key, bool isDown);
+	virtual void onKey(int key, bool isDown, bool& cancel);
 	virtual void onImGuiRender(ImDrawList* drawlist);
 	virtual void ClickGuiChanger() {};
 	virtual void onLevelRender();
