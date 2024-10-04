@@ -18,6 +18,7 @@ void ModuleManager::initModules() {
 		//Client
 		moduleList.push_back(new CustomFont());
 		moduleList.push_back(new DebugConsole());
+		moduleList.push_back(new Test());
 		moduleList.push_back(new ClickGui());
 		moduleList.push_back(new Colors());
 		moduleList.push_back(new ArrayList());

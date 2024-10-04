@@ -1,5 +1,6 @@
 #include "ClickGui.h"
-
+#include "../../../../SDK/Attribute/BaseAttributeMap.h"
+#include <string>
 void getModuleListByCategory(Category category, std::vector<Module*>& modList) {
 	for (Module* mod : *moduleMgr->getModuleList()) {
 		if (mod->getCategory() == category) {
@@ -26,14 +27,16 @@ bool ClickGui::isVisible() {
 
 void ClickGui::onEnable() {
 	static DebugConsole* DebugConsoleMod = moduleMgr->getModule<DebugConsole>();
-	DebugConsoleMod->addLog("open clikcgui");
+
+	//DebugConsoleMod->addLog(std::to_string(sizeof(BaseAttributeMap)));
 	Game.getClientInstance()->releaseMouse();
 }
 
 void ClickGui::onDisable() {
 	if (Game.getLocalPlayer() != nullptr) Game.getClientInstance()->grabMouse();
 	static DebugConsole* DebugConsoleMod = moduleMgr->getModule<DebugConsole>();
-	DebugConsoleMod->addLog("close clikcgui");
+	
+	//DebugConsoleMod->addLog(std::to_string(sizeof(BaseAttributeMap)));
 	isSearching = false;
 	searchingModule.clear();
 	if (isChoosingKeyBindPtr != nullptr) *isChoosingKeyBindPtr = false;

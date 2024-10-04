@@ -19,6 +19,7 @@
 //Client
 #include "Modules/Client/CustomFont.h"
 #include "Modules/Client/Debugconsole.h"
+#include "Modules/Client/Test.h"
 #include "Modules/Client/ClickGui.h"
 #include "Modules/Client/Colors.h"
 #include "Modules/Client/ArrayList.h"
